@@ -38,5 +38,6 @@ a d20
 You can also use the #roll function if you just want results
 
 ```ruby
-GamingDice.roll('1d6') # => [4]
+GamingDice.roll('1d6') # => 4
+GamingDice.roll('1d12e, 1d6e') # => [15, 3]
 ```
