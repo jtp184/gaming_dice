@@ -23,7 +23,7 @@ Or install it yourself as:
 The basic way to use this gem is through the #call method
 
 ```ruby
-GamingDice.('1d6') # => [#<GamingDice::Dice:0x007fa84f91dc10 @bonus=0, @count=1, @explodes=false, @faces=6>]
+GamingDice.('1d6') # => [#<GamingDice::Dice:0x007... @bonus=0, @count=1, @explodes=false, @faces=6>]
 ```
 
 Passing in a decodable string results in a collection of dice. All of these are valid strings:
