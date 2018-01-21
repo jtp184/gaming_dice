@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "gaming_dice"
+
+require "pry"
+Pry.start
+
