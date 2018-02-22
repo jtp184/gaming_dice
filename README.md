@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-The basic way to use this gem is through the #call method
+The basic way to use this gem is through the .call method
 
 ```ruby
 GamingDice.('1d6') # => [#<GamingDice::Dice:0x007... @bonus=0, @count=1, @explodes=false, @faces=6>]
@@ -35,7 +35,7 @@ a d20
 1d12e, 1d6e
 ```
 
-You can also use the #roll function if you just want results
+You can also use the .roll function if you just want results
 
 ```ruby
 GamingDice.roll('1d6') # => 4
