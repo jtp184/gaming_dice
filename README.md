@@ -12,11 +12,11 @@ gem 'gaming_dice'
 
 And then execute:
 
-    $ bundle
+$ bundle
 
 Or install it yourself as:
 
-    $ gem install gaming_dice
+$ gem install gaming_dice
 
 ## Basic Usage
 
@@ -62,21 +62,21 @@ require 'gaming_dice/patches'
 1.of_spades.to_s # => 'Ace of Spades'
 
 [
-	3.of_clubs,
-	10.of_hearts,
-	9.of_spades,
-	14.of_clubs,
-	1.of_spades,
-	4.of_diamonds,
-	12.of_spades
+  3.of_clubs,
+  10.of_hearts,
+  9.of_spades,
+  14.of_clubs,
+  1.of_spades,
+  4.of_diamonds,
+  12.of_spades
 ].sort 
 
 # =>
-# 	Ace of Spades
-# 	3 of Clubs
-# 	4 of Diamonds
-# 	9 of Spades
-# 	10 of Hearts
-# 	Queen of Spades
-# 	Black Joker
+#   Ace of Spades
+#   3 of Clubs
+#   4 of Diamonds
+#   9 of Spades
+#   10 of Hearts
+#   Queen of Spades
+#   Black Joker
 ```
