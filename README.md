@@ -18,7 +18,7 @@ Or install it yourself as:
 
     $ gem install gaming_dice
 
-## Usage
+## Basic Usage
 
 The basic way to use this gem is through the .call method
 
@@ -40,4 +40,24 @@ You can also use the .roll function if you just want results
 ```ruby
 GamingDice.roll('1d6') # => 4
 GamingDice.roll('1d12e, 1d6e') # => [15, 3]
+```
+
+GamingDice also has the ability to handle standard 52 card decks. Useful for game systems like Savage Worlds which use these for initiative.
+
+```ruby
+GamingDice.draw # => #<GamingDice::Card:0x7f8... @suit=:hearts, @value=9>
+GamingDice.draw.to_s # => 4 of Hearts
+GamingDice::Card.new(value: 13, suit: :clubs).to_s # => King of Clubs
+```
+
+## DSL
+
+If these functions are more integral to your code, you can take advantage of monkey patches on Integer that are included in the gem.
+
+```ruby
+require 'gaming_dice/patches'
+
+2.d6 # => #<GamingDice::Dice:0x0a3... @bonus=0, @count=2, @explodes=false, @faces=6>
+1.d(100).roll # => 87
+1.of_spades.to_s # => 'Ace of Spades'
 ```
