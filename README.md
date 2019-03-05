@@ -60,4 +60,23 @@ require 'gaming_dice/patches'
 2.d6 # => #<GamingDice::Dice:0x0a3... @bonus=0, @count=2, @explodes=false, @faces=6>
 1.d(100).roll # => 87
 1.of_spades.to_s # => 'Ace of Spades'
+
+[
+	3.of_clubs,
+	10.of_hearts,
+	9.of_spades,
+	14.of_clubs,
+	1.of_spades,
+	4.of_diamonds,
+	12.of_spades
+].sort 
+
+# =>
+# 	Ace of Spades
+# 	3 of Clubs
+# 	4 of Diamonds
+# 	9 of Spades
+# 	10 of Hearts
+# 	Queen of Spades
+# 	Black Joker
 ```
