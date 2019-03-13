@@ -7,7 +7,7 @@ GamingDice allows you to use polyhedral dice with simple string conversions inli
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'gaming_dice'
+gem 'gaming_dice', github: 'jtp184/gaming_dice'
 ```
 
 And then execute:
