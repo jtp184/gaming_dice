@@ -96,7 +96,7 @@ GamingDice
 <a name='method-c-draw'></a>
 <div class='synopsis'>
 <span class='name'>draw</span>
-<span class='arguments'>()</span>
+<span class='arguments'>(arg=nil)</span>
 
 </div>
 <div class='description'>
@@ -108,7 +108,7 @@ GamingDice
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-draw-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-draw-source'><span class="ruby-comment"># File lib/gaming_dice.rb, line 18</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">draw</span>&#x000A;      <span class="ruby-constant">Card</span>.<span class="ruby-identifier">draw</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-draw-source'><span class="ruby-comment"># File lib/gaming_dice.rb, line 18</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">draw</span>(<span class="ruby-identifier">arg</span>=<span class="ruby-keyword">nil</span>)&#x000A;      <span class="ruby-keyword">if</span> <span class="ruby-identifier">arg</span>&#x000A;              <span class="ruby-constant">Card</span>.<span class="ruby-identifier">draw_a</span>(<span class="ruby-identifier">arg</span>)&#x000A;      <span class="ruby-keyword">else</span>&#x000A;             <span class="ruby-constant">Card</span>.<span class="ruby-identifier">draw</span>&#x000A;      <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-roll'>

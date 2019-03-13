@@ -1,6 +1,6 @@
 module GamingDice
 	# :nodoc:
-	# Represents the cards found in a standard 52 card Playing Card deck.
+	# Represents the cards found in a standard 52 card Playing Card deck, plus Jokers.
 	# Has behavioral support for value, suit, and color comparison.
 	class Card
 		include Comparable
@@ -26,7 +26,56 @@ module GamingDice
 
 		# Randomly creates a possible card
 		def self.draw
-			new(value: rand(1..14), suit: SUIT_ORDERING.keys.sample)
+			val = rand(1..14)
+			sui = case val
+				    when 1..13
+				    	SUIT_ORDERING.keys.sample
+				    when 14
+				    	[:hearts, :clubs].sample
+				    end
+			new(value: val, suit: sui)
+		end
+
+		# Pulls a specific card by using a shorthand notation of "<value><suit>"
+		def self.draw_a(card)
+			arg = /(\d+|k|q|j|f)(s|h|d|c|b|r)/.match(card).captures
+			val = case arg[0]
+				    when /\d+/
+				    	arg[0].to_i
+				    when 'j'
+				    	11
+				    when 'q'
+				    	12
+				    when 'k'
+				    	13
+				    when 'f'
+				    	14
+				    end
+
+			sui = case arg[1]
+						when 's'
+							:spades
+						when 'h', 'r'
+							:hearts
+						when 'd'
+							:diamonds
+						when 'c', 'b'
+							:clubs
+						end
+
+			new(value: val, suit: sui)
+		end
+
+		# Takes the +hex+ couplet and derives its matching Card
+		def self.parse_hex_couplet(hex)
+			hc = hex.chars.map { |a| a.to_i(16) }
+			new(suit: SUIT_ORDERING.key(hc[0]), value: hc[1])
+		end
+
+		# Emits the card's suit and value as a 2-character hexadecimal string.
+		# The first place is the suit's ordering, and the second is the value.
+		def hex_couplet
+			[SUIT_ORDERING[suit], value].map { |h| h.to_s(16) }.join
 		end
 
 		# True if #color returns :red
@@ -55,6 +104,42 @@ module GamingDice
 			v.zero? ? s = SUIT_ORDERING[suit] <=> SUIT_ORDERING[other.suit] : v
 		end
 
+		# Returns the next Card object
+		def next
+			if value < 13
+				self.class.new(value: value + 1, suit: suit)
+			elsif value == 13 && suit != :clubs
+				nindex = SUIT_ORDERING[suit] + 1
+				self.class.new(value: 1, suit: SUIT_ORDERING.key(nindex))
+			elsif value == 13 && suit == :clubs
+				self.class.new(value: 14, suit: :hearts)
+			elsif value == 14 && suit == :hearts
+				self.class.new(value: 14, suit: :clubs)
+			elsif value == 14 && suit == :clubs
+				raise IndexError, 'No Higher Card than the Black Joker'
+			end
+		end
+
+		alias_method :succ, :next
+
+		# Returns the previous Card object
+		def prev
+			if value == 1 && suit == :spades
+				raise IndexError, 'No Lower Card than the Ace of Spades'
+			elsif value <= 13 && value > 1
+				self.class.new(value: value - 1, suit: suit)
+			elsif value == 1
+				nindex = SUIT_ORDERING[suit] - 1
+				self.class.new(value: 13, suit: SUIT_ORDERING.key(nindex))
+			elsif value == 14 && suit == :clubs
+				self.class.new(value: 14, suit: :hearts)
+			elsif value == 14 && suit == :hearts
+				self.class.new(value: 13, suit: :clubs)
+			end
+		end
+
+		alias_method :pred, :prev
+
 		# Returns a text representation from the attributes
 		def to_s
 			if value != 14
@@ -72,11 +157,6 @@ module GamingDice
 		# Implicitly returns the same as #to_s
 		def to_str
 			to_s
-		end
-
-		# Implicitly returns the value
-		def to_int
-			value
 		end
 
 		private
@@ -98,7 +178,7 @@ module GamingDice
 			when 14
 				'Joker'
 			else
-				'Fool'
+				'Trump'
 			end
 		end
 	end

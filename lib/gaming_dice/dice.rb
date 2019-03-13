@@ -94,7 +94,7 @@ module GamingDice
       results = []
       result = 0
       count.times do
-        this_roll = (1..faces).to_a.sample
+        this_roll = rand(1..faces)
 
         if explodes
           this_roll += roll if this_roll == faces
