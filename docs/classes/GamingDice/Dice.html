@@ -97,7 +97,7 @@ Superclass:
 <td class='context-item-name'>
 <a name='attribute-i-bonus'>bonus</a>
 </td>
-<td class='context-item-value'>[R]</td>
+<td class='context-item-value'>[RW]</td>
 <td class='context-item-desc'>
 <p>Any flat bonus the dice has, added at the end.</p>
 </td>
@@ -106,7 +106,7 @@ Superclass:
 <td class='context-item-name'>
 <a name='attribute-i-count'>count</a>
 </td>
-<td class='context-item-value'>[R]</td>
+<td class='context-item-value'>[RW]</td>
 <td class='context-item-desc'>
 <p>The number of dice in this bundle. For rolling things like 3d6 as one entity instead of 3 x 1d6</p>
 </td>
@@ -115,7 +115,7 @@ Superclass:
 <td class='context-item-name'>
 <a name='attribute-i-explodes'>explodes</a>
 </td>
-<td class='context-item-value'>[R]</td>
+<td class='context-item-value'>[RW]</td>
 <td class='context-item-desc'>
 <p>Whether the dice explodes, i.e. re-rolls and adds the result if it critically succeeds.</p>
 </td>
@@ -124,7 +124,7 @@ Superclass:
 <td class='context-item-name'>
 <a name='attribute-i-faces'>faces</a>
 </td>
-<td class='context-item-value'>[R]</td>
+<td class='context-item-value'>[RW]</td>
 <td class='context-item-desc'>
 <p>The number of faces this dice has. Controls how high it can roll.</p>
 </td>
@@ -157,7 +157,7 @@ Superclass:
 <a name='method-c-new'></a>
 <div class='synopsis'>
 <span class='name'>new</span>
-<span class='arguments'>(params)</span>
+<span class='arguments'>(**params)</span>
 
 </div>
 <div class='description'>
@@ -169,7 +169,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-new-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-new-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 85</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">params</span>)&#x000A;  <span class="ruby-ivar">@count</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:count</span>) { <span class="ruby-value">0</span> }&#x000A;  <span class="ruby-ivar">@faces</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:faces</span>) { <span class="ruby-value">0</span> }&#x000A;  <span class="ruby-ivar">@bonus</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:bonus</span>) { <span class="ruby-value">0</span> }&#x000A;  <span class="ruby-ivar">@explodes</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:explodes</span>) { <span class="ruby-keyword">false</span> }&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-new-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 85</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-operator">**</span><span class="ruby-identifier">params</span>)&#x000A;  <span class="ruby-ivar">@count</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:count</span>) { <span class="ruby-value">0</span> }&#x000A;  <span class="ruby-ivar">@faces</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:faces</span>) { <span class="ruby-value">0</span> }&#x000A;  <span class="ruby-ivar">@bonus</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:bonus</span>) { <span class="ruby-value">0</span> }&#x000A;  <span class="ruby-ivar">@explodes</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:explodes</span>) { <span class="ruby-keyword">false</span> }&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-roll'>

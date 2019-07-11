@@ -1,6 +1,6 @@
-Tue, 12 Mar 2019 21:25:15 -0700
-lib/gaming_dice/card.rb	Tue, 12 Mar 2019 21:15:06 -0700
-lib/gaming_dice/dice.rb	Mon, 04 Mar 2019 23:46:26 -0800
-lib/gaming_dice/patches.rb	Mon, 04 Mar 2019 21:46:57 -0800
-lib/gaming_dice/version.rb	Mon, 04 Mar 2019 21:47:39 -0800
-lib/gaming_dice.rb	Mon, 04 Mar 2019 22:22:02 -0800
+Thu, 11 Jul 2019 00:23:19 -0700
+lib/gaming_dice.rb	Wed, 08 May 2019 17:23:14 -0700
+lib/gaming_dice/card.rb	Wed, 08 May 2019 17:23:14 -0700
+lib/gaming_dice/patches.rb	Wed, 08 May 2019 17:23:14 -0700
+lib/gaming_dice/dice.rb	Wed, 10 Jul 2019 23:49:55 -0700
+lib/gaming_dice/version.rb	Wed, 08 May 2019 17:23:14 -0700

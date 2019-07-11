@@ -9,3 +9,11 @@ end
 Then(/result is always greater than the bonus/i) do
 	expect(@result.all? { |r| r > @dice.bonus }).to be true
 end
+
+When(/compare the dice to an integer/i) do
+  @result = @dice <=> rand(10)
+end
+
+Then("I receive a comparator result") do
+	expect(@result).to be_between(-1, 1)
+end

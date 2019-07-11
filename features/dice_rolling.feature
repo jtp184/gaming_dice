@@ -11,3 +11,8 @@ Scenario: Dice with a bonus cannot be lower than that bonus
 	But I give the dice a bonus
 	When I roll it many times
 	Then the result is always greater than the bonus
+
+Scenario: Dice compared with numbers
+	Given I create a dice
+	When I compare the dice to an integer
+	Then I receive a comparator result
