@@ -69,20 +69,20 @@ module GamingDice
     include Comparable
 
     # The number of dice in this bundle. For rolling things like 3d6 as one entity instead of 3 x 1d6
-    attr_reader :count
+    attr_accessor :count
 
     # The number of faces this dice has. Controls how high it can roll.
-    attr_reader :faces
+    attr_accessor :faces
 
     # Any flat bonus the dice has, added at the end.
-    attr_reader :bonus
+    attr_accessor :bonus
 
     # Whether the dice explodes, i.e. re-rolls and adds the result if it critically succeeds.
-    attr_reader :explodes
+    attr_accessor :explodes
 
     # Specified in +params+ are values for :count, :faces, :bonus, and :explodes, used to set the
     # instance variables of the same name. If left unspecified they default to zeros and false.
-    def initialize(params)
+    def initialize(**params)
       @count = params.fetch(:count) { 0 }
       @faces = params.fetch(:faces) { 0 }
       @bonus = params.fetch(:bonus) { 0 }

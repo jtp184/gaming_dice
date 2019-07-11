@@ -1,5 +1,5 @@
 Given(/create a dice/i) do
-	@dice = GamingDice.('1d6').first
+	@dice = FactoryBot.build(:dice)
 end
 
 Given(/input (?:the)? dice strings/i) do |strings|
@@ -11,7 +11,7 @@ Then(/each creates a valid dice/i) do
 end
 
 Given(/give the dice multiple count/i) do
-	@dice = GamingDice.('2d6').first
+	@dice = FactoryBot.build(:dice, :multiple_count)
 end
 
 Then(/dice has multiple count/i) do
@@ -19,7 +19,7 @@ Then(/dice has multiple count/i) do
 end
 
 Given(/make the dice explode/i) do
-  @dice.instance_variable_set(:@explodes, true)
+	@dice = FactoryBot.build(:dice, :explodes)
 end
 
 Then(/dice does explode/i) do
@@ -27,9 +27,17 @@ Then(/dice does explode/i) do
 end
 
 Given(/give the dice(?: a )?bonus/i) do
-  @dice.instance_variable_set(:@bonus, 1)
+	@dice = FactoryBot.build(:dice, :bonus)
 end
 
 Then(/dice has a bonus/i) do
 	expect(@dice.bonus).to be > 0
+end
+
+Then(/receive an array of dice/i) do
+	precon = @dice.all? do |a| 
+		a.is_a?(Array) && a.all? { |d| d.is_a?(GamingDice::Dice) }
+	end
+
+	expect(precon).to be true
 end

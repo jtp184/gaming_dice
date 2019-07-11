@@ -1,0 +1,11 @@
+When(/roll it many times/i) do
+	@result = Array.new(100) { @dice.roll }
+end
+
+Then(/result can be higher than the faces/i) do
+	expect(@result.any? { |r| r > @dice.faces }).to be true
+end
+
+Then(/result is always greater than the bonus/i) do
+	expect(@result.all? { |r| r > @dice.bonus }).to be true
+end
