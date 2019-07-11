@@ -1,7 +1,6 @@
-Feature: Monkey patches on the Integer class for cards
+@patches
 
-Background: 
-	Given I have included the monkey patches
+Feature: Monkey patches on the Integer class for cards
 
 Scenario: Hearts card
 	Given I have an integer

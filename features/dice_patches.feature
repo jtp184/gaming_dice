@@ -1,7 +1,6 @@
-Feature: Monkey patches on the Integer class for dice
+@patches
 
-Background: 
-	Given I have included the monkey patches
+Feature: Monkey patches on the Integer class for dice
 
 Scenario: Four-sided Dice
 	Given I have an integer

@@ -1,3 +1,13 @@
+Given(/i have a card/i) do
+	@card = GamingDice::Card.draw
+end
+
+Given(/i have the following cards/i) do |table|
+  cards = table.raw
+  cards.shift
+  @card = cards.map(&:join).map { |c| GamingDice::Card.draw_a(c) }
+end
+
 Given(/input the shorthand strings/i) do |table|
 	strs = table.raw.flatten
 	@card = strs.map { |s| GamingDice::Card.draw_a(s) }
@@ -8,20 +18,21 @@ Given(/input the hex strings/i) do |table|
 	@card = strs.map { |s| GamingDice::Card.parse_hex_couplet(s) }
 end
 
+Given(/have a high card/i) do
+	@card ||= []
+	@high_card = GamingDice::Card.new(value: 13, suit: :clubs)
+	@card << @high_card
+end
+
+Given(/have a low card/i) do
+	@card ||= []
+	@low_card = GamingDice::Card.new(value: 1, suit: :spades)
+	@card << @low_card
+end
 
 Then(/receive cards named/i) do |table|
 	names = table.raw.flatten
 	expect(@card.map(&:to_s)).to eq names
-end
-
-Given(/i have a card/i) do
-	@card = GamingDice::Card.draw
-end
-
-Given(/i have the following cards/i) do |table|
-  cards = table.raw
-  cards.shift
-  @card = cards.map(&:join).map { |c| GamingDice::Card.draw_a(c) }
 end
 
 When(/ask for the suit of my cards/i) do
@@ -59,18 +70,6 @@ end
 Then(/i receive colors named/i) do |table|
 	colors = table.raw.flatten.map(&:downcase).map(&:to_sym)
 	expect(@result).to eq(colors)
-end
-
-Given(/have a high card/i) do
-	@card ||= []
-	@high_card = GamingDice::Card.new(value: 13, suit: :clubs)
-	@card << @high_card
-end
-
-Given(/have a low card/i) do
-	@card ||= []
-	@low_card = GamingDice::Card.new(value: 1, suit: :spades)
-	@card << @low_card
 end
 
 When(/sort the cards/i) do

@@ -14,6 +14,6 @@ When(/compare the dice to an integer/i) do
   @result = @dice <=> rand(10)
 end
 
-Then("I receive a comparator result") do
+Then(/receive a comparator result/i) do
 	expect(@result).to be_between(-1, 1)
 end
