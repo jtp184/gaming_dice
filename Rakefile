@@ -1,7 +1,8 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require 'bundler/gem_tasks'
 
-RSpec::Core::RakeTask.new(:spec)
+task :test do
+	sh 'cucumber'
+end
 
 task :docs do
 	sh 'rm -rf ./docs'
@@ -11,4 +12,8 @@ task :docs do
 	sh 'mv doc docs'
 end
 
-task :default => :spec
+task :prep => [:test, :docs]
+
+task :gitgo => [:prep] do
+	sh 'git add . && git commit && git push'
+end
