@@ -1,0 +1,1 @@
+require 'gaming_dice'
