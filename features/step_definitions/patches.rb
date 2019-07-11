@@ -1,7 +1,3 @@
-Given(/included the monkey patches/i) do
-	require 'gaming_dice/patches'
-end
-
 Given(/have an integer/i) do
 	@int = 1
 end
