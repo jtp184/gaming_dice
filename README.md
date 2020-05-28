@@ -1,4 +1,4 @@
-# GamingDice
+# GamingDice ![travis_ci](https://travis-ci.com/jtp184/gaming_dice.svg?branch=master)
 
 GamingDice allows you to use polyhedral dice with simple string conversions inline in Ruby.
 
