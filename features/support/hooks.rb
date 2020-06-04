@@ -1,3 +1,3 @@
 Before('@patches') do
-	require 'gaming_dice/patches'
+  require 'gaming_dice/patches'
 end

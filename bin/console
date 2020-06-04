@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-require "bundler/setup"
-require "gaming_dice"
+require 'bundler/setup'
+require 'gaming_dice'
 
-require "pry"
+require 'pry'
 Pry.start
-
