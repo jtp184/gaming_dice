@@ -15,11 +15,11 @@ module GamingDice
   end
 
   # Syntactic sugar. Aliases to Card.draw
-  def self.draw(arg=nil)
-  	if arg
-  		Card.draw_a(arg)
-  	else
-	  	Card.draw
-  	end
+  def self.draw(arg = nil)
+    if arg
+      Card.draw_a(arg)
+    else
+      Card.draw
+    end
   end
 end
