@@ -1,5 +1,19 @@
 module GamingDice
   class Dice
+    # The regex to match against
+    DICE_STRING_REGEX = /
+                            (
+                              (
+                                (a\s|\d+) # count
+                                d
+                                (\d+) # sides
+                                (e)? # explode
+                                (\+\d+|\-\d+)? # flat bonus
+                              )
+                              (\s\&\s|\s\+\s)* # continuant
+                              )
+                          /ix.freeze
+
     # Passes the value in to be parsed by the parser.
     # This is the entry function, and can take in a string +input+ to convert into one or more dice objects.
     def self.call(input)
@@ -36,30 +50,32 @@ module GamingDice
     # Uses a regular expression to parse each dice statement and construct a dice object out of them.
     def self.parse_dice_string(input)
       results = []
+
       individuals = input.split(', ').each do |terms|
         operators = []
         dices = []
-        terms.scan(/(((a |\d+)d(\d+)(e)?(\+\d+|\-\d+)?)( \& | \+ )*)/i) do |match|
-          # 2 = count
-          # 3 = sides
-          # 4 = explode
-          # 5 = flat bonus
-          # 6 = continuant
-          count = match[2]
-          count = count.include?('a') ? 1 : count.to_i
-          face = (match[3].to_i || 0)
-          explode = !match[4].nil?
-          flat = (match[5].to_i || 0)
-          op = (match[6] || '&')
+
+        terms.scan(DICE_STRING_REGEX) do |sc|
+          count = sc[2].include?('a') ? 1 : sc[2].to_i
+          face = (sc[3].to_i || 0)
+          explode = !sc[4].nil?
+          flat = (sc[5].to_i || 0)
+          op = (sc[6] || '&')
 
           operators << op
-          dices << Dice.new(count: count, faces: face, bonus: flat,
-            explodes: explode)
+          dices << Dice.new(
+            count: count,
+            faces: face,
+            bonus: flat,
+            explodes: explode
+          )
         end
+
         dices = dices.first if dices.length == 1
         results << dices if operators.any? { |op| op == '&' }
         results << dices.inject(:+) if operators.any? { |op| op == '+' }
       end
+
       results
     end
   end
