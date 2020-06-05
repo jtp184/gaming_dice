@@ -14,75 +14,73 @@ module GamingDice
                               )
                           /ix.freeze
 
-    # Passes the value in to be parsed by the parser. This is an entry function
-    # and can take in a string +input+ to convert into one or more dice objects.
-    def self.call(input)
-      parse_dice(input)
-    end
-
-    # The roll class method either takes in a string, or an array of dice as
-    # +input+, and returns the roll results. If there's only once dice,
-    # it will return just one Integer as a result. Otherwise, it returns
-    # an array of results for each dice.
-    def self.roll(input)
-      res = parse_dice(input).map(&:roll)
-      res.length == 1 ? res.first : res
-    end
-
-    # Takes in a string, or an array of dice as +input+, 
-    # and returns the single best result of all dice rolls
-    def self.take_best(input)
-      parse_dice(input).map(&:roll).min
-    end
-
-    # Takes in a string, or an array of dice as +input+, 
-    # and returns the worst result of all dice rolls
-    def self.take_worst(input)
-      parse_dice(input).map(&:roll).max
-    end
-
-    private
-
-    # Disambiguation function, if +input+ is dice or an array of dice
-    # (or anything which responds to #roll) it uses them. Otherwise, it
-    # tries to convert the +input+ to a string and run #parse_dice_string on it
-    def self.parse_dice(input)
-      return Array(input) if Array(input).all? { |i| i.respond_to?(:roll) }
-
-      parse_dice_string(input.to_str)
-    end
-
-    # Uses a regular expression to parse each dice statement
-    # and construct a dice object out of them.
-    def self.parse_dice_string(input)
-      results = []
-
-      individuals = input.split(', ').each do |terms|
-        operators = []
-        dices = []
-
-        terms.scan(DICE_STRING_REGEX) do |sc|
-          count = sc[2].include?('a') ? 1 : sc[2].to_i
-          face = (sc[3].to_i || 0)
-          explode = !sc[4].nil?
-          flat = (sc[5].to_i || 0)
-          op = (sc[6] || '&')
-
-          operators << op
-          dices << Dice.new(
-            count: count,
-            faces: face,
-            bonus: flat,
-            explodes: explode
-          )
-        end
-
-        dices = dices.first if dices.length == 1
-        results << dices if operators.any? { |op| op == '&' }
-        results << dices.inject(:+) if operators.any? { |op| op == '+' }
+    class << self
+      # Passes the value in to be parsed by the parser. This is an entry function
+      # and can take in a string +input+ to convert into one or more dice objects.
+      def call(input)
+        parse_dice(input)
       end
 
-      results
+      # The roll class method either takes in a string, or an array of dice as
+      # +input+, and returns the roll results. If there's only once dice,
+      # it will return just one Integer as a result. Otherwise, it returns
+      # an array of results for each dice.
+      def roll(input)
+        res = parse_dice(input).map(&:roll)
+        res.length == 1 ? res.first : res
+      end
+
+      # Takes in a string, or an array of dice as +input+,
+      # and returns the single best result of all dice rolls
+      def take_best(input)
+        parse_dice(input).map(&:roll).min
+      end
+
+      # Takes in a string, or an array of dice as +input+,
+      # and returns the worst result of all dice rolls
+      def take_worst(input)
+        parse_dice(input).map(&:roll).max
+      end
+
+      private
+
+      # Disambiguation function, if +input+ is dice or an array of dice
+      # (or anything which responds to #roll) it uses them. Otherwise, tries
+      # to convert the +input+ to a string and run #parse_dice_string on it
+      def parse_dice(input)
+        return Array(input) if Array(input).all? { |i| i.respond_to?(:roll) }
+
+        parse_dice_string(input.to_str)
+      end
+
+      # Uses a regular expression to parse each dice statement
+      # and construct a dice object out of them.
+      def parse_dice_string(input)
+        input.split(', ').each_with_object([]) do |terms, results|
+          operators = []
+          dices = []
+
+          terms.scan(DICE_STRING_REGEX) do |sc|
+            count = sc[2].include?('a') ? 1 : sc[2].to_i
+            face = (sc[3].to_i || 0)
+            explode = !sc[4].nil?
+            flat = (sc[5].to_i || 0)
+            op = (sc[6] || '&')
+
+            operators << op
+            dices << Dice.new(
+              count: count,
+              faces: face,
+              bonus: flat,
+              explodes: explode
+            )
+          end
+
+          dices = dices.first if dices.length == 1
+          results << dices if operators.any? { |op| op == '&' }
+          results << dices.inject(:+) if operators.any? { |op| op == '+' }
+        end
+      end
     end
   end
 
