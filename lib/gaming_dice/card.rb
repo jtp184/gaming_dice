@@ -1,6 +1,6 @@
 module GamingDice
   # :nodoc:
-  # Represents the cards found in a standard 52 card Playing Card deck, plus Jokers.
+  # Represents cards found in a standard 52 card Playing Card deck, plus Jokers.
   # Has behavioral support for value, suit, and color comparison.
   class Card
     include Comparable
@@ -101,7 +101,7 @@ module GamingDice
     # Compares to +other+ by value, tiebroken with suit
     def <=>(other)
       v = value <=> other.value
-      v.zero? ? s = SUIT_ORDERING[suit] <=> SUIT_ORDERING[other.suit] : v
+      v.zero? ? SUIT_ORDERING[suit] <=> SUIT_ORDERING[other.suit] : v
     end
 
     # Returns the next Card object
