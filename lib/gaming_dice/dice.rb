@@ -1,7 +1,7 @@
 module GamingDice
   class Dice
     # Simpler regex to confirm presence
-    DICE_REGEX = /(?:(?:a\s|\d+)d(?:\d+)(?:e)?(?:\+\d+|\-\d+)?)(?:\s\&\s|\s\+\s)*/i
+    DICE_REGEX = /(?:(?:a\s|\d+)d(?:\d+)(?:e)?(?:\+\d+|\-\d+)?)(?:\s\&)*/i
 
     # Grouped regex for meaning extraction
     DICE_REGEX_GROUPED = /
@@ -13,7 +13,7 @@ module GamingDice
                                 (?<explodes>e)? # explode
                                 (?<bonus>\+\d+|\-\d+)? # flat bonus
                               )
-                              (?<continuant>\s\&\s|\s\+\s)* # continuant
+                              (?<continuant>\s\&)* # continuant
                               )
                           /ix.freeze
 
@@ -30,7 +30,7 @@ module GamingDice
       # an array of results for each dice.
       def roll(input)
         res = parse_dice(input).map(&:roll)
-        res.length == 1 ? res.first : res
+        res.one? ? res.first : res
       end
 
       # Takes in a string, or an array of dice as +input+,
@@ -60,23 +60,15 @@ module GamingDice
       # and construct a dice object out of them.
       def parse_dice_string(input)
         input.split(', ').each_with_object([]) do |terms, results|
-          operators = []
           dices = []
 
           terms.scan(DICE_REGEX) do |sc|
             dice_args = cast_dice_components(sc)
-
-            operators << dice_args[:continuant]
             dices << Dice.new(dice_args)
           end
 
-          next results << dices.first if dices.one?
-
-          if operators.any? { |op| op == '&' }
-            results << dices
-          else
-            # TODO: Handling plus continuant again
-          end
+          new_roller = dices.one? ? dices.first : DicePool.new(dices)
+          results << new_roller
         end
       end
 
@@ -93,12 +85,7 @@ module GamingDice
 
         %i[faces bonus].each { |i| scanned[i] = scanned[i].to_i }
         scanned[:explodes] = !scanned[:explodes].nil?
-
-        scanned[:continuant] = if scanned[:continuant].nil?
-                                 '.'
-                               else
-                                 /\+|\&/.match(scanned[:continuant])[0]
-                               end
+        scanned[:continuant] = scanned[:continuant].nil? ? :stop : :continue
 
         scanned
       end

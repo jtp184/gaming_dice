@@ -1,5 +1,6 @@
 require 'gaming_dice/version'
 require 'gaming_dice/dice'
+require 'gaming_dice/dice_pool'
 require 'gaming_dice/card'
 
 # Used for polyhedral dice and their rolls.
