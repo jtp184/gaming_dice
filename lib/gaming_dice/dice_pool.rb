@@ -4,7 +4,7 @@ module GamingDice
   # Holds multiple dice as one
   class DicePool
     extend Forwardable
-    
+
     # The Dice objects managed by this pool
     attr_accessor :dice
 
