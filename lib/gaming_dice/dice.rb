@@ -1,22 +1,25 @@
 module GamingDice
   class Dice
-    # The regex to match against
-    DICE_STRING_REGEX = /
+    # Simpler regex to confirm presence
+    DICE_REGEX = /(?:(?:a\s|\d+)d(?:\d+)(?:e)?(?:\+\d+|\-\d+)?)(?:\s\&\s|\s\+\s)*/i
+
+    # Grouped regex for meaning extraction
+    DICE_REGEX_GROUPED = /
                             (
                               (
-                                (a\s|\d+) # count
+                                (?<count>a\s|\d+) # count
                                 d
-                                (\d+) # sides
-                                (e)? # explode
-                                (\+\d+|\-\d+)? # flat bonus
+                                (?<faces>\d+) # sides
+                                (?<explodes>e)? # explode
+                                (?<bonus>\+\d+|\-\d+)? # flat bonus
                               )
-                              (\s\&\s|\s\+\s)* # continuant
+                              (?<continuant>\s\&\s|\s\+\s)* # continuant
                               )
                           /ix.freeze
 
     class << self
-      # Passes the value in to be parsed by the parser. This is an entry function
-      # and can take in a string +input+ to convert into one or more dice objects.
+      # Passes the value to be parsed by the parser. This is an entry function
+      # and can take in a string +input+ to convert into one or more Dice.
       def call(input)
         parse_dice(input)
       end
@@ -60,26 +63,44 @@ module GamingDice
           operators = []
           dices = []
 
-          terms.scan(DICE_STRING_REGEX) do |sc|
-            count = sc[2].include?('a') ? 1 : sc[2].to_i
-            face = (sc[3].to_i || 0)
-            explode = !sc[4].nil?
-            flat = (sc[5].to_i || 0)
-            op = (sc[6] || '&')
+          terms.scan(DICE_REGEX) do |sc|
+            dice_args = cast_dice_components(sc)
 
-            operators << op
-            dices << Dice.new(
-              count: count,
-              faces: face,
-              bonus: flat,
-              explodes: explode
-            )
+            operators << dice_args[:continuant]
+            dices << Dice.new(dice_args)
           end
 
-          dices = dices.first if dices.length == 1
-          results << dices if operators.any? { |op| op == '&' }
-          results << dices.inject(:+) if operators.any? { |op| op == '+' }
+          next results << dices.first if dices.one?
+
+          if operators.any? { |op| op == '&' }
+            results << dices
+          else
+            # TODO: Handling plus continuant again
+          end
         end
+      end
+
+      def cast_dice_components(input)
+        scanned = input.match(DICE_REGEX_GROUPED)
+                       .named_captures
+                       .transform_keys(&:to_sym)
+
+        scanned[:count] = if scanned[:count].include?('a')
+                            1
+                          else
+                            scanned[:count].to_i
+                          end
+
+        %i[faces bonus].each { |i| scanned[i] = scanned[i].to_i }
+        scanned[:explodes] = !scanned[:explodes].nil?
+
+        scanned[:continuant] = if scanned[:continuant].nil?
+                                 '.'
+                               else
+                                 /\+|\&/.match(scanned[:continuant])[0]
+                               end
+
+        scanned
       end
     end
   end
@@ -88,7 +109,7 @@ module GamingDice
   class Dice
     include Comparable
 
-    # The number of dice in this bundle. 
+    # The number of dice in this bundle.
     # For rolling things like 3d6 as one entity instead of 3 x 1d6
     attr_accessor :count
 
@@ -98,12 +119,12 @@ module GamingDice
     # Any flat bonus the dice has, added at the end.
     attr_accessor :bonus
 
-    # Whether the dice explodes, i.e. re-rolls and adds 
+    # Whether the dice explodes, i.e. re-rolls and adds
     # the result if it critically succeeds.
     attr_accessor :explodes
 
     # Specified in +params+ are values for :count, :faces, :bonus, and :explodes
-    #, used to set the instance variables of the same name. 
+    # , used to set the instance variables of the same name.
     # If left unspecified they default to zeros and false.
     def initialize(**params)
       @count = params.fetch(:count) { 0 }
