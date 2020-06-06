@@ -1,21 +1,21 @@
 module GamingDice
   class Dice
     # Simpler regex to confirm presence
-    DICE_REGEX = /(?:(?:a\s|\d+)d(?:\d+)(?:e)?(?:\+\d+|\-\d+)?)(?:\s\&)*/i
+    DICE_REGEX = /(?:(?:a\s|\d+)d(?:\d+)(?:e)?(?:\+\d+|-\d+)?)\s?(?:&|\+)*/i.freeze
 
     # Grouped regex for meaning extraction
     DICE_REGEX_GROUPED = /
-                            (
-                              (
-                                (?<count>a\s|\d+) # count
-                                d
-                                (?<faces>\d+) # sides
-                                (?<explodes>e)? # explode
-                                (?<bonus>\+\d+|\-\d+)? # flat bonus
-                              )
-                              (?<continuant>\s\&)* # continuant
-                              )
-                          /ix.freeze
+      (?:
+        (?:
+          (?<count>a\s|\d+) # count
+          d
+          (?<faces>\d+) # sides
+          (?<explodes>e)? # explode
+          (?<bonus>\+\d+|-\d+)? # flat bonus
+        )
+        \s?(?<continuant>&|\+)* # continuant
+      )
+    /ix.freeze
 
     class << self
       # Passes the value to be parsed by the parser. This is an entry function
@@ -60,15 +60,19 @@ module GamingDice
       # and construct a dice object out of them.
       def parse_dice_string(input)
         input.split(', ').each_with_object([]) do |terms, results|
-          dices = []
+          dices = terms.scan(DICE_REGEX).map { |sc| cast_dice_components(sc) }
 
-          terms.scan(DICE_REGEX) do |sc|
-            dice_args = cast_dice_components(sc)
-            dices << Dice.new(dice_args)
-          end
-
-          new_roller = dices.one? ? dices.first : DicePool.new(dices)
-          results << new_roller
+          results << if dices.one? && dices.first[:count] == 1
+                       Dice.new(dices.first)
+                     elsif dices.one?
+                       pool = Array.new(dices.first[:count], dices.first)
+                       pool.map! { |d| Dice.new(d) }
+                       DicePool.new(pool)
+                     else
+                       dice_objects = dices.map { |d| Dice.new(d) }
+                       discrete = dices.all? { |d| d[:continuant] != :plus }
+                       DicePool.new(dice_objects, discrete)
+                     end
         end
       end
 
@@ -77,15 +81,20 @@ module GamingDice
                        .named_captures
                        .transform_keys(&:to_sym)
 
-        scanned[:count] = if scanned[:count].include?('a')
-                            1
-                          else
-                            scanned[:count].to_i
-                          end
+        scanned[:count] = 1 if scanned[:count].include?('a')
+        scanned[:count] = scanned[:count].to_i
 
         %i[faces bonus].each { |i| scanned[i] = scanned[i].to_i }
+
         scanned[:explodes] = !scanned[:explodes].nil?
-        scanned[:continuant] = scanned[:continuant].nil? ? :stop : :continue
+        scanned[:continuant] = case scanned[:continuant]
+                               when '&'
+                                 :and
+                               when '+'
+                                 :plus
+                               when nil
+                                 :end
+                               end
 
         scanned
       end
@@ -95,11 +104,6 @@ module GamingDice
   # The core class. Models a die, with various properties.
   class Dice
     include Comparable
-
-    # The number of dice in this bundle.
-    # For rolling things like 3d6 as one entity instead of 3 x 1d6
-    attr_accessor :count
-
     # The number of faces this dice has. Controls how high it can roll.
     attr_accessor :faces
 
@@ -114,7 +118,6 @@ module GamingDice
     # , used to set the instance variables of the same name.
     # If left unspecified they default to zeros and false.
     def initialize(**params)
-      @count = params.fetch(:count) { 0 }
       @faces = params.fetch(:faces) { 0 }
       @bonus = params.fetch(:bonus) { 0 }
       @explodes = params.fetch(:explodes) { false }
@@ -123,23 +126,15 @@ module GamingDice
     # Calculates rolling the dice. Accounts for explosion, and flat bonuses.
     # Returns an Integer.
     def result
-      results = []
-      result = 0
-      count.times do
+      end_result = 0
+
+      1.times do
         this_roll = rand(1..faces)
-
-        if explodes
-          this_roll += roll if this_roll == faces
-        end
-
-        result += this_roll
+        end_result += this_roll
+        redo if explodes && this_roll == faces
       end
-      result += bonus
-      results << result
-      results = results.flatten
-      return results.first if results.length == 1
 
-      results
+      end_result += bonus
     end
 
     alias roll result
@@ -150,10 +145,15 @@ module GamingDice
     end
 
     def to_s # :nodoc:
-      ret = ''
-      count.times { ret << "[#{faces}#{'!' if explodes}]" }
-      ret << " #{bonus.negative? ? '-' : '+'}#{bonus.abs}" if bonus != 0
-      ret
+      dice_string = "1d#{faces}#{explodes? ? '!' : ''}"
+
+      if bonus.positive?
+        dice_string << "+#{bonus}"
+      elsif bonus.negative?
+        dice_string << bonus.to_s
+      end
+
+      dice_string
     end
 
     # Slightly unusual behavior. When the comparator methods are called,
