@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+<title>dice_rolling.feature</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+<link href='../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+<script type='text/javascript'>
+  function popupCode(url) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+  
+  function toggleCode(id) {
+    var code = document.getElementById(id)
+  
+    code.style.display = code.style.display != 'block' ? 'block' : 'none'
+    return true
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+</script>
+</head>
+<body class='page'>
+<div class='file' id='wrapper'>
+<div class='header'>
+<h1 class='name'>dice_rolling.feature
+</h1>
+<div class='paths'>
+features/dice_rolling.feature
+</div>
+<div class='last-update'>
+Last Update:
+<span class='datetime'>2019-07-11 00:30:51 -0700</span>
+</div>
+</div>
+<div id='content'>
+<div id='text'>
+<div id='description'>
+<p>Feature: Dice can be rolled and return sensible results</p>
+
+<p>Scenario: Dice with explosion can roll higher than their faces</p>
+
+<pre class="ruby"><span class="ruby-constant">Given</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">create</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">dice</span>&#x000A;<span class="ruby-constant">But</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">make</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">dice</span> <span class="ruby-identifier">explode</span>&#x000A;<span class="ruby-constant">When</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">roll</span> <span class="ruby-identifier">it</span> <span class="ruby-identifier">many</span> <span class="ruby-identifier">times</span>&#x000A;<span class="ruby-constant">Then</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">result</span> <span class="ruby-identifier">can</span> <span class="ruby-identifier">be</span> <span class="ruby-identifier">higher</span> <span class="ruby-identifier">than</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">faces</span></pre>
+
+<p>Scenario: Dice with a bonus cannot be lower than that bonus</p>
+
+<pre class="ruby"><span class="ruby-constant">Given</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">create</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">dice</span>&#x000A;<span class="ruby-constant">But</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">give</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">dice</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">bonus</span>&#x000A;<span class="ruby-constant">When</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">roll</span> <span class="ruby-identifier">it</span> <span class="ruby-identifier">many</span> <span class="ruby-identifier">times</span>&#x000A;<span class="ruby-constant">Then</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">result</span> <span class="ruby-identifier">is</span> <span class="ruby-identifier">always</span> <span class="ruby-identifier">greater</span> <span class="ruby-identifier">than</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">bonus</span></pre>
+
+<p>Scenario: Dice compared with numbers</p>
+
+<pre class="ruby"><span class="ruby-constant">Given</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">create</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">dice</span>&#x000A;<span class="ruby-constant">When</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">compare</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">dice</span> <span class="ruby-identifier">to</span> <span class="ruby-identifier">an</span> <span class="ruby-identifier">integer</span>&#x000A;<span class="ruby-constant">Then</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">receive</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">comparator</span> <span class="ruby-identifier">result</span></pre>
+</div>
+<div id='context'>
+</div>
+
+</div>
+</div>
+
+<div id='footer-push'></div>
+</div>
+<div id='footer'>
+<a href="https://github.com/rdoc/hanna-nouveau"><strong>Hanna Nouveau</strong> RDoc template</a>
+</div>
+</body>
+</html>

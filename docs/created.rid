@@ -1,6 +1,13 @@
-Thu, 11 Jul 2019 15:19:24 -0700
-lib/gaming_dice.rb	Wed, 08 May 2019 17:23:14 -0700
-lib/gaming_dice/card.rb	Thu, 11 Jul 2019 01:06:56 -0700
-lib/gaming_dice/patches.rb	Thu, 11 Jul 2019 14:39:05 -0700
-lib/gaming_dice/dice.rb	Wed, 10 Jul 2019 23:49:55 -0700
-lib/gaming_dice/version.rb	Wed, 08 May 2019 17:23:14 -0700
+Sat, 06 Jun 2020 18:00:55 -0700
+./gaming_dice.gemspec	Sat, 06 Jun 2020 15:52:54 -0700
+./README.md	Sat, 06 Jun 2020 17:56:31 -0700
+./Rakefile	Sat, 06 Jun 2020 18:00:52 -0700
+./lib/gaming_dice.rb	Fri, 05 Jun 2020 17:37:03 -0700
+./lib/gaming_dice/card.rb	Fri, 05 Jun 2020 15:55:08 -0700
+./lib/gaming_dice/patches.rb	Thu, 04 Jun 2020 04:19:15 -0700
+./lib/gaming_dice/dice.rb	Sat, 06 Jun 2020 17:57:05 -0700
+./lib/gaming_dice/dice_pool.rb	Sat, 06 Jun 2020 17:36:03 -0700
+./lib/gaming_dice/version.rb	Wed, 08 May 2019 17:23:14 -0700
+./Gemfile	Thu, 04 Jun 2020 04:19:13 -0700
+./Gemfile.lock	Fri, 05 Jun 2020 17:37:40 -0700
+./exe/gdice	Thu, 04 Jun 2020 04:30:28 -0700

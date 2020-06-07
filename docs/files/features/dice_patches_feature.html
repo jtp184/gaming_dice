@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+<title>dice_patches.feature</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+<link href='../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+<script type='text/javascript'>
+  function popupCode(url) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+  
+  function toggleCode(id) {
+    var code = document.getElementById(id)
+  
+    code.style.display = code.style.display != 'block' ? 'block' : 'none'
+    return true
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+</script>
+</head>
+<body class='page'>
+<div class='file' id='wrapper'>
+<div class='header'>
+<h1 class='name'>dice_patches.feature
+</h1>
+<div class='paths'>
+features/dice_patches.feature
+</div>
+<div class='last-update'>
+Last Update:
+<span class='datetime'>2019-07-11 15:13:28 -0700</span>
+</div>
+</div>
+<div id='content'>
+<div id='text'>
+<div id='description'>
+<p>@patches</p>
+
+<p>Feature: Monkey patches on the Integer class for dice</p>
+
+<p>Scenario: Four-sided Dice</p>
+
+<pre>Given I have an integer&#x000A;And I send the message &quot;d4&quot; to the integer&#x000A;Then I receive a dice with 4 faces</pre>
+
+<p>Scenario: Six-sided Dice</p>
+
+<pre>Given I have an integer&#x000A;And I send the message &quot;d6&quot; to the integer&#x000A;Then I receive a dice with 6 faces</pre>
+
+<p>Scenario: Eight-sided Dice</p>
+
+<pre>Given I have an integer&#x000A;And I send the message &quot;d8&quot; to the integer&#x000A;Then I receive a dice with 8 faces</pre>
+
+<p>Scenario: Ten-sided Dice</p>
+
+<pre>Given I have an integer&#x000A;And I send the message &quot;d10&quot; to the integer&#x000A;Then I receive a dice with 10 faces</pre>
+
+<p>Scenario: Twelve-sided Dice</p>
+
+<pre>Given I have an integer&#x000A;And I send the message &quot;d12&quot; to the integer&#x000A;Then I receive a dice with 12 faces</pre>
+
+<p>Scenario: Twenty-sided Dice</p>
+
+<pre>Given I have an integer&#x000A;And I send the message &quot;d20&quot; to the integer&#x000A;Then I receive a dice with 20 faces</pre>
+
+<p>Scenario: n-sided Dice</p>
+
+<pre>Given I have an integer&#x000A;And I send it the message &quot;d&quot; with an integer argument&#x000A;Then I receive a dice with the right number of faces</pre>
+</div>
+<div id='context'>
+</div>
+
+</div>
+</div>
+
+<div id='footer-push'></div>
+</div>
+<div id='footer'>
+<a href="https://github.com/rdoc/hanna-nouveau"><strong>Hanna Nouveau</strong> RDoc template</a>
+</div>
+</body>
+</html>

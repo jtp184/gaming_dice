@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+<title>GamingDice::DicePool</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+<link href='../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+<script type='text/javascript'>
+  function popupCode(url) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+  
+  function toggleCode(id) {
+    var code = document.getElementById(id)
+  
+    code.style.display = code.style.display != 'block' ? 'block' : 'none'
+    return true
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+</script>
+</head>
+<body class='page'>
+<div class='class' id='wrapper'>
+<div class='header'>
+<h1 class='name'><span class='type'>class</span>
+GamingDice::DicePool
+</h1>
+<ol class='paths'>
+<li>
+<a href="../../files/lib/gaming_dice/dice_pool_rb.html">lib/gaming_dice/dice_pool.rb</a>
+</li>
+</ol>
+<div class='parent'>
+Superclass:
+<strong>Object</strong>
+</div>
+</div>
+<div id='content'>
+<div id='text'>
+<div id='description'>
+<p>Holds multiple dice as one</p>
+</div>
+<div id='method-list'>
+<h2>Methods</h2>
+<h3>Public Class</h3>
+<ol>
+<li><a href="#method-c-new">new</a></li>
+</ol>
+<h3>Public Instance</h3>
+<ol>
+<li><a href="#method-i-3C-3D-3E"><=></a></li>
+<li><a href="#attribute-i-dice">dice</a></li>
+<li><a href="#attribute-i-discrete">discrete</a></li>
+<li><a href="#method-i-discrete-3F">discrete?</a></li>
+<li><a href="#method-i-roll">roll</a></li>
+<li><a href="#method-i-roll_all">roll_all</a></li>
+<li><a href="#method-i-to_int">to_int</a></li>
+<li><a href="#method-i-total">total</a></li>
+</ol>
+</div>
+<div id='context'>
+</div>
+<div id='section'>
+<div id='attribute-list'>
+<h2 class='section-bar'>Attributes</h2>
+<div class='name-list'>
+<table>
+<tr class='top-aligned-row context-row'>
+<td class='context-item-name'>
+<a name='attribute-i-dice'>dice</a>
+</td>
+<td class='context-item-value'>[RW]</td>
+<td class='context-item-desc'>
+<p>The <a href="Dice.html"><code>Dice</code></a> objects managed by this pool</p>
+</td>
+</tr>
+<tr class='top-aligned-row context-row'>
+<td class='context-item-name'>
+<a name='attribute-i-discrete'>discrete</a>
+</td>
+<td class='context-item-value'>[RW]</td>
+<td class='context-item-desc'>
+<p>Determines whether the dice should be handled seperately or together</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div id='methods'>
+<h2>Public Class methods</h2>
+<div class='method public-class' id='method-method-c-new'>
+<a name='method-c-new'></a>
+<div class='synopsis'>
+<span class='name'>new</span>
+<span class='arguments'>(initarg = nil, discr = false)</span>
+
+</div>
+<div class='description'>
+
+<p>Uses the <code>initarg</code> to populate the pool</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-new-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-c-new-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 16</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">initarg</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">discr</span> = <span class="ruby-keyword">false</span>)&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">initarg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)&#x000A;    <span class="ruby-ivar">@dice</span> = <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">initarg</span>).<span class="ruby-identifier">flatten</span>&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">initarg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)&#x000A;    <span class="ruby-ivar">@dice</span> = <span class="ruby-identifier">initarg</span>&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">initarg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Dice</span>)&#x000A;    <span class="ruby-ivar">@dice</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">initarg</span>)&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-ivar">@discrete</span> = <span class="ruby-identifier">discr</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<h2>Public Instance methods</h2>
+<div class='method public-instance' id='method-method-i-3C-3D-3E'>
+<a name='method-i-3C-3D-3E'></a>
+<div class='synopsis'>
+<span class='name'><=></span>
+<span class='arguments'>(other)</span>
+
+</div>
+<div class='description'>
+
+<p>Slightly unusual behavior. When the comparator methods are called, the Integer() method is called on self and <code>other</code>. This dice thus uses a randomly generated roll to compare.</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-3C-3D-3E-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-3C-3D-3E-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 51</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)&#x000A;  <span class="ruby-constant">Integer</span>(<span class="ruby-keyword">self</span>) <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">other</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method public-instance' id='method-method-i-discrete-3F'>
+<a name='method-i-discrete-3F'></a>
+<div class='synopsis'>
+<span class='name'>discrete?</span>
+<span class='arguments'>()</span>
+
+</div>
+<div class='description'>
+
+<p>Predicate method for the discrete attribute</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-discrete-3F-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-discrete-3F-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 44</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">discrete?</span>&#x000A;  <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">discrete</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method public-instance' id='method-method-i-roll'>
+<a name='method-i-roll'></a>
+<div class='synopsis'>
+<span class='name'>roll</span>
+<span class='arguments'>()</span>
+
+</div>
+<div class='description'>
+
+<p>Rolls all members of dice</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-roll-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-roll-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 29</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">roll</span>&#x000A;  <span class="ruby-identifier">discrete?</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">roll_all</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">total</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method public-instance' id='method-method-i-roll_all'>
+<a name='method-i-roll_all'></a>
+<div class='synopsis'>
+<span class='name'>roll_all</span>
+<span class='arguments'>()</span>
+
+</div>
+<div class='description'>
+
+<p>Returns individual roll results per dice in the pool</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-roll_all-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-roll_all-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 34</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">roll_all</span>&#x000A;  <span class="ruby-identifier">dice</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:roll</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method public-instance' id='method-method-i-to_int'>
+<a name='method-i-to_int'></a>
+<div class='synopsis'>
+<span class='name'>to_int</span>
+<span class='arguments'>()</span>
+
+</div>
+<div class='description'>
+
+<p>Implicit conversion method returns a roll result, allowing you to compare the results of rolling a dice against a target number or other dice.</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-to_int-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-to_int-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 57</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_int</span>&#x000A;  <span class="ruby-identifier">roll</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method public-instance' id='method-method-i-total'>
+<a name='method-i-total'></a>
+<div class='synopsis'>
+<span class='name'>total</span>
+<span class='arguments'>()</span>
+
+</div>
+<div class='description'>
+
+<p>Rolls and then sums the rolls</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-total-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-i-total-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 39</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">total</span>&#x000A;  <span class="ruby-identifier">roll_all</span>.<span class="ruby-identifier">reduce</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:+</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id='footer-push'></div>
+</div>
+<div id='footer'>
+<a href="https://github.com/rdoc/hanna-nouveau"><strong>Hanna Nouveau</strong> RDoc template</a>
+</div>
+</body>
+</html>

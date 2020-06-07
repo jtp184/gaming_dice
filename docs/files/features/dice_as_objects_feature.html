@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+<title>dice_as_objects.feature</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+<link href='../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+<script type='text/javascript'>
+  function popupCode(url) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+  
+  function toggleCode(id) {
+    var code = document.getElementById(id)
+  
+    code.style.display = code.style.display != 'block' ? 'block' : 'none'
+    return true
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+</script>
+</head>
+<body class='page'>
+<div class='file' id='wrapper'>
+<div class='header'>
+<h1 class='name'>dice_as_objects.feature
+</h1>
+<div class='paths'>
+features/dice_as_objects.feature
+</div>
+<div class='last-update'>
+Last Update:
+<span class='datetime'>2020-06-06 16:01:47 -0700</span>
+</div>
+</div>
+<div id='content'>
+<div id='text'>
+<div id='description'>
+<p>Feature: Dice can be persisted as objects</p>
+
+<p>Scenario: Dice can be created with different string formats</p>
+
+<pre>Given I input the dice strings&#x000A;        | 1d6 |&#x000A;        | 2d10 |&#x000A;        | 1d8+1 |&#x000A;        | 1d12e, 1d6 |&#x000A;        | 1d100 |&#x000A;Then each creates a valid dice</pre>
+
+<p>Scenario: Dice can be created with exploding</p>
+
+<pre class="ruby"><span class="ruby-constant">Given</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">create</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">dice</span>&#x000A;<span class="ruby-constant">And</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">make</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">dice</span> <span class="ruby-identifier">explode</span>&#x000A;<span class="ruby-constant">Then</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">dice</span> <span class="ruby-identifier">does</span> <span class="ruby-identifier">explode</span></pre>
+
+<p>Scenario: Dice can have a flat bonus</p>
+
+<pre class="ruby"><span class="ruby-constant">Given</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">create</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">dice</span>&#x000A;<span class="ruby-constant">And</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">give</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">dice</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">bonus</span>&#x000A;<span class="ruby-constant">Then</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">dice</span> <span class="ruby-identifier">has</span> <span class="ruby-identifier">a</span> <span class="ruby-identifier">bonus</span></pre>
+
+<p>Scenario: Comma separated values return multiple dice objects</p>
+
+<pre>Given I input the dice strings&#x000A;        | 1d6, 1d8 |&#x000A;        | 1d12, 1d3 |&#x000A;        |  1d100, 1d6 |&#x000A;Then I receive an array of dice for each</pre>
+</div>
+<div id='context'>
+</div>
+
+</div>
+</div>
+
+<div id='footer-push'></div>
+</div>
+<div id='footer'>
+<a href="https://github.com/rdoc/hanna-nouveau"><strong>Hanna Nouveau</strong> RDoc template</a>
+</div>
+</body>
+</html>

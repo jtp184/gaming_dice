@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang='en'>
+<head>
+<title>dice_pools.feature</title>
+<meta content='text/html; charset=UTF-8' http-equiv='Content-Type'>
+<link href='../../css/style.css' media='screen' rel='stylesheet' type='text/css'>
+<script type='text/javascript'>
+  function popupCode(url) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+  
+  function toggleCode(id) {
+    var code = document.getElementById(id)
+  
+    code.style.display = code.style.display != 'block' ? 'block' : 'none'
+    return true
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln('<' + 'style type="text/css">.method .source pre { display: none }<\/style>')
+</script>
+</head>
+<body class='page'>
+<div class='file' id='wrapper'>
+<div class='header'>
+<h1 class='name'>dice_pools.feature
+</h1>
+<div class='paths'>
+features/dice_pools.feature
+</div>
+<div class='last-update'>
+Last Update:
+<span class='datetime'>2020-06-06 17:00:34 -0700</span>
+</div>
+</div>
+<div id='content'>
+<div id='text'>
+<div id='description'>
+<p>Feature: Multiple dice can be collected in a Dice Pool</p>
+
+<p>Scenario: Dice Pools can be created from multiple count</p>
+
+<pre>Given I input the dice strings&#x000A;        | 3d6 |&#x000A;        | 10d10 |&#x000A;        | 2d20 |&#x000A;Then each creates a dice pool</pre>
+
+<p>Scenario: Dice Pools can be created from combining terms</p>
+
+<pre>Given I input the dice strings&#x000A;        | 1d12e &amp; 1d6e |&#x000A;        | 1d10 &amp; 4d6 |&#x000A;        | 1d4 + 1d8 |&#x000A;Then each creates a dice pool</pre>
+
+<p>Scenario: Dice pools can be discrete</p>
+
+<pre class="ruby"><span class="ruby-constant">Given</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">input</span> <span class="ruby-identifier">the</span> <span class="ruby-identifier">dice</span> <span class="ruby-identifier">string</span> <span class="ruby-string">&quot;1d20 &amp; 1d10&quot;</span>&#x000A;<span class="ruby-constant">Then</span> <span class="ruby-constant">I</span> <span class="ruby-identifier">receive</span> <span class="ruby-identifier">discrete</span> <span class="ruby-identifier">dice</span> <span class="ruby-identifier">pools</span></pre>
+
+<p>Scenario: Dice pools can be summative</p>
+
+<pre>Given I input the dice string &quot;1d6 + 1d100&quot;&#x000A;Then I receive non-discrete dice pools</pre>
+
+<p>Scenario: Discrete rolling</p>
+
+<pre>Given I input the dice strings&#x000A;        | 1d10 &amp; 1d10 |&#x000A;        | 2d4e &amp; 4d6 |&#x000A;        | 1d100 &amp; 1d2 |&#x000A;When I roll them&#x000A;Then the result is an array of integers</pre>
+
+<p>Scenario: Summative rolling</p>
+
+<pre>Given I input the dice strings&#x000A;        | 1d100 + 1d10+10 |&#x000A;        | 10d6 + 1d12e |&#x000A;        | 3d4 |&#x000A;When I roll them&#x000A;Then the result is an integer</pre>
+</div>
+<div id='context'>
+</div>
+
+</div>
+</div>
+
+<div id='footer-push'></div>
+</div>
+<div id='footer'>
+<a href="https://github.com/rdoc/hanna-nouveau"><strong>Hanna Nouveau</strong> RDoc template</a>
+</div>
+</body>
+</html>
