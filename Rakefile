@@ -7,15 +7,32 @@ task :test do
 end
 
 task :docs do
-  sh 'rm -rf ./docs'
-  sh 'rm README.rdoc'
-  sh 'cp README.md README.rdoc'
-  sh 'rdoc --format=hanna --all lib'
-  sh 'mv doc docs'
+  rdx = %w[tmp pkg bin coverage docs features].map { |e| "--exclude=#{e}" }
+  sh "rdoc --output=docs --format=hanna --all --main=README.md #{rdx.join(' ')}"
 end
 
 task prep: %i[test docs]
 
-task gitgo: [:prep] do
-  sh 'git add . && git commit && git push'
+task :reinstall do
+  sh 'gem uninstall gaming_dice'
+  Rake::Task['install'].invoke
+end
+
+task :bump do
+  repo = Git.open('.')
+  version_file = './lib/gaming_dice/version.rb'
+  matcher = /VERSION = "(.*)"\.freeze/
+
+  file_contents = File.read(version_file)
+
+  updated = file_contents.gsub(matcher) do |v|
+    v.gsub Regexp.last_match(1), Regexp.last_match(1).succ
+  end
+
+  File.open(version_file, 'w+') { |f| f << updated }
+
+  sh 'bundle'
+
+  repo.add(version_file)
+  repo.add('Gemfile.lock')
 end
