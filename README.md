@@ -10,14 +10,6 @@ Add this line to your application's Gemfile:
 gem 'gaming_dice', github: 'jtp184/gaming_dice'
 ```
 
-And then execute:
-
-$ bundle
-
-Or install it yourself as:
-
-$ gem install gaming_dice
-
 ## Basic Usage
 
 The basic way to use this gem is through the .call method

@@ -1,6 +1,6 @@
-Sat, 06 Jun 2020 18:03:00 -0700
+Sat, 06 Jun 2020 18:04:48 -0700
 ./gaming_dice.gemspec	Sat, 06 Jun 2020 15:52:54 -0700
-./README.md	Sat, 06 Jun 2020 17:56:31 -0700
+./README.md	Sat, 06 Jun 2020 18:04:41 -0700
 ./Rakefile	Sat, 06 Jun 2020 18:00:52 -0700
 ./lib/gaming_dice.rb	Fri, 05 Jun 2020 17:37:03 -0700
 ./lib/gaming_dice/card.rb	Fri, 05 Jun 2020 15:55:08 -0700
@@ -9,5 +9,5 @@ Sat, 06 Jun 2020 18:03:00 -0700
 ./lib/gaming_dice/dice_pool.rb	Sat, 06 Jun 2020 17:36:03 -0700
 ./lib/gaming_dice/version.rb	Sat, 06 Jun 2020 18:02:55 -0700
 ./Gemfile	Thu, 04 Jun 2020 04:19:13 -0700
-./Gemfile.lock	Fri, 05 Jun 2020 17:37:40 -0700
+./Gemfile.lock	Sat, 06 Jun 2020 18:03:05 -0700
 ./exe/gdice	Thu, 04 Jun 2020 04:30:28 -0700
