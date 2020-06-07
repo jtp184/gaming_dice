@@ -83,6 +83,7 @@ module GamingDice
         end
       end
 
+      # Takes the +input+ string and converts it to an options hash
       def cast_dice_components(input)
         scanned = input.match(DICE_REGEX_GROUPED)
                        .named_captures
