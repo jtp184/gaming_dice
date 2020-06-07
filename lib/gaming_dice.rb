@@ -1,4 +1,5 @@
 require 'gaming_dice/version'
+require 'gaming_dice/string_parser'
 require 'gaming_dice/dice'
 require 'gaming_dice/dice_pool'
 require 'gaming_dice/constant_value'
@@ -8,7 +9,7 @@ require 'gaming_dice/card'
 module GamingDice
   # Syntactic sugar. Aliases to Dice.call and passes the +var+
   def self.call(var)
-    Dice.call(var)
+    StringParser.call(var)
   end
 
   # Syntactic sugar. Aliases to Dice.roll and passes the +var+
