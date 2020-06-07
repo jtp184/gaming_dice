@@ -1,3 +1,3 @@
 module GamingDice
-  VERSION = '0.1.1'.freeze # :nodoc:
+  VERSION = '0.1.2'.freeze # :nodoc:
 end
