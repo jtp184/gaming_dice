@@ -69,7 +69,14 @@ module GamingDice
                        pool.map! { |d| Dice.new(d) }
                        DicePool.new(pool)
                      else
-                       dice_objects = dices.map { |d| Dice.new(d) }
+                       dice_objects = dices.map do |d|
+                         if d[:count] == 1
+                           Dice.new(d)
+                         else
+                           DicePool.new(Array.new(d[:count]) { Dice.new(d) })
+                         end
+                       end
+
                        discrete = dices.all? { |d| d[:continuant] != :plus }
                        DicePool.new(dice_objects, discrete)
                      end
@@ -145,7 +152,7 @@ module GamingDice
     end
 
     def to_s # :nodoc:
-      dice_string = "1d#{faces}#{explodes? ? '!' : ''}"
+      dice_string = "d#{faces}#{explodes? ? '!' : ''}"
 
       if bonus.positive?
         dice_string << "+#{bonus}"

@@ -1,3 +1,11 @@
+When(/roll it$/) do
+  @result = @dice.first.roll
+end
+
+When(/roll them$/) do
+  @result = @dice.map(&:roll)
+end
+
 When(/roll it many times/i) do
   @result = Array.new(100) { @dice.roll }
 end

@@ -9,11 +9,6 @@ Scenario: Dice can be created with different string formats
 		| 1d100 |
 	Then each creates a valid dice
 
-Scenario: Dice can be created with a count
-	Given I create a dice
-	And I give the dice multiple count
-	Then the dice has multiple count
-
 Scenario: Dice can be created with exploding
 	Given I create a dice
 	And I make the dice explode

@@ -2,20 +2,16 @@ Given(/create a dice/i) do
   @dice = FactoryBot.build(:dice)
 end
 
+Given(/input the dice string "(.*)"/) do |string|
+  @dice = GamingDice.call(string)
+end
+
 Given(/input (?:the)? dice strings/i) do |strings|
-  @dice = strings.raw.flatten.map { |s| GamingDice.call(s) }
+  @dice = strings.raw.flatten.map { |s| GamingDice.call(s) }.flatten
 end
 
 Then(/each creates a valid dice/i) do
   @dice.all? { |d| d.is_a? GamingDice::Dice }
-end
-
-Given(/give the dice multiple count/i) do
-  @dice = FactoryBot.build(:dice, :multiple_count)
-end
-
-Then(/dice has multiple count/i) do
-  expect(@dice.count).to be > 1
 end
 
 Given(/make the dice explode/i) do
@@ -34,10 +30,16 @@ Then(/dice has a bonus/i) do
   expect(@dice.bonus).to be > 0
 end
 
-Then(/receive an array of dice/i) do
-  precon = @dice.all? do |a|
-    a.is_a?(Array) && a.all? { |d| d.is_a?(GamingDice::Dice) }
-  end
+Then(/receive an array of (?:rollables|dice|dice pools)/i) do
+  precon = @dice.all? { |d| d.respond_to?(:roll) }
 
-  expect(precon).to be true
+  expect(precon).to be(true)
+end
+
+Then(/result is an integer/) do
+  @result.is_a?(Integer)
+end
+
+Then(/result is an array of integers/) do
+  @result.is_a?(Array) && @result.all? { |r| r.is_a?(Integer) }
 end

@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :dice, class: 'GamingDice::Dice' do
-    count { 1 }
     faces { 6 }
 
     trait :multiple_count do
