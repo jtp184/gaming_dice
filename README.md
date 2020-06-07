@@ -26,20 +26,24 @@ The basic way to use this gem is through the .call method
 GamingDice.('1d6') # => [#<GamingDice::Dice:0x007... @bonus=0, @count=1, @explodes=false, @faces=6>]
 ```
 
-Passing in a decodable string results in a collection of dice. All of these are valid strings:
+Passing in a decodable string results in dice or dice pools. All of these are valid strings:
 
 ```
 1d6
 3d10+3
 a d20
 1d12e, 1d6e
+3d6 + 1d4
+1d20 & 3d10
 ```
 
 You can also use the .roll function if you just want results
 
 ```ruby
-GamingDice.roll('1d6') # => 4
-GamingDice.roll('1d12e, 1d6e') # => [15, 3]
+GamingDice.roll('1d6') # => 3
+GamingDice.roll('1d12e, 1d6e') # => [14, 3]
+GamingDice.roll('1d100, 1d10 & 3d6') # => [98, [8, 8]]
+GamingDice.roll('1d8 + 3d6') # => 16
 ```
 
 GamingDice also has the ability to handle standard 52 card decks. Useful for game systems like Savage Worlds which use these for initiative.
