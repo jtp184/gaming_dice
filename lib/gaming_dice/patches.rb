@@ -22,36 +22,78 @@ class Integer
 
   # Creates a bundle of dice with +faces+ and count of self
   def d(faces = 1)
-    GamingDice::Dice.new(count: self, faces: faces)
+    if self == 1
+      GamingDice::Dice.new(faces: faces)
+    else
+      GamingDice::DicePool.new(
+        Array.new(self) { GamingDice::Dice.new(faces: faces) }
+      )
+    end
   end
 
   # Creates a bundle of d4s
   def d4
-    GamingDice::Dice.new(count: self, faces: 4)
+    if self == 1
+      GamingDice::Dice.new(faces: 4)
+    else
+      GamingDice::DicePool.new(
+        Array.new(self) { GamingDice::Dice.new(faces: 4) }
+      )
+    end
   end
 
   # Creates a bundle of d6s
   def d6
-    GamingDice::Dice.new(count: self, faces: 6)
+    if self == 1
+      GamingDice::Dice.new(faces: 6)
+    else
+      GamingDice::DicePool.new(
+        Array.new(self) { GamingDice::Dice.new(faces: 6) }
+      )
+    end
   end
 
   # Creates a bundle of d8s
   def d8
-    GamingDice::Dice.new(count: self, faces: 8)
+    if self == 1
+      GamingDice::Dice.new(faces: 8)
+    else
+      GamingDice::DicePool.new(
+        Array.new(self) { GamingDice::Dice.new(faces: 8) }
+      )
+    end
   end
 
   # Creates a bundle of d10s
   def d10
-    GamingDice::Dice.new(count: self, faces: 10)
+    if self == 1
+      GamingDice::Dice.new(faces: 10)
+    else
+      GamingDice::DicePool.new(
+        Array.new(self) { GamingDice::Dice.new(faces: 10) }
+      )
+    end
   end
 
   # Creates a bundle of d12s
   def d12
-    GamingDice::Dice.new(count: self, faces: 12)
+    if self == 1
+      GamingDice::Dice.new(faces: 12)
+    else
+      GamingDice::DicePool.new(
+        Array.new(self) { GamingDice::Dice.new(faces: 12) }
+      )
+    end
   end
 
   # Creates a bundle of d20s
   def d20
-    GamingDice::Dice.new(count: self, faces: 20)
+    if self == 1
+      GamingDice::Dice.new(faces: 20)
+    else
+      GamingDice::DicePool.new(
+        Array.new(self) { GamingDice::Dice.new(faces: 20) }
+      )
+    end
   end
 end
