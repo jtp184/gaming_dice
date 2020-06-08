@@ -1,4 +1,4 @@
-Sun, 07 Jun 2020 17:01:30 -0700
+Sun, 07 Jun 2020 17:02:38 -0700
 ./gaming_dice.gemspec	Sat, 06 Jun 2020 15:52:54 -0700
 ./README.md	Sun, 07 Jun 2020 16:54:25 -0700
 ./Rakefile	Sun, 07 Jun 2020 17:00:31 -0700
@@ -9,7 +9,7 @@ Sun, 07 Jun 2020 17:01:30 -0700
 ./lib/gaming_dice/dice.rb	Sun, 07 Jun 2020 16:51:30 -0700
 ./lib/gaming_dice/dice_pool.rb	Sun, 07 Jun 2020 16:52:53 -0700
 ./lib/gaming_dice/version.rb	Sun, 07 Jun 2020 17:00:37 -0700
-./lib/gaming_dice/string_parser.rb	Sun, 07 Jun 2020 17:01:22 -0700
+./lib/gaming_dice/string_parser.rb	Sun, 07 Jun 2020 17:02:05 -0700
 ./Gemfile	Thu, 04 Jun 2020 04:19:13 -0700
 ./Gemfile.lock	Sun, 07 Jun 2020 17:00:39 -0700
 ./exe/gdice	Thu, 04 Jun 2020 04:30:28 -0700
