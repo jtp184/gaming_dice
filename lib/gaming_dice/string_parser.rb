@@ -39,7 +39,7 @@ module GamingDice
       count: ->(v) { v.to_s.include?('a') ? 1 : v.to_i },
       faces: ->(v) { v.to_i },
       explodes: ->(v) { !v.nil? },
-      continuant: ->(v) { CONTINUANTS[v] },
+      continuant: ->(v) { CONTINUANTS[v] }
     }.freeze
 
     class << self
