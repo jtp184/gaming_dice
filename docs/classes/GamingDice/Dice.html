@@ -45,22 +45,12 @@ Superclass:
 <h2>Methods</h2>
 <h3>Public Class</h3>
 <ol>
-<li><a href="#method-c-call">call</a></li>
 <li><a href="#method-c-new">new</a></li>
 <li><a href="#method-c-roll">roll</a></li>
-<li><a href="#method-c-take_best">take_best</a></li>
-<li><a href="#method-c-take_worst">take_worst</a></li>
-</ol>
-<h3>Private Class</h3>
-<ol>
-<li><a href="#method-c-cast_dice_components">cast_dice_components</a></li>
-<li><a href="#method-c-parse_dice">parse_dice</a></li>
-<li><a href="#method-c-parse_dice_string">parse_dice_string</a></li>
 </ol>
 <h3>Public Instance</h3>
 <ol>
 <li><a href="#method-i-3C-3D-3E"><=></a></li>
-<li><a href="#attribute-i-bonus">bonus</a></li>
 <li><a href="#attribute-i-explodes">explodes</a></li>
 <li><a href="#method-i-explodes-3F">explodes?</a></li>
 <li><a href="#attribute-i-faces">faces</a></li>
@@ -77,42 +67,6 @@ Superclass:
 </div>
 </div>
 <div id='section'>
-<div id='constants-list'>
-<h2>Constants</h2>
-<div class='name-list'>
-<table summary='Constants'>
-<tr class='top-aligned-row context-row'>
-<td class='context-item-name'>DICE_REGEX</td>
-<td>=</td>
-<td class='context-item-value'>/(?:(?:a\s|\d+)d(?:\d+)(?:e)?(?:\+\d+|-\d+)?)\s?(?:&|\+)*/i.freeze</td>
-<td>&nbsp;</td>
-<td class='context-item-desc'>
-<p>Simpler regex to confirm presence</p>
-</td>
-</tr>
-<tr class='top-aligned-row context-row'>
-<td class='context-item-name'>DICE_REGEX_GROUPED</td>
-<td>=</td>
-<td class='context-item-value'>/
-(?:
-(?:
-(?<count>a\s|\d+) # count
-d
-(?<faces>\d+) # sides
-(?<explodes>e)? # explode
-(?<bonus>\+\d+|-\d+)? # flat bonus
-)
-\s?(?<continuant>&|\+)* # continuant
-)
-/ix.freeze</td>
-<td>&nbsp;</td>
-<td class='context-item-desc'>
-<p>Grouped regex for meaning extraction</p>
-</td>
-</tr>
-</table>
-</div>
-</div>
 <div id='aliases-list'>
 <h2>Public Instance Aliases</h2>
 <div class='name-list'>
@@ -129,15 +83,6 @@ d
 <h2 class='section-bar'>Attributes</h2>
 <div class='name-list'>
 <table>
-<tr class='top-aligned-row context-row'>
-<td class='context-item-name'>
-<a name='attribute-i-bonus'>bonus</a>
-</td>
-<td class='context-item-value'>[RW]</td>
-<td class='context-item-desc'>
-<p>Any flat bonus the dice has, added at the end.</p>
-</td>
-</tr>
 <tr class='top-aligned-row context-row'>
 <td class='context-item-name'>
 <a name='attribute-i-explodes'>explodes</a>
@@ -161,25 +106,6 @@ d
 </div>
 <div id='methods'>
 <h2>Public Class methods</h2>
-<div class='method public-class' id='method-method-c-call'>
-<a name='method-c-call'></a>
-<div class='synopsis'>
-<span class='name'>call</span>
-<span class='arguments'>(input)</span>
-
-</div>
-<div class='description'>
-
-<p>Passes the value to be parsed by the parser. This is an entry function and can take in a string <code>input</code> to convert into one or more <a href="Dice.html"><code>Dice</code></a>.</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-call-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-call-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 23</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">call</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">parse_dice</span>(<span class="ruby-identifier">input</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
 <div class='method public-class' id='method-method-c-new'>
 <a name='method-c-new'></a>
 <div class='synopsis'>
@@ -189,14 +115,14 @@ d
 </div>
 <div class='description'>
 
-<p>Specified in <code>params</code> are values for :count, :faces, :bonus, and :explodes , used to set the instance variables of the same name. If left unspecified they default to zeros and false.</p>
+<p>Specified in <code>params</code> are values for :faces and :explodes , used to set the instance variables of the same name. If left unspecified they default to zero and false.</p>
 
 </div>
 <div class='source'>
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-new-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-new-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 128</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-operator">**</span><span class="ruby-identifier">params</span>)&#x000A;  <span class="ruby-ivar">@faces</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:faces</span>) { <span class="ruby-value">0</span> }&#x000A;  <span class="ruby-ivar">@bonus</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:bonus</span>) { <span class="ruby-value">0</span> }&#x000A;  <span class="ruby-ivar">@explodes</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:explodes</span>) { <span class="ruby-keyword">false</span> }&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-new-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 15</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-operator">**</span><span class="ruby-identifier">params</span>)&#x000A;  <span class="ruby-ivar">@faces</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:faces</span>) { <span class="ruby-value">0</span> }&#x000A;  <span class="ruby-ivar">@explodes</span> = <span class="ruby-identifier">params</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:explodes</span>) { <span class="ruby-keyword">false</span> }&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-roll'>
@@ -208,110 +134,14 @@ d
 </div>
 <div class='description'>
 
-<p>The roll class method either takes in a string, or an array of dice as <code>input</code>, and returns the roll results. If there&#39;s only once dice, it will return just one Integer as a result. Otherwise, it returns an array of results for each dice.</p>
+<p>The roll class method takes in a string <code>input</code>, and returns the roll results. If there&#39;s only once dice, it will return just one Integer as a result. Otherwise, it returns an array of results.</p>
 
 </div>
 <div class='source'>
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-roll-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-roll-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 31</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">roll</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">res</span> = <span class="ruby-identifier">parse_dice</span>(<span class="ruby-identifier">input</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:roll</span>)&#x000A;  <span class="ruby-identifier">res</span>.<span class="ruby-identifier">one?</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">res</span>&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
-<div class='method public-class' id='method-method-c-take_best'>
-<a name='method-c-take_best'></a>
-<div class='synopsis'>
-<span class='name'>take_best</span>
-<span class='arguments'>(input)</span>
-
-</div>
-<div class='description'>
-
-<p>Takes in a string, or an array of dice as <code>input</code>, and returns the single best result of all dice rolls</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-take_best-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-take_best-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 38</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">take_best</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">parse_dice</span>(<span class="ruby-identifier">input</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:roll</span>).<span class="ruby-identifier">min</span>&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
-<div class='method public-class' id='method-method-c-take_worst'>
-<a name='method-c-take_worst'></a>
-<div class='synopsis'>
-<span class='name'>take_worst</span>
-<span class='arguments'>(input)</span>
-
-</div>
-<div class='description'>
-
-<p>Takes in a string, or an array of dice as <code>input</code>, and returns the worst result of all dice rolls</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-take_worst-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-take_worst-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 44</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">take_worst</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">parse_dice</span>(<span class="ruby-identifier">input</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:roll</span>).<span class="ruby-identifier">max</span>&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
-<h2>Private Class methods</h2>
-<div class='method private-class' id='method-method-c-cast_dice_components'>
-<a name='method-c-cast_dice_components'></a>
-<div class='synopsis'>
-<span class='name'>cast_dice_components</span>
-<span class='arguments'>(input)</span>
-
-</div>
-<div class='description'>
-
-<p>Takes the <code>input</code> string and converts it to an options hash</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-cast_dice_components-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-cast_dice_components-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 87</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cast_dice_components</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">scanned</span> = <span class="ruby-identifier">input</span>.<span class="ruby-identifier">match</span>(<span class="ruby-constant">DICE_REGEX_GROUPED</span>)&#x000A;                 .<span class="ruby-identifier">named_captures</span>&#x000A;                 .<span class="ruby-identifier">transform_keys</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_sym</span>)&#x000A;&#x000A;  <span class="ruby-identifier">scanned</span>[<span class="ruby-value">:count</span>] = <span class="ruby-value">1</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">scanned</span>[<span class="ruby-value">:count</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-string">&#39;a&#39;</span>)&#x000A;  <span class="ruby-identifier">scanned</span>[<span class="ruby-value">:count</span>] = <span class="ruby-identifier">scanned</span>[<span class="ruby-value">:count</span>].<span class="ruby-identifier">to_i</span>&#x000A;&#x000A;  <span class="ruby-node">%i[faces bonus]</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">scanned</span>[<span class="ruby-identifier">i</span>] = <span class="ruby-identifier">scanned</span>[<span class="ruby-identifier">i</span>].<span class="ruby-identifier">to_i</span> }&#x000A;&#x000A;  <span class="ruby-identifier">scanned</span>[<span class="ruby-value">:explodes</span>] = <span class="ruby-operator">!</span><span class="ruby-identifier">scanned</span>[<span class="ruby-value">:explodes</span>].<span class="ruby-identifier">nil?</span>&#x000A;  <span class="ruby-identifier">scanned</span>[<span class="ruby-value">:continuant</span>] = <span class="ruby-keyword">case</span> <span class="ruby-identifier">scanned</span>[<span class="ruby-value">:continuant</span>]&#x000A;                         <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;&amp;&#39;</span>&#x000A;                           <span class="ruby-value">:and</span>&#x000A;                         <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;+&#39;</span>&#x000A;                           <span class="ruby-value">:plus</span>&#x000A;                         <span class="ruby-keyword">when</span> <span class="ruby-keyword">nil</span>&#x000A;                           <span class="ruby-value">:end</span>&#x000A;                         <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-identifier">scanned</span>&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
-<div class='method private-class' id='method-method-c-parse_dice'>
-<a name='method-c-parse_dice'></a>
-<div class='synopsis'>
-<span class='name'>parse_dice</span>
-<span class='arguments'>(input)</span>
-
-</div>
-<div class='description'>
-
-<p>Disambiguation function, if <code>input</code> is dice or an array of dice (or anything which responds to <a href="Dice.html#method-i-roll"><code>roll</code></a>) it uses them. Otherwise, tries to convert the <code>input</code> to a string and run parse_dice_string on it</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-parse_dice-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-parse_dice-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 53</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">parse_dice</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-keyword">return</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">input</span>) <span class="ruby-keyword">if</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">input</span>).<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value">:roll</span>) }&#x000A;&#x000A;  <span class="ruby-identifier">parse_dice_string</span>(<span class="ruby-identifier">input</span>.<span class="ruby-identifier">to_str</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
-<div class='method private-class' id='method-method-c-parse_dice_string'>
-<a name='method-c-parse_dice_string'></a>
-<div class='synopsis'>
-<span class='name'>parse_dice_string</span>
-<span class='arguments'>(input)</span>
-
-</div>
-<div class='description'>
-
-<p>Uses a regular expression to parse each dice statement and construct a dice object out of them.</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-parse_dice_string-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-parse_dice_string-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 61</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">parse_dice_string</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">input</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;, &#39;</span>).<span class="ruby-identifier">each_with_object</span>([]) <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">terms</span>, <span class="ruby-identifier">results</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">dices</span> = <span class="ruby-identifier">terms</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-constant">DICE_REGEX</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">sc</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cast_dice_components</span>(<span class="ruby-identifier">sc</span>) }&#x000A;&#x000A;    <span class="ruby-identifier">results</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">dices</span>.<span class="ruby-identifier">one?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">dices</span>.<span class="ruby-identifier">first</span>[<span class="ruby-value">:count</span>] <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;                 <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dices</span>.<span class="ruby-identifier">first</span>)&#x000A;               <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">dices</span>.<span class="ruby-identifier">one?</span>&#x000A;                 <span class="ruby-identifier">pool</span> = <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dices</span>.<span class="ruby-identifier">first</span>[<span class="ruby-value">:count</span>], <span class="ruby-identifier">dices</span>.<span class="ruby-identifier">first</span>)&#x000A;                 <span class="ruby-identifier">pool</span>.<span class="ruby-identifier">map!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">d</span>) }&#x000A;                 <span class="ruby-constant">DicePool</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">pool</span>)&#x000A;               <span class="ruby-keyword">else</span>&#x000A;                 <span class="ruby-identifier">dice_objects</span> = <span class="ruby-identifier">dices</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span>&#x000A;                   <span class="ruby-keyword">if</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">:count</span>] <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;                     <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">d</span>)&#x000A;                   <span class="ruby-keyword">else</span>&#x000A;                     <span class="ruby-constant">DicePool</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">d</span>[<span class="ruby-value">:count</span>]) { <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">d</span>) })&#x000A;                   <span class="ruby-keyword">end</span>&#x000A;                 <span class="ruby-keyword">end</span>&#x000A;&#x000A;                 <span class="ruby-identifier">discrete</span> = <span class="ruby-identifier">dices</span>.<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-identifier">d</span>[<span class="ruby-value">:continuant</span>] <span class="ruby-operator">!=</span> <span class="ruby-value">:plus</span> }&#x000A;                 <span class="ruby-constant">DicePool</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dice_objects</span>, <span class="ruby-identifier">discrete</span>)&#x000A;               <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-roll-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 23</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">roll</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">res</span> = <span class="ruby-constant">StringParser</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">input</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:roll</span>)&#x000A;  <span class="ruby-identifier">res</span>.<span class="ruby-identifier">one?</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">res</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <h2>Public Instance methods</h2>
@@ -331,7 +161,7 @@ d
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-3C-3D-3E-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-3C-3D-3E-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 171</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)&#x000A;  <span class="ruby-constant">Integer</span>(<span class="ruby-keyword">self</span>) <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">other</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-3C-3D-3E-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 66</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)&#x000A;  <span class="ruby-constant">Integer</span>(<span class="ruby-keyword">self</span>) <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-constant">Integer</span>(<span class="ruby-identifier">other</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-explodes-3F'>
@@ -350,7 +180,7 @@ d
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-explodes-3F-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-explodes-3F-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 151</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">explodes?</span>&#x000A;  <span class="ruby-identifier">explodes</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-explodes-3F-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 46</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">explodes?</span>&#x000A;  <span class="ruby-identifier">explodes</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-result'>
@@ -369,7 +199,7 @@ d
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-result-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-result-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 136</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">result</span>&#x000A;  <span class="ruby-identifier">end_result</span> = <span class="ruby-value">0</span>&#x000A;&#x000A;  <span class="ruby-value">1</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>&#x000A;    <span class="ruby-identifier">this_roll</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">faces</span>)&#x000A;    <span class="ruby-identifier">end_result</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">this_roll</span>&#x000A;    <span class="ruby-keyword">redo</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">explodes</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">this_roll</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">faces</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-identifier">end_result</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">bonus</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-result-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 30</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">result</span>&#x000A;  <span class="ruby-identifier">result_roll</span> = <span class="ruby-value">0</span>&#x000A;&#x000A;  <span class="ruby-value">1</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword">do</span>&#x000A;    <span class="ruby-identifier">this_roll</span> = <span class="ruby-identifier">rand</span>(<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">faces</span>)&#x000A;    <span class="ruby-identifier">result_roll</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">this_roll</span>&#x000A;&#x000A;    <span class="ruby-keyword">redo</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">explodes</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">this_roll</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">faces</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-identifier">result_roll</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-to_int'>
@@ -388,7 +218,7 @@ d
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-to_int-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-to_int-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 177</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_int</span>&#x000A;  <span class="ruby-identifier">roll</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-to_int-source'><span class="ruby-comment"># File lib/gaming_dice/dice.rb, line 72</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_int</span>&#x000A;  <span class="ruby-identifier">roll</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 </div>

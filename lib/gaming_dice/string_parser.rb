@@ -33,6 +33,7 @@ module GamingDice
       'b' => :best
     }.freeze
 
+    # Converts the capture groups to their proper formats
     FILTER = {
       constant: ->(v) { v.nil? ? v : v.to_i },
       count: ->(v) { v.to_s.include?('a') ? 1 : v.to_i },
