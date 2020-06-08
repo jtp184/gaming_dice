@@ -4330,19 +4330,24 @@ Object.extend(Element.ClassNames.prototype, Enumerable);
 
 Element.addMethods();
 var search_index = [
+  { method: 'all_hex_couplets', module: 'gamingdice::stringparser', html: '<a href="classes/GamingDice/StringParser.html#method-c-all_hex_couplets"><span class="method_name">::all_hex_couplets</span> <span class="module_name">(GamingDice::StringParser)</span></a>' },
   { method: 'call', module: 'gamingdice', html: '<a href="classes/GamingDice.html#method-c-call"><span class="method_name">::call</span> <span class="module_name">(GamingDice)</span></a>' },
   { method: 'call', module: 'gamingdice::stringparser', html: '<a href="classes/GamingDice/StringParser.html#method-c-call"><span class="method_name">::call</span> <span class="module_name">(GamingDice::StringParser)</span></a>' },
   { method: 'cast_capture_values', module: 'gamingdice::stringparser', html: '<a href="classes/GamingDice/StringParser.html#method-c-cast_capture_values"><span class="method_name">::cast_capture_values</span> <span class="module_name">(GamingDice::StringParser)</span></a>' },
+  { method: 'cast_suit', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-c-cast_suit"><span class="method_name">::cast_suit</span> <span class="module_name">(GamingDice::Card)</span></a>' },
+  { method: 'cast_value', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-c-cast_value"><span class="method_name">::cast_value</span> <span class="module_name">(GamingDice::Card)</span></a>' },
   { method: 'dice_cast', module: 'gamingdice::stringparser', html: '<a href="classes/GamingDice/StringParser.html#method-c-dice_cast"><span class="method_name">::dice_cast</span> <span class="module_name">(GamingDice::StringParser)</span></a>' },
-  { method: 'draw', module: 'gamingdice', html: '<a href="classes/GamingDice.html#method-c-draw"><span class="method_name">::draw</span> <span class="module_name">(GamingDice)</span></a>' },
   { method: 'draw', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-c-draw"><span class="method_name">::draw</span> <span class="module_name">(GamingDice::Card)</span></a>' },
+  { method: 'draw', module: 'gamingdice', html: '<a href="classes/GamingDice.html#method-c-draw"><span class="method_name">::draw</span> <span class="module_name">(GamingDice)</span></a>' },
   { method: 'draw_a', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-c-draw_a"><span class="method_name">::draw_a</span> <span class="module_name">(GamingDice::Card)</span></a>' },
-  { method: 'new', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
+  { method: 'draw_hex', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-c-draw_hex"><span class="method_name">::draw_hex</span> <span class="module_name">(GamingDice::Card)</span></a>' },
+  { method: 'new', module: 'gamingdice::constantvalue', html: '<a href="classes/GamingDice/ConstantValue.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::ConstantValue)</span></a>' },
   { method: 'new', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::Card)</span></a>' },
   { method: 'new', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
-  { method: 'new', module: 'gamingdice::constantvalue', html: '<a href="classes/GamingDice/ConstantValue.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::ConstantValue)</span></a>' },
+  { method: 'new', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
+  { method: 'new', module: 'gamingdice::carddeck', html: '<a href="classes/GamingDice/CardDeck.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::CardDeck)</span></a>' },
   { method: 'parse_dice', module: 'gamingdice::stringparser', html: '<a href="classes/GamingDice/StringParser.html#method-c-parse_dice"><span class="method_name">::parse_dice</span> <span class="module_name">(GamingDice::StringParser)</span></a>' },
-  { method: 'parse_hex_couplet', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-c-parse_hex_couplet"><span class="method_name">::parse_hex_couplet</span> <span class="module_name">(GamingDice::Card)</span></a>' },
+  { method: 'parse_hex_couplet', module: 'gamingdice::stringparser', html: '<a href="classes/GamingDice/StringParser.html#method-c-parse_hex_couplet"><span class="method_name">::parse_hex_couplet</span> <span class="module_name">(GamingDice::StringParser)</span></a>' },
   { method: 'roll', module: 'gamingdice', html: '<a href="classes/GamingDice.html#method-c-roll"><span class="method_name">::roll</span> <span class="module_name">(GamingDice)</span></a>' },
   { method: 'roll', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#method-c-roll"><span class="method_name">::roll</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
   { method: 'scan', module: 'gamingdice::stringparser', html: '<a href="classes/GamingDice/StringParser.html#method-c-scan"><span class="method_name">::scan</span> <span class="module_name">(GamingDice::StringParser)</span></a>' },
@@ -4351,6 +4356,9 @@ var search_index = [
   { method: '<=>', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#method-i-3C-3D-3E"><span class="method_name">#&lt;=&gt;</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
   { method: 'black?', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-i-black-3F"><span class="method_name">#black?</span> <span class="module_name">(GamingDice::Card)</span></a>' },
   { method: 'color', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-i-color"><span class="method_name">#color</span> <span class="module_name">(GamingDice::Card)</span></a>' },
+  { method: 'discard', module: 'gamingdice::carddeck', html: '<a href="classes/GamingDice/CardDeck.html#method-i-discard"><span class="method_name">#discard</span> <span class="module_name">(GamingDice::CardDeck)</span></a>' },
+  { method: 'draw', module: 'gamingdice::carddeck', html: '<a href="classes/GamingDice/CardDeck.html#method-i-draw"><span class="method_name">#draw</span> <span class="module_name">(GamingDice::CardDeck)</span></a>' },
+  { method: 'draw_hand', module: 'gamingdice::carddeck', html: '<a href="classes/GamingDice/CardDeck.html#method-i-draw_hand"><span class="method_name">#draw_hand</span> <span class="module_name">(GamingDice::CardDeck)</span></a>' },
   { method: 'explodes?', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#method-i-explodes-3F"><span class="method_name">#explodes?</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
   { method: 'hex_couplet', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-i-hex_couplet"><span class="method_name">#hex_couplet</span> <span class="module_name">(GamingDice::Card)</span></a>' },
   { method: 'next', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-i-next"><span class="method_name">#next</span> <span class="module_name">(GamingDice::Card)</span></a>' },
@@ -4360,27 +4368,31 @@ var search_index = [
   { method: 'result', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#method-i-result"><span class="method_name">#result</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
   { method: 'returns_one?', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-i-returns_one-3F"><span class="method_name">#returns_one?</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
   { method: 'roll', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#method-i-roll"><span class="method_name">#roll</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
-  { method: 'roll', module: 'gamingdice::constantvalue', html: '<a href="classes/GamingDice/ConstantValue.html#method-i-roll"><span class="method_name">#roll</span> <span class="module_name">(GamingDice::ConstantValue)</span></a>' },
   { method: 'roll', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-i-roll"><span class="method_name">#roll</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
+  { method: 'roll', module: 'gamingdice::constantvalue', html: '<a href="classes/GamingDice/ConstantValue.html#method-i-roll"><span class="method_name">#roll</span> <span class="module_name">(GamingDice::ConstantValue)</span></a>' },
   { method: 'roll_all', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-i-roll_all"><span class="method_name">#roll_all</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
   { method: 'rule=', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-i-rule-3D"><span class="method_name">#rule=</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
+  { method: 'shuffle', module: 'gamingdice::carddeck', html: '<a href="classes/GamingDice/CardDeck.html#method-i-shuffle"><span class="method_name">#shuffle</span> <span class="module_name">(GamingDice::CardDeck)</span></a>' },
   { method: 'succ', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-i-succ"><span class="method_name">#succ</span> <span class="module_name">(GamingDice::Card)</span></a>' },
   { method: 'take_best', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-i-take_best"><span class="method_name">#take_best</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
   { method: 'take_worst', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-i-take_worst"><span class="method_name">#take_worst</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
   { method: 'to_i', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-i-to_i"><span class="method_name">#to_i</span> <span class="module_name">(GamingDice::Card)</span></a>' },
-  { method: 'to_int', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-i-to_int"><span class="method_name">#to_int</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
   { method: 'to_int', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#method-i-to_int"><span class="method_name">#to_int</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
+  { method: 'to_int', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-i-to_int"><span class="method_name">#to_int</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
   { method: 'to_s', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-i-to_s"><span class="method_name">#to_s</span> <span class="module_name">(GamingDice::Card)</span></a>' },
   { method: 'to_str', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-i-to_str"><span class="method_name">#to_str</span> <span class="module_name">(GamingDice::Card)</span></a>' },
   { method: 'total', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#method-i-total"><span class="method_name">#total</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
   { method: 'value_string', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#method-i-value_string"><span class="method_name">#value_string</span> <span class="module_name">(GamingDice::Card)</span></a>' },
   { method: 'dice', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#attribute-i-dice"><span class="method_name">#dice</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
+  { method: 'discard_pile', module: 'gamingdice::carddeck', html: '<a href="classes/GamingDice/CardDeck.html#attribute-i-discard_pile"><span class="method_name">#discard_pile</span> <span class="module_name">(GamingDice::CardDeck)</span></a>' },
+  { method: 'draw_pile', module: 'gamingdice::carddeck', html: '<a href="classes/GamingDice/CardDeck.html#attribute-i-draw_pile"><span class="method_name">#draw_pile</span> <span class="module_name">(GamingDice::CardDeck)</span></a>' },
   { method: 'explodes', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#attribute-i-explodes"><span class="method_name">#explodes</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
   { method: 'faces', module: 'gamingdice::dice', html: '<a href="classes/GamingDice/Dice.html#attribute-i-faces"><span class="method_name">#faces</span> <span class="module_name">(GamingDice::Dice)</span></a>' },
+  { method: 'in_play', module: 'gamingdice::carddeck', html: '<a href="classes/GamingDice/CardDeck.html#attribute-i-in_play"><span class="method_name">#in_play</span> <span class="module_name">(GamingDice::CardDeck)</span></a>' },
   { method: 'rule', module: 'gamingdice::dicepool', html: '<a href="classes/GamingDice/DicePool.html#attribute-i-rule"><span class="method_name">#rule</span> <span class="module_name">(GamingDice::DicePool)</span></a>' },
   { method: 'suit', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#attribute-i-suit"><span class="method_name">#suit</span> <span class="module_name">(GamingDice::Card)</span></a>' },
-  { method: 'value', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#attribute-i-value"><span class="method_name">#value</span> <span class="module_name">(GamingDice::Card)</span></a>' },
   { method: 'value', module: 'gamingdice::constantvalue', html: '<a href="classes/GamingDice/ConstantValue.html#attribute-i-value"><span class="method_name">#value</span> <span class="module_name">(GamingDice::ConstantValue)</span></a>' },
+  { method: 'value', module: 'gamingdice::card', html: '<a href="classes/GamingDice/Card.html#attribute-i-value"><span class="method_name">#value</span> <span class="module_name">(GamingDice::Card)</span></a>' },
 ]
 $(document).observe('dom:loaded', function() {
 	// Setup search-during-typing.
@@ -4453,25 +4465,33 @@ function performSearch() {
 <ol class='methods' id='search-results' style='display: none'></ol>
 <ol class='methods' id='index-entries'>
 <li><a href="classes/GamingDice/DicePool.html#attribute-i-dice"><span class="method_name">#dice</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
+<li><a href="classes/GamingDice/CardDeck.html#attribute-i-discard_pile"><span class="method_name">#discard_pile</span> <span class="module_name">(GamingDice::CardDeck)</span></a></li>
+<li><a href="classes/GamingDice/CardDeck.html#attribute-i-draw_pile"><span class="method_name">#draw_pile</span> <span class="module_name">(GamingDice::CardDeck)</span></a></li>
 <li><a href="classes/GamingDice/Dice.html#attribute-i-explodes"><span class="method_name">#explodes</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
 <li><a href="classes/GamingDice/Dice.html#attribute-i-faces"><span class="method_name">#faces</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
+<li><a href="classes/GamingDice/CardDeck.html#attribute-i-in_play"><span class="method_name">#in_play</span> <span class="module_name">(GamingDice::CardDeck)</span></a></li>
 <li><a href="classes/GamingDice/DicePool.html#attribute-i-rule"><span class="method_name">#rule</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#attribute-i-suit"><span class="method_name">#suit</span> <span class="module_name">(GamingDice::Card)</span></a></li>
-<li><a href="classes/GamingDice/Card.html#attribute-i-value"><span class="method_name">#value</span> <span class="module_name">(GamingDice::Card)</span></a></li>
 <li><a href="classes/GamingDice/ConstantValue.html#attribute-i-value"><span class="method_name">#value</span> <span class="module_name">(GamingDice::ConstantValue)</span></a></li>
+<li><a href="classes/GamingDice/Card.html#attribute-i-value"><span class="method_name">#value</span> <span class="module_name">(GamingDice::Card)</span></a></li>
+<li><a href="classes/GamingDice/StringParser.html#method-c-all_hex_couplets"><span class="method_name">::all_hex_couplets</span> <span class="module_name">(GamingDice::StringParser)</span></a></li>
 <li><a href="classes/GamingDice.html#method-c-call"><span class="method_name">::call</span> <span class="module_name">(GamingDice)</span></a></li>
 <li><a href="classes/GamingDice/StringParser.html#method-c-call"><span class="method_name">::call</span> <span class="module_name">(GamingDice::StringParser)</span></a></li>
 <li><a href="classes/GamingDice/StringParser.html#method-c-cast_capture_values"><span class="method_name">::cast_capture_values</span> <span class="module_name">(GamingDice::StringParser)</span></a></li>
+<li><a href="classes/GamingDice/Card.html#method-c-cast_suit"><span class="method_name">::cast_suit</span> <span class="module_name">(GamingDice::Card)</span></a></li>
+<li><a href="classes/GamingDice/Card.html#method-c-cast_value"><span class="method_name">::cast_value</span> <span class="module_name">(GamingDice::Card)</span></a></li>
 <li><a href="classes/GamingDice/StringParser.html#method-c-dice_cast"><span class="method_name">::dice_cast</span> <span class="module_name">(GamingDice::StringParser)</span></a></li>
-<li><a href="classes/GamingDice.html#method-c-draw"><span class="method_name">::draw</span> <span class="module_name">(GamingDice)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-c-draw"><span class="method_name">::draw</span> <span class="module_name">(GamingDice::Card)</span></a></li>
+<li><a href="classes/GamingDice.html#method-c-draw"><span class="method_name">::draw</span> <span class="module_name">(GamingDice)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-c-draw_a"><span class="method_name">::draw_a</span> <span class="module_name">(GamingDice::Card)</span></a></li>
-<li><a href="classes/GamingDice/Dice.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
+<li><a href="classes/GamingDice/Card.html#method-c-draw_hex"><span class="method_name">::draw_hex</span> <span class="module_name">(GamingDice::Card)</span></a></li>
+<li><a href="classes/GamingDice/ConstantValue.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::ConstantValue)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::Card)</span></a></li>
 <li><a href="classes/GamingDice/DicePool.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
-<li><a href="classes/GamingDice/ConstantValue.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::ConstantValue)</span></a></li>
+<li><a href="classes/GamingDice/Dice.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
+<li><a href="classes/GamingDice/CardDeck.html#method-c-new"><span class="method_name">::new</span> <span class="module_name">(GamingDice::CardDeck)</span></a></li>
 <li><a href="classes/GamingDice/StringParser.html#method-c-parse_dice"><span class="method_name">::parse_dice</span> <span class="module_name">(GamingDice::StringParser)</span></a></li>
-<li><a href="classes/GamingDice/Card.html#method-c-parse_hex_couplet"><span class="method_name">::parse_hex_couplet</span> <span class="module_name">(GamingDice::Card)</span></a></li>
+<li><a href="classes/GamingDice/StringParser.html#method-c-parse_hex_couplet"><span class="method_name">::parse_hex_couplet</span> <span class="module_name">(GamingDice::StringParser)</span></a></li>
 <li><a href="classes/GamingDice.html#method-c-roll"><span class="method_name">::roll</span> <span class="module_name">(GamingDice)</span></a></li>
 <li><a href="classes/GamingDice/Dice.html#method-c-roll"><span class="method_name">::roll</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
 <li><a href="classes/GamingDice/StringParser.html#method-c-scan"><span class="method_name">::scan</span> <span class="module_name">(GamingDice::StringParser)</span></a></li>
@@ -4480,6 +4500,9 @@ function performSearch() {
 <li><a href="classes/GamingDice/Dice.html#method-i-3C-3D-3E"><span class="method_name">#&lt;=&gt;</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-i-black-3F"><span class="method_name">#black?</span> <span class="module_name">(GamingDice::Card)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-i-color"><span class="method_name">#color</span> <span class="module_name">(GamingDice::Card)</span></a></li>
+<li><a href="classes/GamingDice/CardDeck.html#method-i-discard"><span class="method_name">#discard</span> <span class="module_name">(GamingDice::CardDeck)</span></a></li>
+<li><a href="classes/GamingDice/CardDeck.html#method-i-draw"><span class="method_name">#draw</span> <span class="module_name">(GamingDice::CardDeck)</span></a></li>
+<li><a href="classes/GamingDice/CardDeck.html#method-i-draw_hand"><span class="method_name">#draw_hand</span> <span class="module_name">(GamingDice::CardDeck)</span></a></li>
 <li><a href="classes/GamingDice/Dice.html#method-i-explodes-3F"><span class="method_name">#explodes?</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-i-hex_couplet"><span class="method_name">#hex_couplet</span> <span class="module_name">(GamingDice::Card)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-i-next"><span class="method_name">#next</span> <span class="module_name">(GamingDice::Card)</span></a></li>
@@ -4489,16 +4512,17 @@ function performSearch() {
 <li><a href="classes/GamingDice/Dice.html#method-i-result"><span class="method_name">#result</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
 <li><a href="classes/GamingDice/DicePool.html#method-i-returns_one-3F"><span class="method_name">#returns_one?</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
 <li><a href="classes/GamingDice/Dice.html#method-i-roll"><span class="method_name">#roll</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
-<li><a href="classes/GamingDice/ConstantValue.html#method-i-roll"><span class="method_name">#roll</span> <span class="module_name">(GamingDice::ConstantValue)</span></a></li>
 <li><a href="classes/GamingDice/DicePool.html#method-i-roll"><span class="method_name">#roll</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
+<li><a href="classes/GamingDice/ConstantValue.html#method-i-roll"><span class="method_name">#roll</span> <span class="module_name">(GamingDice::ConstantValue)</span></a></li>
 <li><a href="classes/GamingDice/DicePool.html#method-i-roll_all"><span class="method_name">#roll_all</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
 <li><a href="classes/GamingDice/DicePool.html#method-i-rule-3D"><span class="method_name">#rule=</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
+<li><a href="classes/GamingDice/CardDeck.html#method-i-shuffle"><span class="method_name">#shuffle</span> <span class="module_name">(GamingDice::CardDeck)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-i-succ"><span class="method_name">#succ</span> <span class="module_name">(GamingDice::Card)</span></a></li>
 <li><a href="classes/GamingDice/DicePool.html#method-i-take_best"><span class="method_name">#take_best</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
 <li><a href="classes/GamingDice/DicePool.html#method-i-take_worst"><span class="method_name">#take_worst</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-i-to_i"><span class="method_name">#to_i</span> <span class="module_name">(GamingDice::Card)</span></a></li>
-<li><a href="classes/GamingDice/DicePool.html#method-i-to_int"><span class="method_name">#to_int</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
 <li><a href="classes/GamingDice/Dice.html#method-i-to_int"><span class="method_name">#to_int</span> <span class="module_name">(GamingDice::Dice)</span></a></li>
+<li><a href="classes/GamingDice/DicePool.html#method-i-to_int"><span class="method_name">#to_int</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-i-to_s"><span class="method_name">#to_s</span> <span class="module_name">(GamingDice::Card)</span></a></li>
 <li><a href="classes/GamingDice/Card.html#method-i-to_str"><span class="method_name">#to_str</span> <span class="module_name">(GamingDice::Card)</span></a></li>
 <li><a href="classes/GamingDice/DicePool.html#method-i-total"><span class="method_name">#total</span> <span class="module_name">(GamingDice::DicePool)</span></a></li>

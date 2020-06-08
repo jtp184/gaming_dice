@@ -33,6 +33,7 @@ module GamingDice
         Card.new(value: cast_value(arg[0]), suit: cast_suit(arg[1]))
       end
 
+      # Draws a card based on +hex+ couplet
       def draw_hex(hex)
         Card.new(StringParser.parse_hex_couplet(hex))
       end
