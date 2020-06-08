@@ -18,58 +18,61 @@ module GamingDice
     # The suit as one of the symbols in SUIT_ORDERING
     attr_reader :suit
 
+    class << self
+      # Randomly draws a possible card
+      def draw
+        piq = StringParser.all_hex_couplets.sample
+
+        Card.new(StringParser.parse_hex_couplet(piq))
+      end
+
+      # Pulls a specific card by using a shorthand notation of "<value><suit>"
+      def draw_a(card)
+        arg = /(\d+|k|q|j|f)(s|h|d|c|b|r)/.match(card).captures
+
+        Card.new(value: cast_value(arg[0]), suit: cast_suit(arg[1]))
+      end
+
+      def draw_hex(hex)
+        Card.new(StringParser.parse_hex_couplet(hex))
+      end
+
+      private
+
+      # Casts the suit +arg+ into a suit symbol
+      def cast_suit(arg)
+        case arg
+        when 's'
+          :spades
+        when 'h', 'r'
+          :hearts
+        when 'd'
+          :diamonds
+        when 'c', 'b'
+          :clubs
+        end
+      end
+
+      # Casts the value +arg+ into a numerical value
+      def cast_value(arg)
+        return @value_cast[arg] if @value_cast
+
+        vals = Hash.new { |h, v| h[v] = v.to_i }
+
+        vals['j'] = 11
+        vals['q'] = 12
+        vals['k'] = 13
+        vals['f'] = 14
+
+        @value_cast = vals
+        @value_cast[arg]
+      end
+    end
+
     # Feeds in +value+ and +suit+ from +args+
     def initialize(args = {})
       @value = args.fetch(:value)
       @suit = args.fetch(:suit)
-    end
-
-    # Randomly creates a possible card
-    def self.draw
-      val = rand(1..14)
-      sui = case val
-            when 1..13
-              SUIT_ORDERING.keys.sample
-            when 14
-              %i[hearts clubs].sample
-            end
-      new(value: val, suit: sui)
-    end
-
-    # Pulls a specific card by using a shorthand notation of "<value><suit>"
-    def self.draw_a(card)
-      arg = /(\d+|k|q|j|f)(s|h|d|c|b|r)/.match(card).captures
-      val = case arg[0]
-            when /\d+/
-              arg[0].to_i
-            when 'j'
-              11
-            when 'q'
-              12
-            when 'k'
-              13
-            when 'f'
-              14
-            end
-
-      sui = case arg[1]
-            when 's'
-              :spades
-            when 'h', 'r'
-              :hearts
-            when 'd'
-              :diamonds
-            when 'c', 'b'
-              :clubs
-            end
-
-      new(value: val, suit: sui)
-    end
-
-    # Takes the +hex+ couplet and derives its matching Card
-    def self.parse_hex_couplet(hex)
-      hc = hex.chars.map { |a| a.to_i(16) }
-      new(suit: SUIT_ORDERING.key(hc[0]), value: hc[1])
     end
 
     # Emits the card's suit and value as a 2-character hexadecimal string.

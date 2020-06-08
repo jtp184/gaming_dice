@@ -62,6 +62,27 @@ module GamingDice
         end
       end
 
+      # Takes the +hex+ couplet and derives its matching Card attributes
+      def parse_hex_couplet(hex)
+        hc = hex.chars.map { |a| a.to_i(16) }
+        { suit: Card::SUIT_ORDERING.key(hc[0]), value: hc[1] }
+      end
+
+      # Returns all hex couplets, Ace-King in all suits plus a
+      # joker of hearts and of clubs
+      def all_hex_couplets
+        return @all_hex_couplets if @all_hex_couplets
+
+        prefixes = %w[0 1 2 3]
+        suffixes = ((1..9).to_a + ('a'..'d').to_a).map(&:to_s)
+
+        @all_hex_couplets = prefixes.map { |pf| suffixes.map { |sf| pf + sf } }
+                                    .flatten
+                                    .append('1e')
+                                    .append('3e')
+                                    .sort
+      end
+
       # Tokenizes and casts the capture values
       def scan(input)
         tokenize(input).map do |groups|
