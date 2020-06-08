@@ -4,6 +4,7 @@ require 'gaming_dice/dice'
 require 'gaming_dice/dice_pool'
 require 'gaming_dice/constant_value'
 require 'gaming_dice/card'
+require 'gaming_dice/card_deck'
 
 # Used for polyhedral dice and their rolls.
 module GamingDice
