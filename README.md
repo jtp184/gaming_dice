@@ -53,8 +53,9 @@ If these functions are more integral to your code, you can take advantage of mon
 ```ruby
 require 'gaming_dice/patches'
 
-2.d6 # => #<GamingDice::Dice:0x0a3... @bonus=0, @count=2, @explodes=false, @faces=6>
+1.d6 # => #<GamingDice::Dice:0x0a3... @explodes=false, @faces=6>
 1.d(100).roll # => 87
+3.d10 # => #<GamingDice::DicePool:0x0b1... @dice=[<GamingDice::Dice:0x0e1... @faces=10>...], @rule=:sum>
 1.of_spades.to_s # => 'Ace of Spades'
 
 [
