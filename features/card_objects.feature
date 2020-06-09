@@ -9,36 +9,50 @@ Scenario: Cards know their suit
 		| 13    | c    |
 	When I ask for the suit of my cards
 	Then I receive suits named
-		| Spades |
-		| Hearts |
+		| Spades   |
+		| Hearts   |
 		| Diamonds |
-		| Clubs |
+		| Clubs    |
 
 Scenario: Cards know their color
 	Given I have the following cards
 		| Value | Suit|
-		| 2 | h |
-		| 3 | c |
+		| 2     | h   |
+		| 3     | c   |
 	When I ask for the color of my cards
 	Then I receive colors named
-		| red |
+		| red   |
 		| black |
+
+Scenario: Cards know their value
+	Given I have the following cards
+		| Value | Suit |
+		| 2     | h    |
+		| 3     | s    |
+		| 11    | c    |
+		| 14    | d    |
+	And I ask for the value of my cards
+	Then I receive the values
+		| 2  |
+		| 3  |
+		| 11 |
+		| 14 |
 
 Scenario: Creating by shorthand
 	Given I input the shorthand strings
-		| 1s |
-		| kr |
+		| 1s  |
+		| kr  |
 		| 11c |
-		| fh |
-		| qd |
-		| jb |
+		| fh  |
+		| qd  |
+		| jb  |
 	Then I receive cards named
-		| Ace of Spades |
-		| King of Hearts |
-		| Jack of Clubs |
-		| Red Joker |
+		| Ace of Spades     |
+		| King of Hearts    |
+		| Jack of Clubs     |
+		| Red Joker         |
 		| Queen of Diamonds |
-		| Jack of Clubs |
+		| Jack of Clubs     |
 
 Scenario: Creating by hex couplet
 	Given I input the hex strings
@@ -47,9 +61,9 @@ Scenario: Creating by hex couplet
 		| 39 |
 		| 2b |
 	Then I should receive cards named
-		| 10 of Spades |
-		| 2 of Hearts |
-		| 9 of Clubs |
+		| 10 of Spades     |
+		| 2 of Hearts      |
+		| 9 of Clubs       |
 		| Jack of Diamonds |
 
 Scenario: Returning a hex couplet
@@ -62,3 +76,88 @@ Scenario: Cards are sorted in proper order, lowest to highest
 	And I have a low card
 	When I sort the cards
 	Then the low card should be on top
+
+Scenario: A Card can return its next card
+	Given I have the following cards
+		| Value | Suit |
+		| 2     | s    |
+		| 5     | h    |
+		| 10    | d    |
+		| 12    | c    |
+	And I send each card the message "next"
+	Then the resulting cards are named
+		| 3 of Spades      |
+		| 6 of Hearts      |
+		| Jack of Diamonds |
+		| King of Clubs    | 
+
+Scenario: A Card can return its previous card
+	Given I have the following cards
+		| Value | Suit |
+		| 5     | s    |
+		| 8     | h    |
+		| 12    | d    |
+		| 13    | c    |
+	And I send each card the message "prev"
+	Then the resulting cards are named
+		| 4 of Spades       |
+		| 7 of Hearts       |
+		| Jack of Diamonds  |
+		| Queen of Clubs    |
+
+Scenario: A Card can return its next card even when it elevates suit
+	Given I have the following cards
+		| Value | Suit |
+		| 13    | s    |
+		| 13    | h    |
+		| 13    | d    |
+	And I send each card the message "next"
+	When I ask for the suit of my cards
+	Then I receive suits named
+		| hearts   |
+		| diamonds |
+		| clubs    |
+
+Scenario: A Card can return its previous card even when it demotes suit
+	Given I have the following cards
+		| Value | Suit |
+		| 1     | c    |
+		| 1     | d    |
+		| 1     | h    |
+	And I send each card the message "prev"
+	When I ask for the suit of my cards
+	Then I receive suits named
+		| diamonds |
+		| hearts   |
+		| spades   |
+
+Scenario: A Card can return its next card when it is one of the top 3 cards
+	Given I have the following cards
+		| Value | Suit |
+		| 13    | c    |
+		| 14    | h    |
+	And I send each card the message "next"
+	Then the resulting cards are named
+		| Red Joker   |
+		| Black Joker |
+
+Scenario: A Card can return its previous card when it is one of the top 3 cards
+	Given I have the following cards
+		| Value | Suit |
+		| 14    | c    |
+		| 14    | h    |
+	And I send each card the message "prev"
+	Then the resulting cards are named
+		| Red Joker   |
+		| King of Clubs |
+
+Scenario: A Card raises an exception if it's lower than the lowest card
+	Given I have the card "Ace of Spades"
+	And I send the message "prev" to the card
+	Then an exception should be raised
+
+Scenario: A Card raises an exception if it's higher than the highest card
+	Given I have the card "Black Joker"
+	And I send the message "next" to the card
+	Then an exception should be raised
+

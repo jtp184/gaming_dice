@@ -48,15 +48,7 @@ module GamingDice
     end
 
     def to_s # :nodoc:
-      dice_string = "d#{faces}#{explodes? ? '!' : ''}"
-
-      if bonus.positive?
-        dice_string << "+#{bonus}"
-      elsif bonus.negative?
-        dice_string << bonus.to_s
-      end
-
-      dice_string
+      "d#{faces}#{explodes? ? '!' : ''}"
     end
 
     # Slightly unusual behavior. When the comparator methods are called,

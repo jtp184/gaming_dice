@@ -9,9 +9,5 @@ FactoryBot.define do
     trait :explodes do
       explodes { true }
     end
-
-    trait :bonus do
-      bonus { 1 }
-    end
   end
 end

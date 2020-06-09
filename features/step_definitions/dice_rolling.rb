@@ -21,3 +21,11 @@ end
 Then(/receive a comparator result/i) do
   expect(@result).to be_between(-1, 1)
 end
+
+Then(/result is an integer/) do
+  @result.is_a?(Integer)
+end
+
+Then(/result is an array of integers/) do
+  @result.is_a?(Array) && @result.all? { |r| r.is_a?(Integer) }
+end

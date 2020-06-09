@@ -14,6 +14,14 @@ Scenario: Dice can be created with exploding
 	And I make the dice explode
 	Then the dice does explode
 
+Scenario: Dice rolling can be done directly on the class, for a single dice
+	Given I roll the dice string "1d6"
+	Then the result is an integer
+
+Scenario: Dice rolling can be done directly on the class, for multiple dice
+	Given I roll the dice string "3d10"
+	Then the result is an array of integers
+
 Scenario: Comma separated values return multiple dice objects
 	Given I input the dice strings
 		| 1d6, 1d8 |
@@ -31,3 +39,8 @@ Scenario: Dice compared with numbers
 	Given I create a dice
 	When I compare the dice to an integer
 	Then I receive a comparator result
+
+Scenario: Dice know how to represent themselves as strings
+	Given I create a dice
+	When I print the dice
+	Then the result should be a simple string

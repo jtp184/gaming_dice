@@ -8,6 +8,41 @@ Given(/i have the following cards/i) do |table|
   @card = cards.map(&:join).map { |c| GamingDice::Card.draw_a(c) }
 end
 
+Given(/send the message (?:['"](.*)['"]) to the card/i) do |msg|
+  begin
+    @result = @card.send(msg.to_sym)
+  rescue StandardError => e
+    @exception = e
+  end
+end
+
+Given(/send each card the message (?:['"](.*)['"])/i) do |msg|
+  begin
+    @result = @card.map { |c| c.send(msg.to_sym) }
+  rescue StandardError => e
+    @exception = e
+  end
+end
+
+Then(/exception.*raised/) do
+  expect(@exception).not_to be_nil
+end
+
+Given(/have the card (?:['"](.*)['"])/i) do |card_name|
+  all_cards = GamingDice::StringParser.all_hex_couplets
+                                      .map { |c| GamingDice::Card.draw_hex(c) }
+
+  @card = all_cards.find { |c| c.to_s == card_name }
+end
+
+Then(/resulting card should be (?:['"](.*)['"])/) do |card_name|
+  expect(@result.to_s).to eql(card_name)
+end
+
+Then(/resulting cards are named/i) do |card_names|
+  expect(@result.map(&:to_s)).to eql(card_names.raw.flatten)
+end
+
 Given(/input the shorthand strings/i) do |table|
   strs = table.raw.flatten
   @card = strs.map { |s| GamingDice::Card.draw_a(s) }
@@ -15,8 +50,7 @@ end
 
 Given(/input the hex strings/i) do |table|
   strs = table.raw.flatten
-  @card = strs.map { |s| GamingDice::StringParser.parse_hex_couplet(s) }
-              .map { |s| GamingDice::Card.new(s) }
+  @card = strs.map { |s| GamingDice::Card.draw_hex(s) }
 end
 
 Given(/have a high card/i) do
@@ -39,6 +73,11 @@ end
 When(/ask for the suit of my cards/i) do
   pickr = @result || @card
   @result = pickr.map(&:suit)
+end
+
+When(/ask for the value of my cards/i) do
+  pickr = @result || @card
+  @result = pickr.map(&:value)
 end
 
 When(/ask for the suit of the card/i) do
@@ -64,13 +103,41 @@ Then(/receive suits named/i) do |table|
   end
 end
 
+Then(/receive the values/i) do |table|
+  values = table.raw.flatten.map(&:downcase).map(&:to_i)
+  case @result.is_a? Array
+  when true
+    expect(@result).to eq(values)
+  when false
+    expect(@result).to eq(values.first)
+  end
+end
+
 When(/ask for the color of my cards/i) do
-  @result = @card.map(&:color)
+  @result = @card.map do |card|
+    [
+      card.color,
+      card.red?,
+      card.black?
+    ]
+  end
 end
 
 Then(/i receive colors named/i) do |table|
   colors = table.raw.flatten.map(&:downcase).map(&:to_sym)
-  expect(@result).to eq(colors)
+
+  @result.partition(&:first).each do |col|
+    case col[0]
+    when :red
+      expect(col[1]).to be(true)
+      expect(col[1]).to be(false)
+    when :black
+      expect(col[2]).to be(true)
+      expect(col[2]).to be(false)
+    end
+  end
+
+  expect(@result.map(&:first)).to eq(colors)
 end
 
 When(/sort the cards/i) do

@@ -1,5 +1,8 @@
 require 'simplecov'
-SimpleCov.start
+
+SimpleCov.start do
+	add_filter 'features'
+end
 
 require 'gaming_dice'
 require 'factory_bot'
