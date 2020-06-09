@@ -1,5 +1,4 @@
 require 'bundler/gem_tasks'
-require 'git'
 
 task default: %w[test]
 
@@ -20,7 +19,6 @@ task :reinstall do
 end
 
 task :bump do
-  repo = Git.open('.')
   version_file = './lib/gaming_dice/version.rb'
   matcher = /VERSION = '(.*)'\.freeze/
 
@@ -33,6 +31,4 @@ task :bump do
   File.open(version_file, 'w+') { |f| f << updated }
 
   sh 'bundle'
-
-  repo.add(version_file)
 end
