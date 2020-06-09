@@ -13,6 +13,19 @@ module GamingDice
       clubs: 3
     }.freeze
 
+    # The word representations of some small integers
+    SHORT_WORDS = %w[
+      Two
+      Three
+      Four
+      Five
+      Six
+      Seven
+      Eight
+      Nine
+      Ten
+    ].unshift(nil).unshift(nil)
+
     # The numerical value of the card as an integer
     attr_reader :value
     # The suit as one of the symbols in SUIT_ORDERING
@@ -172,7 +185,7 @@ module GamingDice
       when 1
         'Ace'
       when 2..10
-        value.to_s
+        SHORT_WORDS[value]
       when 11
         'Jack'
       when 12
