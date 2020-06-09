@@ -14,7 +14,9 @@ gem 'gaming_dice', github: 'jtp184/gaming_dice'
 
 Read the docs on [GitHub Pages](https://jtp184.github.io/gaming_dice/)
 
-## Basic Usage
+## Usage
+
+### Dice
 
 The basic way to use this gem is through the .call method
 
@@ -51,6 +53,8 @@ GamingDice.roll('1d100, 1d10 & 3d6') # => [98, [8, 8]]
 GamingDice.roll('1d10, 1d4 b 1d4, a d12, 3d6 + 4') # => [8, 4, 7, 20]
 
 ```
+
+### Cards
 
 GamingDice also has the ability to handle standard 52 card decks. Useful for game systems like Savage Worlds which use these for initiative.
 
