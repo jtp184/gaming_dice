@@ -10,6 +10,10 @@ Add this line to your application's Gemfile:
 gem 'gaming_dice', github: 'jtp184/gaming_dice'
 ```
 
+## Documentation
+
+Read the docs on [GitHub Pages](https://jtp184.github.io/gaming_dice/)
+
 ## Basic Usage
 
 The basic way to use this gem is through the .call method
