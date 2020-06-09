@@ -98,14 +98,14 @@ GamingDice
 </div>
 <div class='description'>
 
-<p>Syntactic sugar. Aliases to Dice.call and passes the <code>var</code></p>
+<p>Syntactic sugar. Aliases to <a href="GamingDice/StringParser.html#method-c-call"><code>StringParser.call</code></a> and passes the <code>var</code></p>
 
 </div>
 <div class='source'>
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-call-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-call-source'><span class="ruby-comment"># File lib/gaming_dice.rb, line 12</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">call</span>(<span class="ruby-identifier">var</span>)&#x000A;  <span class="ruby-constant">StringParser</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">var</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-call-source'><span class="ruby-comment"># File lib/gaming_dice.rb, line 12</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">call</span>(<span class="ruby-identifier">var</span>)&#x000A;  <span class="ruby-identifier">type</span>, <span class="ruby-identifier">res</span> = <span class="ruby-constant">StringParser</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">var</span>)&#x000A;&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">type</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:dice</span>&#x000A;    <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">res</span>)&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:card</span>&#x000A;    <span class="ruby-constant">Card</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">res</span>)&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-draw'>
@@ -124,7 +124,7 @@ GamingDice
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-draw-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-draw-source'><span class="ruby-comment"># File lib/gaming_dice.rb, line 22</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">draw</span>(<span class="ruby-identifier">arg</span> = <span class="ruby-keyword">nil</span>)&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">arg</span>&#x000A;    <span class="ruby-constant">Card</span>.<span class="ruby-identifier">draw_a</span>(<span class="ruby-identifier">arg</span>)&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-constant">Card</span>.<span class="ruby-identifier">draw</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-draw-source'><span class="ruby-comment"># File lib/gaming_dice.rb, line 29</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">draw</span>(<span class="ruby-identifier">arg</span> = <span class="ruby-keyword">nil</span>)&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">arg</span>&#x000A;    <span class="ruby-constant">Card</span>.<span class="ruby-identifier">draw_a</span>(<span class="ruby-identifier">arg</span>)&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-constant">Card</span>.<span class="ruby-identifier">draw</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-roll'>
@@ -143,7 +143,7 @@ GamingDice
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-roll-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-roll-source'><span class="ruby-comment"># File lib/gaming_dice.rb, line 17</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">roll</span>(<span class="ruby-identifier">var</span>)&#x000A;  <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-identifier">var</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-roll-source'><span class="ruby-comment"># File lib/gaming_dice.rb, line 24</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">roll</span>(<span class="ruby-identifier">var</span>)&#x000A;  <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-identifier">var</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 </div>

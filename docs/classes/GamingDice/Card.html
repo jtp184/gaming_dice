@@ -53,13 +53,7 @@ Superclass:
 <ol>
 <li><a href="#method-c-draw">draw</a></li>
 <li><a href="#method-c-draw_a">draw_a</a></li>
-<li><a href="#method-c-draw_hex">draw_hex</a></li>
 <li><a href="#method-c-new">new</a></li>
-</ol>
-<h3>Private Class</h3>
-<ol>
-<li><a href="#method-c-cast_suit">cast_suit</a></li>
-<li><a href="#method-c-cast_value">cast_value</a></li>
 </ol>
 <h3>Public Instance</h3>
 <ol>
@@ -190,7 +184,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-draw-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-draw-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 36</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw</span>&#x000A;  <span class="ruby-identifier">piq</span> = <span class="ruby-constant">StringParser</span>.<span class="ruby-identifier">all_hex_couplets</span>.<span class="ruby-identifier">sample</span>&#x000A;&#x000A;  <span class="ruby-constant">Card</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">StringParser</span>.<span class="ruby-identifier">parse_hex_couplet</span>(<span class="ruby-identifier">piq</span>))&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-draw-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 36</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw</span>&#x000A;  <span class="ruby-identifier">_type</span>, <span class="ruby-identifier">vs</span> = <span class="ruby-constant">StringParser</span>.<span class="ruby-identifier">call</span>(<span class="ruby-constant">StringParser</span>.<span class="ruby-identifier">all_hex_couplets</span>.<span class="ruby-identifier">sample</span>)&#x000A;  <span class="ruby-constant">Card</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">vs</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-draw_a'>
@@ -202,33 +196,14 @@ clubs: 3
 </div>
 <div class='description'>
 
-<p>Pulls a specific card by using a shorthand notation of “&lt;value&gt;&lt;suit&gt;”</p>
+<p>Pulls a specific card by using a shorthand notation</p>
 
 </div>
 <div class='source'>
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-draw_a-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-draw_a-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 43</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw_a</span>(<span class="ruby-identifier">card</span>)&#x000A;  <span class="ruby-identifier">arg</span> = <span class="ruby-regexp">/(\d+|k|q|j|f)(s|h|d|c|b|r)/</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">card</span>).<span class="ruby-identifier">captures</span>&#x000A;&#x000A;  <span class="ruby-constant">Card</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-identifier">cast_value</span>(<span class="ruby-identifier">arg</span>[<span class="ruby-value">0</span>]), <span class="ruby-value">suit:</span> <span class="ruby-identifier">cast_suit</span>(<span class="ruby-identifier">arg</span>[<span class="ruby-value">1</span>]))&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
-<div class='method public-class' id='method-method-c-draw_hex'>
-<a name='method-c-draw_hex'></a>
-<div class='synopsis'>
-<span class='name'>draw_hex</span>
-<span class='arguments'>(hex)</span>
-
-</div>
-<div class='description'>
-
-<p>Draws a card based on <code>hex</code> couplet</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-draw_hex-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-draw_hex-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 50</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw_hex</span>(<span class="ruby-identifier">hex</span>)&#x000A;  <span class="ruby-constant">Card</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">StringParser</span>.<span class="ruby-identifier">parse_hex_couplet</span>(<span class="ruby-identifier">hex</span>))&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-draw_a-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 42</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw_a</span>(<span class="ruby-identifier">card</span>)&#x000A;  <span class="ruby-identifier">_type</span>, <span class="ruby-identifier">vs</span> = <span class="ruby-constant">StringParser</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">card</span>)&#x000A;  <span class="ruby-constant">Card</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">vs</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-new'>
@@ -247,46 +222,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-new-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-new-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 87</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">args</span> = {})&#x000A;  <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:value</span>)&#x000A;  <span class="ruby-ivar">@suit</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:suit</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
-<h2>Private Class methods</h2>
-<div class='method private-class' id='method-method-c-cast_suit'>
-<a name='method-c-cast_suit'></a>
-<div class='synopsis'>
-<span class='name'>cast_suit</span>
-<span class='arguments'>(arg)</span>
-
-</div>
-<div class='description'>
-
-<p>Casts the suit <code>arg</code> into a suit symbol</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-cast_suit-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-cast_suit-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 57</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cast_suit</span>(<span class="ruby-identifier">arg</span>)&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">arg</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;s&#39;</span>&#x000A;    <span class="ruby-value">:spades</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;h&#39;</span>, <span class="ruby-string">&#39;r&#39;</span>&#x000A;    <span class="ruby-value">:hearts</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;d&#39;</span>&#x000A;    <span class="ruby-value">:diamonds</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;c&#39;</span>, <span class="ruby-string">&#39;b&#39;</span>&#x000A;    <span class="ruby-value">:clubs</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
-<div class='method private-class' id='method-method-c-cast_value'>
-<a name='method-c-cast_value'></a>
-<div class='synopsis'>
-<span class='name'>cast_value</span>
-<span class='arguments'>(arg)</span>
-
-</div>
-<div class='description'>
-
-<p>Casts the value <code>arg</code> into a numerical value</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-cast_value-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-cast_value-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 71</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cast_value</span>(<span class="ruby-identifier">arg</span>)&#x000A;  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@value_cast</span>[<span class="ruby-identifier">arg</span>] <span class="ruby-keyword">if</span> <span class="ruby-ivar">@value_cast</span>&#x000A;&#x000A;  <span class="ruby-identifier">vals</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">v</span>] = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_i</span> }&#x000A;&#x000A;  <span class="ruby-identifier">vals</span>[<span class="ruby-string">&#39;j&#39;</span>] = <span class="ruby-value">11</span>&#x000A;  <span class="ruby-identifier">vals</span>[<span class="ruby-string">&#39;q&#39;</span>] = <span class="ruby-value">12</span>&#x000A;  <span class="ruby-identifier">vals</span>[<span class="ruby-string">&#39;k&#39;</span>] = <span class="ruby-value">13</span>&#x000A;  <span class="ruby-identifier">vals</span>[<span class="ruby-string">&#39;f&#39;</span>] = <span class="ruby-value">14</span>&#x000A;&#x000A;  <span class="ruby-ivar">@value_cast</span> = <span class="ruby-identifier">vals</span>&#x000A;  <span class="ruby-ivar">@value_cast</span>[<span class="ruby-identifier">arg</span>]&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-new-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 49</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">args</span> = {})&#x000A;  <span class="ruby-ivar">@value</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:value</span>)&#x000A;  <span class="ruby-ivar">@suit</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-value">:suit</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <h2>Public Instance methods</h2>
@@ -306,7 +242,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-3C-3D-3E-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-3C-3D-3E-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 119</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)&#x000A;  <span class="ruby-identifier">v</span> = <span class="ruby-identifier">value</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">value</span>&#x000A;  <span class="ruby-identifier">v</span>.<span class="ruby-identifier">zero?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">suit</span>] <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">other</span>.<span class="ruby-identifier">suit</span>] <span class="ruby-operator">:</span> <span class="ruby-identifier">v</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-3C-3D-3E-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 81</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">&lt;=&gt;</span>(<span class="ruby-identifier">other</span>)&#x000A;  <span class="ruby-identifier">v</span> = <span class="ruby-identifier">value</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">other</span>.<span class="ruby-identifier">value</span>&#x000A;  <span class="ruby-identifier">v</span>.<span class="ruby-identifier">zero?</span> <span class="ruby-operator">?</span> <span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">suit</span>] <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">other</span>.<span class="ruby-identifier">suit</span>] <span class="ruby-operator">:</span> <span class="ruby-identifier">v</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-black-3F'>
@@ -325,7 +261,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-black-3F-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-black-3F-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 104</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">black?</span>&#x000A;  <span class="ruby-identifier">color</span> <span class="ruby-operator">==</span> <span class="ruby-value">:black</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-black-3F-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 66</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">black?</span>&#x000A;  <span class="ruby-identifier">color</span> <span class="ruby-operator">==</span> <span class="ruby-value">:black</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-color'>
@@ -344,7 +280,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-color-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-color-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 109</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">color</span>&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">suit</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:hearts</span>, <span class="ruby-value">:diamonds</span>&#x000A;    <span class="ruby-value">:red</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:clubs</span>, <span class="ruby-value">:spades</span>&#x000A;    <span class="ruby-value">:black</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-color-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 71</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">color</span>&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">suit</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:hearts</span>, <span class="ruby-value">:diamonds</span>&#x000A;    <span class="ruby-value">:red</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:clubs</span>, <span class="ruby-value">:spades</span>&#x000A;    <span class="ruby-value">:black</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-hex_couplet'>
@@ -363,7 +299,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-hex_couplet-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-hex_couplet-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 94</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hex_couplet</span>&#x000A;  [<span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">suit</span>], <span class="ruby-identifier">value</span>].<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>) }.<span class="ruby-identifier">join</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-hex_couplet-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 56</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">hex_couplet</span>&#x000A;  [<span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">suit</span>] <span class="ruby-operator">+</span> <span class="ruby-value">10</span>, <span class="ruby-identifier">value</span>].<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>) }.<span class="ruby-identifier">join</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-next'>
@@ -382,7 +318,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-next-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-next-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 125</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">next</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier ruby-title">value</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">13</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-value">suit:</span> <span class="ruby-identifier">suit</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">13</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:clubs</span>&#x000A;    <span class="ruby-identifier">nindex</span> = <span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">suit</span>] <span class="ruby-operator">+</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">1</span>, <span class="ruby-value">suit:</span> <span class="ruby-constant">SUIT_ORDERING</span>.<span class="ruby-identifier">key</span>(<span class="ruby-identifier">nindex</span>))&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">13</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:clubs</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">14</span>, <span class="ruby-value">suit:</span> <span class="ruby-value">:hearts</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">14</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:hearts</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">14</span>, <span class="ruby-value">suit:</span> <span class="ruby-value">:clubs</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">14</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:clubs</span>&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>, <span class="ruby-string">&#39;No Higher Card than the Black Joker&#39;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-next-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 87</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-keyword">next</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier ruby-title">value</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">13</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>, <span class="ruby-value">suit:</span> <span class="ruby-identifier">suit</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">13</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:clubs</span>&#x000A;    <span class="ruby-identifier">nindex</span> = <span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">suit</span>] <span class="ruby-operator">+</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">1</span>, <span class="ruby-value">suit:</span> <span class="ruby-constant">SUIT_ORDERING</span>.<span class="ruby-identifier">key</span>(<span class="ruby-identifier">nindex</span>))&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">13</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:clubs</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">14</span>, <span class="ruby-value">suit:</span> <span class="ruby-value">:hearts</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">14</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:hearts</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">14</span>, <span class="ruby-value">suit:</span> <span class="ruby-value">:clubs</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">14</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:clubs</span>&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>, <span class="ruby-string">&#39;No Higher Card than the Black Joker&#39;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-prev'>
@@ -401,7 +337,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-prev-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-prev-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 143</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">prev</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:spades</span>&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>, <span class="ruby-string">&#39;No Lower Card than the Ace of Spades&#39;</span>&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">13</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>, <span class="ruby-value">suit:</span> <span class="ruby-identifier">suit</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-identifier">nindex</span> = <span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">suit</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">13</span>, <span class="ruby-value">suit:</span> <span class="ruby-constant">SUIT_ORDERING</span>.<span class="ruby-identifier">key</span>(<span class="ruby-identifier">nindex</span>))&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">14</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:clubs</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">14</span>, <span class="ruby-value">suit:</span> <span class="ruby-value">:hearts</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">14</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:hearts</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">13</span>, <span class="ruby-value">suit:</span> <span class="ruby-value">:clubs</span>)&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-prev-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 105</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">prev</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:spades</span>&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">IndexError</span>, <span class="ruby-string">&#39;No Lower Card than the Ace of Spades&#39;</span>&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-value">13</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>, <span class="ruby-value">suit:</span> <span class="ruby-identifier">suit</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-identifier">nindex</span> = <span class="ruby-constant">SUIT_ORDERING</span>[<span class="ruby-identifier">suit</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">13</span>, <span class="ruby-value">suit:</span> <span class="ruby-constant">SUIT_ORDERING</span>.<span class="ruby-identifier">key</span>(<span class="ruby-identifier">nindex</span>))&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">14</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:clubs</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">14</span>, <span class="ruby-value">suit:</span> <span class="ruby-value">:hearts</span>)&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">==</span> <span class="ruby-value">14</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">suit</span> <span class="ruby-operator">==</span> <span class="ruby-value">:hearts</span>&#x000A;    <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">value:</span> <span class="ruby-value">13</span>, <span class="ruby-value">suit:</span> <span class="ruby-value">:clubs</span>)&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-red-3F'>
@@ -420,7 +356,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-red-3F-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-red-3F-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 99</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">red?</span>&#x000A;  <span class="ruby-identifier">color</span> <span class="ruby-operator">==</span> <span class="ruby-value">:red</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-red-3F-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 61</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">red?</span>&#x000A;  <span class="ruby-identifier">color</span> <span class="ruby-operator">==</span> <span class="ruby-value">:red</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-to_i'>
@@ -439,7 +375,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-to_i-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-to_i-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 170</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_i</span>&#x000A;  <span class="ruby-identifier">value</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-to_i-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 132</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_i</span>&#x000A;  <span class="ruby-identifier">value</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-to_s'>
@@ -458,7 +394,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-to_s-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-to_s-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 161</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_s</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">!=</span> <span class="ruby-value">14</span>&#x000A;    <span class="ruby-node">&quot;#{value_string} of #{suit.to_s.capitalize}&quot;</span>&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-node">&quot;#{color.to_s.capitalize} #{value_string}&quot;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-to_s-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 123</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_s</span>&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">value</span> <span class="ruby-operator">!=</span> <span class="ruby-value">14</span>&#x000A;    <span class="ruby-node">&quot;#{value_string} of #{suit.to_s.capitalize}&quot;</span>&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-node">&quot;#{color.to_s.capitalize} #{value_string}&quot;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-to_str'>
@@ -477,7 +413,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-to_str-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-to_str-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 175</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_str</span>&#x000A;  <span class="ruby-identifier">to_s</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-to_str-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 137</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_str</span>&#x000A;  <span class="ruby-identifier">to_s</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <h2>Private Instance methods</h2>
@@ -497,7 +433,7 @@ clubs: 3
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-value_string-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-value_string-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 183</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">value_string</span>&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-string">&#39;Ace&#39;</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">10</span>&#x000A;    <span class="ruby-constant">SHORT_WORDS</span>[<span class="ruby-identifier">value</span>]&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">11</span>&#x000A;    <span class="ruby-string">&#39;Jack&#39;</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">12</span>&#x000A;    <span class="ruby-string">&#39;Queen&#39;</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">13</span>&#x000A;    <span class="ruby-string">&#39;King&#39;</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">14</span>&#x000A;    <span class="ruby-string">&#39;Joker&#39;</span>&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-string">&#39;Trump&#39;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-value_string-source'><span class="ruby-comment"># File lib/gaming_dice/card.rb, line 145</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">value_string</span>&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">value</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-string">&#39;Ace&#39;</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">2</span><span class="ruby-operator">..</span><span class="ruby-value">10</span>&#x000A;    <span class="ruby-constant">SHORT_WORDS</span>[<span class="ruby-identifier">value</span>]&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">11</span>&#x000A;    <span class="ruby-string">&#39;Jack&#39;</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">12</span>&#x000A;    <span class="ruby-string">&#39;Queen&#39;</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">13</span>&#x000A;    <span class="ruby-string">&#39;King&#39;</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">14</span>&#x000A;    <span class="ruby-string">&#39;Joker&#39;</span>&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-string">&#39;Trump&#39;</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 </div>

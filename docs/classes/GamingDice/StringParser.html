@@ -47,14 +47,15 @@ Superclass:
 <ol>
 <li><a href="#method-c-all_hex_couplets">all_hex_couplets</a></li>
 <li><a href="#method-c-call">call</a></li>
+<li><a href="#method-c-parse_card_string">parse_card_string</a></li>
 <li><a href="#method-c-parse_dice">parse_dice</a></li>
 <li><a href="#method-c-parse_hex_couplet">parse_hex_couplet</a></li>
-<li><a href="#method-c-scan">scan</a></li>
 </ol>
 <h3>Private Class</h3>
 <ol>
 <li><a href="#method-c-cast_capture_values">cast_capture_values</a></li>
-<li><a href="#method-c-dice_cast">dice_cast</a></li>
+<li><a href="#method-c-cast_card_suit">cast_card_suit</a></li>
+<li><a href="#method-c-cast_card_value">cast_card_value</a></li>
 <li><a href="#method-c-tokenize">tokenize</a></li>
 </ol>
 </div>
@@ -65,6 +66,15 @@ Superclass:
 <h2>Constants</h2>
 <div class='name-list'>
 <table summary='Constants'>
+<tr class='top-aligned-row context-row'>
+<td class='context-item-name'>CARD_STRING</td>
+<td>=</td>
+<td class='context-item-value'>/^(\d+|k|q|j|f)(s|h|d|c|b|r)$/i.freeze</td>
+<td>&nbsp;</td>
+<td class='context-item-desc'>
+<p>Detects simple string card declarations</p>
+</td>
+</tr>
 <tr class='top-aligned-row context-row'>
 <td class='context-item-name'>CONTINUANTS</td>
 <td>=</td>
@@ -77,6 +87,42 @@ Superclass:
 <td>&nbsp;</td>
 <td class='context-item-desc'>
 <p>Mapping of continuants to symbols</p>
+</td>
+</tr>
+<tr class='top-aligned-row context-row'>
+<td class='context-item-name'>DICE_FINDER</td>
+<td>=</td>
+<td class='context-item-value'>/(?:(?:(?:(?:\d+|a\s)d(?:\d+)(?:e?))(?:\s(?:[+&wb]))?)|(?:-?\d+\b))/i.freeze</td>
+<td>&nbsp;</td>
+<td class='context-item-desc'>
+<p>Simpler regex to confirm presence</p>
+</td>
+</tr>
+<tr class='top-aligned-row context-row'>
+<td class='context-item-name'>DICE_MATCHER</td>
+<td>=</td>
+<td class='context-item-value'>/
+(?:
+(?:
+(?:
+(?<count>\d+|a\s)
+d
+(?<faces>\d+)
+(?<explodes>e)?
+)
+(?:
+\s
+(?<continuant>[+&wb])
+)
+?
+)
+|
+(?<constant>-?\d+\b)
+)
+/ix.freeze</td>
+<td>&nbsp;</td>
+<td class='context-item-desc'>
+<p>Grouped regex for meaning extraction</p>
 </td>
 </tr>
 <tr class='top-aligned-row context-row'>
@@ -95,39 +141,12 @@ continuant: ->(v) { CONTINUANTS[v] }
 </td>
 </tr>
 <tr class='top-aligned-row context-row'>
-<td class='context-item-name'>FINDER</td>
+<td class='context-item-name'>HEX_FINDER</td>
 <td>=</td>
-<td class='context-item-value'>/(?:(?:(?:(?:\d+|a\s)d(?:\d+)(?:e?))(?:\s(?:[+&wb]))?)|(?:-?\d+))/i.freeze</td>
+<td class='context-item-value'>/^[abcd][1-9a-e]$/i.freeze</td>
 <td>&nbsp;</td>
 <td class='context-item-desc'>
-<p>Simpler regex to confirm presence</p>
-</td>
-</tr>
-<tr class='top-aligned-row context-row'>
-<td class='context-item-name'>MATCHER</td>
-<td>=</td>
-<td class='context-item-value'>/
-(?:
-(?:
-(?:
-(?<count>\d+|a\s)
-d
-(?<faces>\d+)
-(?<explodes>e)?
-)
-(?:
-\s
-(?<continuant>[+&wb])
-)
-?
-)
-|
-(?<constant>-?\d+)
-)
-/ix.freeze</td>
-<td>&nbsp;</td>
-<td class='context-item-desc'>
-<p>Grouped regex for meaning extraction</p>
+<p>Detect hex couplets</p>
 </td>
 </tr>
 </table>
@@ -151,7 +170,7 @@ d
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-all_hex_couplets-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-all_hex_couplets-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 73</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_hex_couplets</span>&#x000A;  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@all_hex_couplets</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@all_hex_couplets</span>&#x000A;&#x000A;  <span class="ruby-identifier">prefixes</span> = <span class="ruby-node">%w[0 1 2 3]</span>&#x000A;  <span class="ruby-identifier">suffixes</span> = ((<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">9</span>).<span class="ruby-identifier">to_a</span> <span class="ruby-operator">+</span> (<span class="ruby-string">&#39;a&#39;</span><span class="ruby-operator">..</span><span class="ruby-string">&#39;d&#39;</span>).<span class="ruby-identifier">to_a</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_s</span>)&#x000A;&#x000A;  <span class="ruby-ivar">@all_hex_couplets</span> = <span class="ruby-identifier">prefixes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pf</span><span class="ruby-operator">|</span> <span class="ruby-identifier">suffixes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">sf</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pf</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sf</span> } }&#x000A;                              .<span class="ruby-identifier">flatten</span>&#x000A;                              .<span class="ruby-identifier">append</span>(<span class="ruby-string">&#39;1e&#39;</span>)&#x000A;                              .<span class="ruby-identifier">append</span>(<span class="ruby-string">&#39;3e&#39;</span>)&#x000A;                              .<span class="ruby-identifier">sort</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-all_hex_couplets-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 94</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">all_hex_couplets</span>&#x000A;  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@all_hex_couplets</span> <span class="ruby-keyword">if</span> <span class="ruby-ivar">@all_hex_couplets</span>&#x000A;&#x000A;  <span class="ruby-identifier">prefixes</span> = <span class="ruby-node">%w[a b c d]</span>&#x000A;  <span class="ruby-identifier">suffixes</span> = (<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">13</span>).<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">16</span>) }&#x000A;&#x000A;  <span class="ruby-ivar">@all_hex_couplets</span> = <span class="ruby-identifier">prefixes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pf</span><span class="ruby-operator">|</span> <span class="ruby-identifier">suffixes</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">sf</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pf</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">sf</span> } }&#x000A;                              .<span class="ruby-identifier">flatten</span>&#x000A;                              .<span class="ruby-identifier">append</span>(<span class="ruby-string">&#39;be&#39;</span>)&#x000A;                              .<span class="ruby-identifier">append</span>(<span class="ruby-string">&#39;de&#39;</span>)&#x000A;                              .<span class="ruby-identifier">sort</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-call'>
@@ -170,26 +189,45 @@ d
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-call-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-call-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 47</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">call</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">parse_dice</span>(<span class="ruby-identifier">scan</span>(<span class="ruby-identifier">input</span>))&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-call-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 53</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">call</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">input</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-constant">HEX_FINDER</span>&#x000A;    [<span class="ruby-value">:card</span>, <span class="ruby-identifier">parse_hex_couplet</span>(<span class="ruby-identifier">input</span>)]&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-constant">CARD_STRING</span>&#x000A;    [<span class="ruby-value">:card</span>, <span class="ruby-identifier">parse_card_string</span>(<span class="ruby-identifier">input</span>)]&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-constant">DICE_FINDER</span>&#x000A;    [<span class="ruby-value">:dice</span>, <span class="ruby-identifier">parse_dice</span>(<span class="ruby-identifier">input</span>)]&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-node">%(&quot;#{input}&quot; could not be parsed)</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method public-class' id='method-method-c-parse_card_string'>
+<a name='method-c-parse_card_string'></a>
+<div class='synopsis'>
+<span class='name'>parse_card_string</span>
+<span class='arguments'>(str)</span>
+
+</div>
+<div class='description'>
+
+<p>Takes the card <code>str</code> and extracts its value and suit</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-parse_card_string-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-c-parse_card_string-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 87</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">parse_card_string</span>(<span class="ruby-identifier">str</span>)&#x000A;  <span class="ruby-identifier">card</span> = <span class="ruby-constant">CARD_STRING</span>.<span class="ruby-identifier">match</span>(<span class="ruby-identifier">str</span>).<span class="ruby-identifier">captures</span>&#x000A;  { <span class="ruby-value">value:</span> <span class="ruby-identifier">cast_card_value</span>(<span class="ruby-identifier">card</span>[<span class="ruby-value">0</span>]), <span class="ruby-value">suit:</span> <span class="ruby-identifier">cast_card_suit</span>(<span class="ruby-identifier">card</span>[<span class="ruby-value">1</span>]) }&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-parse_dice'>
 <a name='method-c-parse_dice'></a>
 <div class='synopsis'>
 <span class='name'>parse_dice</span>
-<span class='arguments'>(groups)</span>
+<span class='arguments'>(input)</span>
 
 </div>
 <div class='description'>
 
-<p>Takes in the <code>groups</code> yielded from the <a href="StringParser.html"><code>StringParser</code></a> and converts them into dice and dice pools</p>
+<p>Takes in the <code>input</code> yielded from the <a href="StringParser.html"><code>StringParser</code></a> and converts them into dice and dice pool structures</p>
 
 </div>
 <div class='source'>
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-parse_dice-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-parse_dice-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 53</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">parse_dice</span>(<span class="ruby-identifier">groups</span>)&#x000A;  <span class="ruby-identifier">groups</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">terms</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">dice</span> = <span class="ruby-identifier">terms</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">term</span><span class="ruby-operator">|</span>&#x000A;      <span class="ruby-identifier">dice_cast</span>(<span class="ruby-identifier">term</span>)&#x000A;    <span class="ruby-keyword">end</span>&#x000A;&#x000A;    <span class="ruby-keyword">next</span> <span class="ruby-identifier">dice</span>.<span class="ruby-identifier">first</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">dice</span>.<span class="ruby-identifier">one?</span>&#x000A;&#x000A;    <span class="ruby-constant">DicePool</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dice</span>, <span class="ruby-identifier">terms</span>.<span class="ruby-identifier">first</span>[<span class="ruby-value">:continuant</span>] <span class="ruby-operator">||</span> <span class="ruby-value">:sum</span>)&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-parse_dice-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 68</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">parse_dice</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">tokenize</span>(<span class="ruby-identifier">input</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">groups</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">groups</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">term</span><span class="ruby-operator">|</span>&#x000A;      <span class="ruby-identifier">cast_capture_values</span>(<span class="ruby-identifier">term</span>)&#x000A;    <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-class' id='method-method-c-parse_hex_couplet'>
@@ -208,26 +246,7 @@ d
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-parse_hex_couplet-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-parse_hex_couplet-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 66</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">parse_hex_couplet</span>(<span class="ruby-identifier">hex</span>)&#x000A;  <span class="ruby-identifier">hc</span> = <span class="ruby-identifier">hex</span>.<span class="ruby-identifier">chars</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">to_i</span>(<span class="ruby-value">16</span>) }&#x000A;  { <span class="ruby-value">suit:</span> <span class="ruby-constant">Card</span><span class="ruby-operator">::</span><span class="ruby-constant">SUIT_ORDERING</span>.<span class="ruby-identifier">key</span>(<span class="ruby-identifier">hc</span>[<span class="ruby-value">0</span>]), <span class="ruby-value">value:</span> <span class="ruby-identifier">hc</span>[<span class="ruby-value">1</span>] }&#x000A;<span class="ruby-keyword">end</span></pre>
-</div>
-</div>
-<div class='method public-class' id='method-method-c-scan'>
-<a name='method-c-scan'></a>
-<div class='synopsis'>
-<span class='name'>scan</span>
-<span class='arguments'>(input)</span>
-
-</div>
-<div class='description'>
-
-<p>Tokenizes and casts the capture values</p>
-
-</div>
-<div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-scan-source&#39;); return false'>
-[show source]
-</a>
-<pre id='method-c-scan-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 87</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">scan</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">tokenize</span>(<span class="ruby-identifier">input</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">groups</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">groups</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">term</span><span class="ruby-operator">|</span>&#x000A;      <span class="ruby-identifier">cast_capture_values</span>(<span class="ruby-identifier">term</span>)&#x000A;    <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-parse_hex_couplet-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 77</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">parse_hex_couplet</span>(<span class="ruby-identifier">hex</span>)&#x000A;  <span class="ruby-identifier">hc</span> = [&#x000A;    <span class="ruby-identifier">hex</span>.<span class="ruby-identifier">chars</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">to_i</span>(<span class="ruby-value">16</span>) <span class="ruby-operator">-</span> <span class="ruby-value">10</span>,&#x000A;    <span class="ruby-identifier">hex</span>.<span class="ruby-identifier">chars</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">to_i</span>(<span class="ruby-value">16</span>)&#x000A;  ]&#x000A;&#x000A;  { <span class="ruby-value">suit:</span> <span class="ruby-constant">Card</span><span class="ruby-operator">::</span><span class="ruby-constant">SUIT_ORDERING</span>.<span class="ruby-identifier">key</span>(<span class="ruby-identifier">hc</span>[<span class="ruby-value">0</span>]), <span class="ruby-value">value:</span> <span class="ruby-identifier">hc</span>[<span class="ruby-value">1</span>], <span class="ruby-value">type:</span> <span class="ruby-value">:card</span> }&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <h2>Private Class methods</h2>
@@ -247,26 +266,45 @@ d
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-cast_capture_values-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-cast_capture_values-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 112</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cast_capture_values</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">input</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ky</span>, <span class="ruby-identifier">vl</span><span class="ruby-operator">|</span>&#x000A;    [<span class="ruby-identifier">ky</span>, <span class="ruby-constant">FILTER</span>[<span class="ruby-identifier">ky</span>].<span class="ruby-identifier">call</span>(<span class="ruby-identifier">vl</span>)]&#x000A;  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">to_h</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-cast_capture_values-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 139</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cast_capture_values</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">input</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">ky</span>, <span class="ruby-identifier">vl</span><span class="ruby-operator">|</span>&#x000A;    [<span class="ruby-identifier">ky</span>, <span class="ruby-constant">FILTER</span>[<span class="ruby-identifier">ky</span>].<span class="ruby-identifier">call</span>(<span class="ruby-identifier">vl</span>)]&#x000A;  <span class="ruby-keyword">end</span>.<span class="ruby-identifier">to_h</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
-<div class='method private-class' id='method-method-c-dice_cast'>
-<a name='method-c-dice_cast'></a>
+<div class='method private-class' id='method-method-c-cast_card_suit'>
+<a name='method-c-cast_card_suit'></a>
 <div class='synopsis'>
-<span class='name'>dice_cast</span>
-<span class='arguments'>(term)</span>
+<span class='name'>cast_card_suit</span>
+<span class='arguments'>(arg)</span>
 
 </div>
 <div class='description'>
 
-<p>Casts an individual hash <code>term</code> into its representation as either a <a href="ConstantValue.html"><code>ConstantValue</code></a>, <a href="Dice.html"><code>Dice</code></a>, or <a href="DicePool.html"><code>DicePool</code></a></p>
+<p>Casts the suit <code>arg</code> into a suit symbol</p>
 
 </div>
 <div class='source'>
-<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-dice_cast-source&#39;); return false'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-cast_card_suit-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-dice_cast-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 99</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">dice_cast</span>(<span class="ruby-identifier">term</span>)&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">term</span>[<span class="ruby-value">:constant</span>]&#x000A;    <span class="ruby-constant">ConstantValue</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">term</span>[<span class="ruby-value">:constant</span>])&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">term</span>[<span class="ruby-value">:count</span>] <span class="ruby-operator">==</span> <span class="ruby-value">1</span>&#x000A;    <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">term</span>)&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-constant">DicePool</span>.<span class="ruby-identifier">new</span>(&#x000A;      <span class="ruby-constant">Array</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">term</span>[<span class="ruby-value">:count</span>], <span class="ruby-identifier">term</span>).<span class="ruby-identifier">map!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">Dice</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">d</span>) }&#x000A;    )&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-cast_card_suit-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 110</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cast_card_suit</span>(<span class="ruby-identifier">arg</span>)&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">arg</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;s&#39;</span>&#x000A;    <span class="ruby-value">:spades</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;h&#39;</span>, <span class="ruby-string">&#39;r&#39;</span>&#x000A;    <span class="ruby-value">:hearts</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;d&#39;</span>&#x000A;    <span class="ruby-value">:diamonds</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-string">&#39;c&#39;</span>, <span class="ruby-string">&#39;b&#39;</span>&#x000A;    <span class="ruby-value">:clubs</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+</div>
+</div>
+<div class='method private-class' id='method-method-c-cast_card_value'>
+<a name='method-c-cast_card_value'></a>
+<div class='synopsis'>
+<span class='name'>cast_card_value</span>
+<span class='arguments'>(arg)</span>
+
+</div>
+<div class='description'>
+
+<p>Casts the value <code>arg</code> into a numerical value</p>
+
+</div>
+<div class='source'>
+<a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-cast_card_value-source&#39;); return false'>
+[show source]
+</a>
+<pre id='method-c-cast_card_value-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 124</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">cast_card_value</span>(<span class="ruby-identifier">arg</span>)&#x000A;  <span class="ruby-keyword">return</span> <span class="ruby-ivar">@cast_card_value</span>[<span class="ruby-identifier">arg</span>] <span class="ruby-keyword">if</span> <span class="ruby-ivar">@cast_card_value</span>&#x000A;&#x000A;  <span class="ruby-identifier">vals</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>, <span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">v</span>] = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">to_i</span> }&#x000A;&#x000A;  <span class="ruby-identifier">vals</span>[<span class="ruby-string">&#39;j&#39;</span>] = <span class="ruby-value">11</span>&#x000A;  <span class="ruby-identifier">vals</span>[<span class="ruby-string">&#39;q&#39;</span>] = <span class="ruby-value">12</span>&#x000A;  <span class="ruby-identifier">vals</span>[<span class="ruby-string">&#39;k&#39;</span>] = <span class="ruby-value">13</span>&#x000A;  <span class="ruby-identifier">vals</span>[<span class="ruby-string">&#39;f&#39;</span>] = <span class="ruby-value">14</span>&#x000A;&#x000A;  <span class="ruby-ivar">@cast_card_value</span> = <span class="ruby-identifier">vals</span>&#x000A;  <span class="ruby-ivar">@cast_card_value</span>[<span class="ruby-identifier">arg</span>]&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method private-class' id='method-method-c-tokenize'>
@@ -278,14 +316,14 @@ d
 </div>
 <div class='description'>
 
-<p>Converts input strings into hash values for object instantiation</p>
+<p>Converts <code>input</code> strings into hash values for object instantiation</p>
 
 </div>
 <div class='source'>
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-tokenize-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-tokenize-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 119</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tokenize</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">input</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;, &#39;</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">group</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">group</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-constant">FINDER</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">term</span><span class="ruby-operator">|</span>&#x000A;      <span class="ruby-identifier">term</span>.<span class="ruby-identifier">match</span>(<span class="ruby-constant">MATCHER</span>).<span class="ruby-identifier">named_captures</span>.<span class="ruby-identifier">transform_keys</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_sym</span>)&#x000A;    <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-tokenize-source'><span class="ruby-comment"># File lib/gaming_dice/string_parser.rb, line 146</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">tokenize</span>(<span class="ruby-identifier">input</span>)&#x000A;  <span class="ruby-identifier">input</span>.<span class="ruby-identifier">split</span>(<span class="ruby-string">&#39;, &#39;</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">group</span><span class="ruby-operator">|</span>&#x000A;    <span class="ruby-identifier">group</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-constant">DICE_FINDER</span>).<span class="ruby-identifier">map</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">term</span><span class="ruby-operator">|</span>&#x000A;      <span class="ruby-identifier">term</span>.<span class="ruby-identifier">match</span>(<span class="ruby-constant">DICE_MATCHER</span>).<span class="ruby-identifier">named_captures</span>.<span class="ruby-identifier">transform_keys</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:to_sym</span>)&#x000A;    <span class="ruby-keyword">end</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 </div>
