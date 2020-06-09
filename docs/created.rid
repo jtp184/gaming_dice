@@ -1,6 +1,6 @@
-Tue, 09 Jun 2020 15:38:58 -0700
+Tue, 09 Jun 2020 15:59:04 -0700
 ./gaming_dice.gemspec	Sat, 06 Jun 2020 15:52:54 -0700
-./README.md	Tue, 09 Jun 2020 15:25:29 -0700
+./README.md	Tue, 09 Jun 2020 15:41:30 -0700
 ./Rakefile	Tue, 09 Jun 2020 03:47:45 -0700
 ./lib/gaming_dice.rb	Tue, 09 Jun 2020 14:27:36 -0700
 ./lib/gaming_dice/card_deck.rb	Tue, 09 Jun 2020 15:12:10 -0700
@@ -8,7 +8,7 @@ Tue, 09 Jun 2020 15:38:58 -0700
 ./lib/gaming_dice/card.rb	Tue, 09 Jun 2020 14:56:07 -0700
 ./lib/gaming_dice/patches.rb	Sun, 07 Jun 2020 17:10:36 -0700
 ./lib/gaming_dice/dice.rb	Tue, 09 Jun 2020 15:37:26 -0700
-./lib/gaming_dice/dice_pool.rb	Sun, 07 Jun 2020 16:52:53 -0700
+./lib/gaming_dice/dice_pool.rb	Tue, 09 Jun 2020 15:58:07 -0700
 ./lib/gaming_dice/version.rb	Tue, 09 Jun 2020 15:38:54 -0700
 ./lib/gaming_dice/string_parser.rb	Tue, 09 Jun 2020 15:34:48 -0700
 ./Gemfile	Thu, 04 Jun 2020 04:19:13 -0700

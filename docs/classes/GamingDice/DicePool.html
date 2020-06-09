@@ -123,7 +123,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-c-new-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-c-new-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 19</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">initarg</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">rul</span> = <span class="ruby-value">:sum</span>)&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">initarg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)&#x000A;    <span class="ruby-ivar">@dice</span> = <span class="ruby-identifier">initarg</span>&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">initarg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Dice</span>)&#x000A;    <span class="ruby-ivar">@dice</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">initarg</span>)&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-ivar">@rule</span> = <span class="ruby-identifier">rul</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-c-new-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 19</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">initarg</span> = <span class="ruby-keyword">nil</span>, <span class="ruby-identifier">rul</span> = <span class="ruby-value">:sum</span>)&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">initarg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">NilClass</span>)&#x000A;    <span class="ruby-ivar">@dice</span> = []&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">initarg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)&#x000A;    <span class="ruby-ivar">@dice</span> = <span class="ruby-identifier">initarg</span>&#x000A;  <span class="ruby-keyword">elsif</span> <span class="ruby-identifier">initarg</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Dice</span>)&#x000A;    <span class="ruby-ivar">@dice</span> = <span class="ruby-constant">Array</span>(<span class="ruby-identifier">initarg</span>)&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-ivar">@rule</span> = <span class="ruby-identifier">rul</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <h2>Public Instance methods</h2>
@@ -143,7 +143,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-returns_one-3F-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-returns_one-3F-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 85</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">returns_one?</span>&#x000A;  <span class="ruby-identifier">rule</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:each</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-returns_one-3F-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 87</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">returns_one?</span>&#x000A;  <span class="ruby-identifier">rule</span> <span class="ruby-operator">!=</span> <span class="ruby-value">:each</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-roll'>
@@ -162,7 +162,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-roll-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-roll-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 43</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">roll</span>&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">rule</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:each</span>&#x000A;    <span class="ruby-identifier">roll_all</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:sum</span>&#x000A;    <span class="ruby-identifier">total</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:worst</span>&#x000A;    <span class="ruby-identifier">take_worst</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:best</span>&#x000A;    <span class="ruby-identifier">take_best</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-roll-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 45</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">roll</span>&#x000A;  <span class="ruby-keyword">case</span> <span class="ruby-identifier">rule</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:each</span>&#x000A;    <span class="ruby-identifier">roll_all</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:sum</span>&#x000A;    <span class="ruby-identifier">total</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:worst</span>&#x000A;    <span class="ruby-identifier">take_worst</span>&#x000A;  <span class="ruby-keyword">when</span> <span class="ruby-value">:best</span>&#x000A;    <span class="ruby-identifier">take_best</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-roll_all'>
@@ -181,7 +181,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-roll_all-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-roll_all-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 57</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">roll_all</span>&#x000A;  <span class="ruby-identifier">dice</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:roll</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-roll_all-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 59</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">roll_all</span>&#x000A;  <span class="ruby-identifier">dice</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:roll</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-rule-3D'>
@@ -200,7 +200,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-rule-3D-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-rule-3D-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 30</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">rule=</span>(<span class="ruby-identifier">nu_rule</span>)&#x000A;  <span class="ruby-keyword">unless</span> <span class="ruby-constant">RULES</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">nu_rule</span>)&#x000A;    <span class="ruby-identifier">str</span> = <span class="ruby-node">%(&quot;#{nu_rule}&quot;)</span>&#x000A;    <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39; is not one of &#39;</span>&#x000A;    <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RULES</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:inspect</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;, &#39;</span>)&#x000A;&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-identifier">str</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-ivar">@rule</span> = <span class="ruby-identifier">nu_rule</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-rule-3D-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 32</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">rule=</span>(<span class="ruby-identifier">nu_rule</span>)&#x000A;  <span class="ruby-keyword">unless</span> <span class="ruby-constant">RULES</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">nu_rule</span>)&#x000A;    <span class="ruby-identifier">str</span> = <span class="ruby-node">%(&quot;#{nu_rule}&quot;)</span>&#x000A;    <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-string">&#39; is not one of &#39;</span>&#x000A;    <span class="ruby-identifier">str</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">RULES</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:inspect</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;, &#39;</span>)&#x000A;&#x000A;    <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-identifier">str</span>&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-ivar">@rule</span> = <span class="ruby-identifier">nu_rule</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-take_best'>
@@ -219,7 +219,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-take_best-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-take_best-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 67</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">take_best</span>&#x000A;  <span class="ruby-identifier">roll_all</span>.<span class="ruby-identifier">max</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-take_best-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 69</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">take_best</span>&#x000A;  <span class="ruby-identifier">roll_all</span>.<span class="ruby-identifier">max</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-take_worst'>
@@ -238,7 +238,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-take_worst-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-take_worst-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 72</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">take_worst</span>&#x000A;  <span class="ruby-identifier">roll_all</span>.<span class="ruby-identifier">min</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-take_worst-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 74</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">take_worst</span>&#x000A;  <span class="ruby-identifier">roll_all</span>.<span class="ruby-identifier">min</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-to_int'>
@@ -257,7 +257,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-to_int-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-to_int-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 78</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_int</span>&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;Would return an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">returns_one?</span>&#x000A;&#x000A;  <span class="ruby-identifier">roll</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-to_int-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 80</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_int</span>&#x000A;  <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-string">&#39;Would return an Array&#39;</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">returns_one?</span>&#x000A;&#x000A;  <span class="ruby-identifier">roll</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-total'>
@@ -276,7 +276,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-total-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-total-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 62</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">total</span>&#x000A;  <span class="ruby-identifier">roll_all</span>.<span class="ruby-identifier">reduce</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:+</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-total-source'><span class="ruby-comment"># File lib/gaming_dice/dice_pool.rb, line 64</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">total</span>&#x000A;  <span class="ruby-identifier">roll_all</span>.<span class="ruby-identifier">reduce</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:+</span>)&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 </div>
