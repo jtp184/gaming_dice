@@ -13,11 +13,13 @@ module GamingDice
     # Determines the rule for roll results
     attr_reader :rule
 
-    def_delegators :@dice, :each, :count, :map, :<<
+    def_delegators :@dice, :each, :count, :map, :<<, :empty?, :one?
 
     # Uses the +initarg+ to populate the pool
     def initialize(initarg = nil, rul = :sum)
-      if initarg.is_a?(Array)
+      if initarg.is_a?(NilClass)
+        @dice = []
+      elsif initarg.is_a?(Array)
         @dice = initarg
       elsif initarg.is_a?(Dice)
         @dice = Array(initarg)
