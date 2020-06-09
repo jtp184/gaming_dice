@@ -2,7 +2,7 @@ module GamingDice
   # Handles extracting dice values from strings
   class StringParser
     # Simpler regex to confirm presence
-    DICE_FINDER = /(?:(?:(?:(?:\d+|a\s)d(?:\d+)(?:e?))(?:\s(?:[+&wb]))?)|(?:-?\d+\b))/i.freeze
+    DICE_FINDER = /(?:(?:(?:(?:\d+|a\s)d(?:\d+)(?:e?))(?:\s?(?:[+&wb]))?)|(?:-?\d+\b))/i.freeze
 
     # Grouped regex for meaning extraction
     DICE_MATCHER = /
@@ -15,7 +15,7 @@ module GamingDice
           (?<explodes>e)?
           )
         (?:
-          \s
+          \s?
           (?<continuant>[+&wb])
           )
         ?

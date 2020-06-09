@@ -50,7 +50,8 @@ module GamingDice
           Dice.new(term)
         else
           DicePool.new(
-            Array.new(term[:count], term).map! { |d| Dice.new(d) }
+            Array.new(term[:count], term).map! { |d| Dice.new(d) },
+            term[:continuant] || :sum
           )
         end
       end
