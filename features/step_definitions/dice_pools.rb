@@ -2,13 +2,21 @@ Given(/create a dice pool/i) do
   @dice = GamingDice.('3d6')
 end
 
-Given(/resulting dice pool/i) do
+Given(/no arguments when creating the dice pool/i) do
+  @dice = GamingDice::DicePool.new
+end
+
+Given(/check the resulting dice pool/i) do
   @result = @dice
 end
 
 When(/roll the pool/i) do
   @result = @dice.map(&:roll)
   @result.one? ? @result.first : @result
+end
+
+Then(/resulting dice pool is empty/i) do
+  expect(@result).to be_empty
 end
 
 Given(/dice argument to the dice pool/i) do

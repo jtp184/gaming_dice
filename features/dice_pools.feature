@@ -6,6 +6,13 @@ Scenario: Dice Pools can be created with a dice argument
 	When I check the resulting dice pool
 	Then the result is a valid dice pool
 
+Scenario: Dice pools can be created empty
+	Given I create a dice pool
+	But I give no arguments when creating the dice pool
+	When I check the resulting dice pool
+	Then the result is a valid dice pool
+	And the resulting dice pool is empty
+
 Scenario: Dice Pools can be created from multiple count
 	Given I input the dice strings
 		| 3d6   |
