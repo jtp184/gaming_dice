@@ -1,5 +1,9 @@
-Given(/have an integer/i) do
+Given(/have the number one/i) do
   @int = 1
+end
+
+Given(/have a number/i) do
+  @int = rand(2..10)
 end
 
 Given(/send the message "(\w*)" to the integer/) do |string|
