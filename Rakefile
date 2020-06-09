@@ -12,6 +12,7 @@ task :docs do
 end
 
 task prep: %i[test docs]
+task go: %i[test bump docs]
 
 task :reinstall do
   sh 'gem uninstall gaming_dice'
