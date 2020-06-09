@@ -15,7 +15,8 @@ end
 
 Given(/input the hex strings/i) do |table|
   strs = table.raw.flatten
-  @card = strs.map { |s| GamingDice::Card.parse_hex_couplet(s) }
+  @card = strs.map { |s| GamingDice::StringParser.parse_hex_couplet(s) }
+              .map { |s| GamingDice::Card.new(s) }
 end
 
 Given(/have a high card/i) do
