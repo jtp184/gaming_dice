@@ -24,21 +24,22 @@ module GamingDice
       discard_pile.unshift(in_play.shift) until in_play.empty?
 
       if count <= draw_pile.length
-        count.times { draw }
+        draw(count)
       else
         remain = count - draw_pile.length
 
-        draw_pile.length.times { draw }
+        draw(draw_pile.length)
         shuffle
-        remain.times { draw }
+        draw(remain)
       end
 
       in_play
     end
 
     # Draws a single card from the draw_pile to the in_play pile if possible
-    def draw
-      in_play.unshift(draw_pile.shift) unless draw_pile.empty?
+    def draw(count = 1)
+      count.times { in_play.unshift(draw_pile.shift) unless draw_pile.empty? }
+      in_play
     end
 
     # Moves all cards from the discard_pile to the draw_pile and then shuffles
