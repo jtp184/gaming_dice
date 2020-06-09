@@ -98,7 +98,7 @@ module GamingDice
       # ConstantValue, Dice, or DicePool
       def dice_cast(term)
         if term[:constant]
-          ConstantValue.new(term)
+          ConstantValue.new(term[:constant])
         elsif term[:count] == 1
           Dice.new(term)
         else

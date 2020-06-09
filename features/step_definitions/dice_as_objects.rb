@@ -1,4 +1,4 @@
-Given(/create a dice/i) do
+Given(/create a dice$/i) do
   @dice = FactoryBot.build(:dice)
 end
 
@@ -34,6 +34,18 @@ end
 
 When(/print the dice/i) do
   @result = @dice.to_s
+end
+
+When(/ask for (?:the) integer representation/i) do
+  begin
+    @result = if @dice.one?
+                @dice.first.to_int
+              else
+                @dice.map(&:to_int)
+              end
+  rescue StandardError => e
+    @exception = e
+  end
 end
 
 Then("the result should be a simple string") do
