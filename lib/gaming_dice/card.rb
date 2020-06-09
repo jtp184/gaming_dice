@@ -41,45 +41,12 @@ module GamingDice
 
       # Pulls a specific card by using a shorthand notation of "<value><suit>"
       def draw_a(card)
-        arg = /(\d+|k|q|j|f)(s|h|d|c|b|r)/.match(card).captures
-
-        Card.new(value: cast_value(arg[0]), suit: cast_suit(arg[1]))
+        Card.new(StringParser.parse_card_string(card))
       end
 
       # Draws a card based on +hex+ couplet
       def draw_hex(hex)
         Card.new(StringParser.parse_hex_couplet(hex))
-      end
-
-      private
-
-      # Casts the suit +arg+ into a suit symbol
-      def cast_suit(arg)
-        case arg
-        when 's'
-          :spades
-        when 'h', 'r'
-          :hearts
-        when 'd'
-          :diamonds
-        when 'c', 'b'
-          :clubs
-        end
-      end
-
-      # Casts the value +arg+ into a numerical value
-      def cast_value(arg)
-        return @value_cast[arg] if @value_cast
-
-        vals = Hash.new { |h, v| h[v] = v.to_i }
-
-        vals['j'] = 11
-        vals['q'] = 12
-        vals['k'] = 13
-        vals['f'] = 14
-
-        @value_cast = vals
-        @value_cast[arg]
       end
     end
 
