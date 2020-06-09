@@ -2,6 +2,24 @@ Given(/i have a card/i) do
   @card = GamingDice::Card.draw
 end
 
+Then(/have drawn a card/i) do
+  expect(@card).not_to be_nil
+end
+
+Given(/draw a card directly/i) do
+  @card = GamingDice.draw
+end
+
+Given(/draw a specific card/i) do
+  @specific_card = %w[1c 4d 13h 5s].sample
+  @card = GamingDice.draw(@specific_card)
+end
+
+Then(/card i meant to/i) do
+  check = [@card.value, @card.suit.to_s.chars.first].join
+  expect(check).to eq(@specific_card)
+end
+
 Given(/i have the following cards/i) do |table|
   cards = table.raw
   cards.shift

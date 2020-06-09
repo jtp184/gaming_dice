@@ -1,5 +1,14 @@
 Feature: Playing cards can be persisted as objects
 
+Scenario: Can draw a card directly from the module
+Given I draw a card directly
+Then I have drawn a card
+
+Scenario: Can draw a specific card directly from the module
+Given I draw a card directly
+But I draw a specific card
+Then I have drawn the card I meant to
+
 Scenario: Cards know their suit
 	Given I have the following cards
 		| Value | Suit |
