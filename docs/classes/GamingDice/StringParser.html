@@ -92,7 +92,7 @@ Superclass:
 <tr class='top-aligned-row context-row'>
 <td class='context-item-name'>DICE_FINDER</td>
 <td>=</td>
-<td class='context-item-value'>/(?:(?:(?:(?:\d+|a\s)d(?:\d+)(?:e?))(?:\s(?:[+&wb]))?)|(?:-?\d+\b))/i.freeze</td>
+<td class='context-item-value'>/(?:(?:(?:(?:\d+|a\s)d(?:\d+)(?:e?))(?:\s?(?:[+&wb]))?)|(?:-?\d+\b))/i.freeze</td>
 <td>&nbsp;</td>
 <td class='context-item-desc'>
 <p>Simpler regex to confirm presence</p>
@@ -111,7 +111,7 @@ d
 (?<explodes>e)?
 )
 (?:
-\s
+\s?
 (?<continuant>[+&wb])
 )
 ?
