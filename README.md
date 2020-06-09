@@ -26,11 +26,12 @@ Passing in a decodable string results in dice or dice pools. All of these are va
 
 ```
 1d6
-3d10+3
 a d20
-1d12e, 1d6e
 3d6 + 1d4
+3d10 + 3
 1d20 & 3d10
+1d12e b 1d6e
+1d20 w 1d20
 ```
 
 You can also use the .roll function if you just want results
