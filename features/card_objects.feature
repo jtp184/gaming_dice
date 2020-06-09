@@ -5,9 +5,28 @@ Given I draw a card directly
 Then I have drawn a card
 
 Scenario: Can draw a specific card directly from the module
-Given I draw a card directly
-But I draw a specific card
-Then I have drawn the card I meant to
+	Given I draw a card directly
+	But I draw a specific card
+	Then I have drawn the card I meant to
+
+Scenario: Cards know how to represent themselves as strings
+	Given I have the card "Ace of Spades"
+	When I get the string representation of the card
+	Then the result is the string "Ace of Spades"
+
+Scenario: Cards in excess of real values still instantiate
+	Given I have the following cards
+		| Value | Suit |
+		| 15    | s    | 
+		| 20    | h    | 
+		| 27    | d    | 
+		| 100   | c    |
+	And I send each card the message 'itself'
+	Then the resulting cards are named
+		| Trump of Spades |
+		| Trump of Hearts |
+		| Trump of Diamonds |
+		| Trump of Clubs |
 
 Scenario: Cards know their suit
 	Given I have the following cards

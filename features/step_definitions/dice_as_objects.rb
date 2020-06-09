@@ -33,7 +33,7 @@ Then(/receive an array of (?:rollables|dice|dice pools)/i) do
 end
 
 When(/print the dice/i) do
-  @result = @dice.to_s
+  @result = @dice.to_str
 end
 
 When(/ask for (?:the) integer representation/i) do

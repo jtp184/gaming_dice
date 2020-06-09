@@ -15,6 +15,14 @@ Given(/draw a specific card/i) do
   @card = GamingDice.draw(@specific_card)
 end
 
+When(/string representation of the card/i) do
+  @result = @card.to_str
+end
+
+Then(/result is the string (?:['"](.*)['"])/i) do |str|
+  expect(@result).to eql(str)
+end
+
 Then(/card i meant to/i) do
   check = [@card.value, @card.suit.to_s.chars.first].join
   expect(check).to eq(@specific_card)
@@ -95,7 +103,7 @@ end
 
 When(/ask for the value of my cards/i) do
   pickr = @result || @card
-  @result = pickr.map(&:value)
+  @result = pickr.map(&:to_i)
 end
 
 When(/ask for the suit of the card/i) do
