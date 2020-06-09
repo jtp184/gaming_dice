@@ -19,7 +19,7 @@ Given(/draw a specific card/i) do
   @specific_card_method = ex.keys.sample
   @specific_card = ex[@specific_card_method].sample
 
-  @card = GamingDice.call(@specific_card)
+  @card = GamingDice.draw(@specific_card)
 end
 
 When(/string representation of the card/i) do
@@ -84,12 +84,12 @@ end
 
 Given(/input the shorthand strings/i) do |table|
   strs = table.raw.flatten
-  @card = strs.map { |s| GamingDice.draw(s) }
+  @card = strs.map { |s| GamingDice.call(s) }
 end
 
 Given(/input the hex strings/i) do |table|
   strs = table.raw.flatten
-  @card = strs.map { |s| GamingDice.draw(s) }
+  @card = strs.map { |s| GamingDice.call(s) }
 end
 
 Given(/have a high card/i) do

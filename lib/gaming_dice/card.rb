@@ -54,7 +54,7 @@ module GamingDice
     # Emits the card's suit and value as a 2-character hexadecimal string.
     # The first place is the suit's ordering, and the second is the value.
     def hex_couplet
-      [SUIT_ORDERING[suit], value].map { |h| h.to_s(16) }.join
+      [SUIT_ORDERING[suit] + 10, value].map { |h| h.to_s(16) }.join
     end
 
     # True if #color returns :red
