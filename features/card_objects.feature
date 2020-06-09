@@ -84,10 +84,10 @@ Scenario: Creating by shorthand
 
 Scenario: Creating by hex couplet
 	Given I input the hex strings
-		| 0a |
-		| 12 |
-		| 39 |
-		| 2b |
+		| aa |
+		| b2 |
+		| d9 |
+		| cb |
 	Then I should receive cards named
 		| Ten of Spades     |
 		| Two of Hearts      |

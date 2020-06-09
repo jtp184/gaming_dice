@@ -3,7 +3,11 @@ Given(/create a dice$/i) do
 end
 
 Given(/input the dice string (?:["'](.*)["'])/) do |string|
-  @dice = GamingDice.call(string)
+  begin
+    @dice = GamingDice.call(string)
+  rescue StandardError => e
+    @exception = e
+  end
 end
 
 Given(/input (?:the)? dice strings/i) do |strings|

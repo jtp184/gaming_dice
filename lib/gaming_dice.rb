@@ -8,9 +8,16 @@ require 'gaming_dice/card_deck'
 
 # Used for polyhedral dice and their rolls.
 module GamingDice
-  # Syntactic sugar. Aliases to Dice.call and passes the +var+
+  # Syntactic sugar. Aliases to StringParser.call and passes the +var+
   def self.call(var)
-    StringParser.call(var)
+    type, res = StringParser.call(var)
+
+    case type
+    when :dice
+      Dice.create(res)
+    when :card
+      Card.new(res)
+    end
   end
 
   # Syntactic sugar. Aliases to Dice.roll and passes the +var+

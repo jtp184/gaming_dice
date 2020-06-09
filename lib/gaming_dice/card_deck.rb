@@ -13,7 +13,7 @@ module GamingDice
       @discard_pile = []
       @in_play = []
       @draw_pile = StringParser.all_hex_couplets.map do |hex|
-        Card.draw_hex(hex)
+        Card.draw_a(hex)
       end
 
       shuffle

@@ -17,12 +17,43 @@ module GamingDice
       @explodes = params.fetch(:explodes) { false }
     end
 
-    # The roll class method takes in a string +input+, and returns
-    # the roll results. If there's only once dice, it will return just one
-    # Integer as a result. Otherwise, it returns an array of results.
-    def self.roll(input)
-      res = StringParser.call(input).map(&:roll)
-      res.one? ? res.first : res
+    class << self
+      # The roll class method takes in a string +input+, and returns
+      # the roll results. If there's only once dice, it will return just one
+      # Integer as a result. Otherwise, it returns an array of results.
+      def roll(input)
+        _type, dices = StringParser.call(input)
+        res = create(dices).map(&:roll)
+
+        res.one? ? res.first : res
+      end
+
+      # Creates dice from the +groups+ returned by the string parser
+      def create(groups)
+        groups.map do |terms|
+          dice = terms.map { |term| dice_cast(term) }
+
+          next dice.first if dice.one?
+
+          DicePool.new(dice, terms.first[:continuant] || :sum)
+        end
+      end
+
+      private
+
+      # Casts an individual hash +term+ into its representation as either a
+      # ConstantValue, Dice, or DicePool
+      def dice_cast(term)
+        if term[:constant]
+          ConstantValue.new(term[:constant])
+        elsif term[:count] == 1
+          Dice.new(term)
+        else
+          DicePool.new(
+            Array.new(term[:count], term).map! { |d| Dice.new(d) }
+          )
+        end
+      end
     end
 
     # Calculates rolling the dice. Accounts for explosion, and flat bonuses.

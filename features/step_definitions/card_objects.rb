@@ -11,8 +11,15 @@ Given(/draw a card directly/i) do
 end
 
 Given(/draw a specific card/i) do
-  @specific_card = %w[1c 4d 13h 5s].sample
-  @card = GamingDice.draw(@specific_card)
+  ex = {
+    by_short: %w[1c 4d 11h 5s],
+    by_hex: %w[b2 ca a9 d3]
+  }
+
+  @specific_card_method = ex.keys.sample
+  @specific_card = ex[@specific_card_method].sample
+
+  @card = GamingDice.call(@specific_card)
 end
 
 When(/string representation of the card/i) do
@@ -24,7 +31,13 @@ Then(/result is the string (?:['"](.*)['"])/i) do |str|
 end
 
 Then(/card i meant to/i) do
-  check = [@card.value, @card.suit.to_s.chars.first].join
+  check = case @specific_card_method
+          when :by_short
+            [@card.value, @card.suit.to_s.chars.first].join
+          when :by_hex
+            @card.hex_couplet
+          end
+
   expect(check).to eq(@specific_card)
 end
 
@@ -56,7 +69,7 @@ end
 
 Given(/have the card (?:['"](.*)['"])/i) do |card_name|
   all_cards = GamingDice::StringParser.all_hex_couplets
-                                      .map { |c| GamingDice::Card.draw_hex(c) }
+                                      .map { |c| GamingDice::Card.draw_a(c) }
 
   @card = all_cards.find { |c| c.to_s == card_name }
 end
@@ -71,12 +84,12 @@ end
 
 Given(/input the shorthand strings/i) do |table|
   strs = table.raw.flatten
-  @card = strs.map { |s| GamingDice::Card.draw_a(s) }
+  @card = strs.map { |s| GamingDice.draw(s) }
 end
 
 Given(/input the hex strings/i) do |table|
   strs = table.raw.flatten
-  @card = strs.map { |s| GamingDice::Card.draw_hex(s) }
+  @card = strs.map { |s| GamingDice.draw(s) }
 end
 
 Given(/have a high card/i) do

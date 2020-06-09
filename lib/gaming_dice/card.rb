@@ -34,19 +34,14 @@ module GamingDice
     class << self
       # Randomly draws a possible card
       def draw
-        piq = StringParser.all_hex_couplets.sample
-
-        Card.new(StringParser.parse_hex_couplet(piq))
+        _type, vs = StringParser.call(StringParser.all_hex_couplets.sample)
+        Card.new(vs)
       end
 
-      # Pulls a specific card by using a shorthand notation of "<value><suit>"
+      # Pulls a specific card by using a shorthand notation
       def draw_a(card)
-        Card.new(StringParser.parse_card_string(card))
-      end
-
-      # Draws a card based on +hex+ couplet
-      def draw_hex(hex)
-        Card.new(StringParser.parse_hex_couplet(hex))
+        _type, vs = StringParser.call(card)
+        Card.new(vs)
       end
     end
 
