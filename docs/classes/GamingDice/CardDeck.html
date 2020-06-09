@@ -133,14 +133,14 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-discard-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-discard-source'><span class="ruby-comment"># File lib/gaming_dice/card_deck.rb, line 52</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">discard</span>(<span class="ruby-identifier">card</span>)&#x000A;  <span class="ruby-identifier">discard_pile</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">in_play</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">card</span>))&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-discard-source'><span class="ruby-comment"># File lib/gaming_dice/card_deck.rb, line 53</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">discard</span>(<span class="ruby-identifier">card</span>)&#x000A;  <span class="ruby-identifier">discard_pile</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">in_play</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">card</span>))&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-draw'>
 <a name='method-i-draw'></a>
 <div class='synopsis'>
 <span class='name'>draw</span>
-<span class='arguments'>()</span>
+<span class='arguments'>(count = 1)</span>
 
 </div>
 <div class='description'>
@@ -152,7 +152,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-draw-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-draw-source'><span class="ruby-comment"># File lib/gaming_dice/card_deck.rb, line 40</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw</span>&#x000A;  <span class="ruby-identifier">in_play</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">shift</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">empty?</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-draw-source'><span class="ruby-comment"># File lib/gaming_dice/card_deck.rb, line 40</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw</span>(<span class="ruby-identifier">count</span> = <span class="ruby-value">1</span>)&#x000A;  <span class="ruby-identifier">count</span>.<span class="ruby-identifier">times</span> { <span class="ruby-identifier">in_play</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">shift</span>) <span class="ruby-keyword">unless</span> <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">empty?</span> }&#x000A;  <span class="ruby-identifier">in_play</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-draw_hand'>
@@ -171,7 +171,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-draw_hand-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-draw_hand-source'><span class="ruby-comment"># File lib/gaming_dice/card_deck.rb, line 23</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw_hand</span>(<span class="ruby-identifier">count</span> = <span class="ruby-value">1</span>)&#x000A;  <span class="ruby-identifier">discard_pile</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">in_play</span>.<span class="ruby-identifier">shift</span>) <span class="ruby-keyword">until</span> <span class="ruby-identifier">in_play</span>.<span class="ruby-identifier">empty?</span>&#x000A;&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">length</span>&#x000A;    <span class="ruby-identifier">count</span>.<span class="ruby-identifier">times</span> { <span class="ruby-identifier">draw</span> }&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-identifier">remain</span> = <span class="ruby-identifier">count</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">length</span>&#x000A;&#x000A;    <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">length</span>.<span class="ruby-identifier">times</span> { <span class="ruby-identifier">draw</span> }&#x000A;    <span class="ruby-identifier">shuffle</span>&#x000A;    <span class="ruby-identifier">remain</span>.<span class="ruby-identifier">times</span> { <span class="ruby-identifier">draw</span> }&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-identifier">in_play</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-draw_hand-source'><span class="ruby-comment"># File lib/gaming_dice/card_deck.rb, line 23</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">draw_hand</span>(<span class="ruby-identifier">count</span> = <span class="ruby-value">1</span>)&#x000A;  <span class="ruby-identifier">discard_pile</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">in_play</span>.<span class="ruby-identifier">shift</span>) <span class="ruby-keyword">until</span> <span class="ruby-identifier">in_play</span>.<span class="ruby-identifier">empty?</span>&#x000A;&#x000A;  <span class="ruby-keyword">if</span> <span class="ruby-identifier">count</span> <span class="ruby-operator">&lt;=</span> <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">length</span>&#x000A;    <span class="ruby-identifier">draw</span>(<span class="ruby-identifier">count</span>)&#x000A;  <span class="ruby-keyword">else</span>&#x000A;    <span class="ruby-identifier">remain</span> = <span class="ruby-identifier">count</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">length</span>&#x000A;&#x000A;    <span class="ruby-identifier">draw</span>(<span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">length</span>)&#x000A;    <span class="ruby-identifier">shuffle</span>&#x000A;    <span class="ruby-identifier">draw</span>(<span class="ruby-identifier">remain</span>)&#x000A;  <span class="ruby-keyword">end</span>&#x000A;&#x000A;  <span class="ruby-identifier">in_play</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 <div class='method public-instance' id='method-method-i-shuffle'>
@@ -190,7 +190,7 @@ Superclass:
 <a class='source-toggle' href='#' onclick='toggleCode(&#39;method-i-shuffle-source&#39;); return false'>
 [show source]
 </a>
-<pre id='method-i-shuffle-source'><span class="ruby-comment"># File lib/gaming_dice/card_deck.rb, line 45</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">shuffle</span>&#x000A;  <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">discard_pile</span>.<span class="ruby-identifier">shift</span>) <span class="ruby-keyword">until</span> <span class="ruby-identifier">discard_pile</span>.<span class="ruby-identifier">empty?</span>&#x000A;&#x000A;  <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">shuffle!</span>&#x000A;<span class="ruby-keyword">end</span></pre>
+<pre id='method-i-shuffle-source'><span class="ruby-comment"># File lib/gaming_dice/card_deck.rb, line 46</span>&#x000A;<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">shuffle</span>&#x000A;  <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">unshift</span>(<span class="ruby-identifier">discard_pile</span>.<span class="ruby-identifier">shift</span>) <span class="ruby-keyword">until</span> <span class="ruby-identifier">discard_pile</span>.<span class="ruby-identifier">empty?</span>&#x000A;&#x000A;  <span class="ruby-identifier">draw_pile</span>.<span class="ruby-identifier">shuffle!</span>&#x000A;<span class="ruby-keyword">end</span></pre>
 </div>
 </div>
 </div>

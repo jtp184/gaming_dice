@@ -85,7 +85,7 @@ module GamingDice
     # Slightly unusual behavior. When the comparator methods are called,
     # the Integer() method is called on self and +other+.
     # This dice thus uses a randomly generated roll to compare.
-    # This way you can do things like <td>Dice.('1d6').roll > 10</td>
+    # This way you can do things like <td>1.d6 > 10</td>
     def <=>(other)
       Integer(self) <=> Integer(other)
     end
