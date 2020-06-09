@@ -38,9 +38,18 @@ You can also use the .roll function if you just want results
 
 ```ruby
 GamingDice.roll('1d6') # => 3
+GamingDice.roll('1d6 + 2') # => 6
+GamingDice.roll('1d8 + 3d6') # => 16 (total)
+GamingDice.roll('1d6 & 1d8') # => [3, 5] (each)
+GamingDice.roll('1d20 b 1d20') # => 14 (best)
+GamingDice.roll('1d6 w 1d6') # => 2 (worst)
+
+# Combine terms
 GamingDice.roll('1d12e, 1d6e') # => [14, 3]
+GamingDice.roll('1d20, 1d4 + 1d6') # => [5, 7]
 GamingDice.roll('1d100, 1d10 & 3d6') # => [98, [8, 8]]
-GamingDice.roll('1d8 + 3d6') # => 16
+GamingDice.roll('1d10, 1d4 b 1d4, a d12, 3d6 + 4') # => [8, 4, 7, 20]
+
 ```
 
 GamingDice also has the ability to handle standard 52 card decks. Useful for game systems like Savage Worlds which use these for initiative.

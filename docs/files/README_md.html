@@ -30,7 +30,7 @@ README.md
 </div>
 <div class='last-update'>
 Last Update:
-<span class='datetime'>2020-06-09 03:26:55 -0700</span>
+<span class='datetime'>2020-06-09 03:33:59 -0700</span>
 </div>
 </div>
 <div id='content'>
@@ -62,7 +62,7 @@ Last Update:
 
 <p>You can also use the .roll function if you just want results</p>
 
-<pre class="ruby"><span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d6&#39;</span>) <span class="ruby-comment"># =&gt; 3</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d12e, 1d6e&#39;</span>) <span class="ruby-comment"># =&gt; [14, 3]</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d100, 1d10 &amp; 3d6&#39;</span>) <span class="ruby-comment"># =&gt; [98, [8, 8]]</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d8 + 3d6&#39;</span>) <span class="ruby-comment"># =&gt; 16</span></pre>
+<pre class="ruby"><span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d6&#39;</span>) <span class="ruby-comment"># =&gt; 3</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d6 + 2&#39;</span>) <span class="ruby-comment"># =&gt; 6</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d8 + 3d6&#39;</span>) <span class="ruby-comment"># =&gt; 16 (total)</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d6 &amp; 1d8&#39;</span>) <span class="ruby-comment"># =&gt; [3, 5] (each)</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d20 b 1d20&#39;</span>) <span class="ruby-comment"># =&gt; 14 (best)</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d6 w 1d6&#39;</span>) <span class="ruby-comment"># =&gt; 2 (worst)</span>&#x000A;&#x000A;<span class="ruby-comment"># Combine terms</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d12e, 1d6e&#39;</span>) <span class="ruby-comment"># =&gt; [14, 3]</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d20, 1d4 + 1d6&#39;</span>) <span class="ruby-comment"># =&gt; [5, 7]</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d100, 1d10 &amp; 3d6&#39;</span>) <span class="ruby-comment"># =&gt; [98, [8, 8]]</span>&#x000A;<span class="ruby-constant">GamingDice</span>.<span class="ruby-identifier">roll</span>(<span class="ruby-string">&#39;1d10, 1d4 b 1d4, a d12, 3d6 + 4&#39;</span>) <span class="ruby-comment"># =&gt; [8, 4, 7, 20]</span></pre>
 
 <p><a href="../classes/GamingDice.html"><code>GamingDice</code></a> also has the ability to handle standard 52 card decks. Useful for game systems like Savage Worlds which use these for initiative.</p>
 
