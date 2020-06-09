@@ -89,9 +89,9 @@ Scenario: Creating by hex couplet
 		| 39 |
 		| 2b |
 	Then I should receive cards named
-		| 10 of Spades     |
-		| 2 of Hearts      |
-		| 9 of Clubs       |
+		| Ten of Spades     |
+		| Two of Hearts      |
+		| Nine of Clubs       |
 		| Jack of Diamonds |
 
 Scenario: Returning a hex couplet
@@ -114,8 +114,8 @@ Scenario: A Card can return its next card
 		| 12    | c    |
 	And I send each card the message "next"
 	Then the resulting cards are named
-		| 3 of Spades      |
-		| 6 of Hearts      |
+		| Three of Spades      |
+		| Six of Hearts      |
 		| Jack of Diamonds |
 		| King of Clubs    | 
 
@@ -128,8 +128,8 @@ Scenario: A Card can return its previous card
 		| 13    | c    |
 	And I send each card the message "prev"
 	Then the resulting cards are named
-		| 4 of Spades       |
-		| 7 of Hearts       |
+		| Four of Spades       |
+		| Seven of Hearts       |
 		| Jack of Diamonds  |
 		| Queen of Clubs    |
 
