@@ -65,7 +65,7 @@ module GamingDice
       roll
     end
 
-    def to_str
+    def to_str # :nodoc:
       to_s
     end
   end
