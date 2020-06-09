@@ -14,26 +14,22 @@ Scenario: Dice Pools can be created from combining terms
 		| 1d4 + 1d8 |
 	Then each creates a dice pool
 
-Scenario: Dice pools can be discrete
-	Given I input the dice string "1d20 & 1d10"
-	Then I receive discrete dice pools
+Scenario: Dice pools with '&'
+	Given I input the dice string "1d20 & 3d10"
+	Then the pool rule should be 'each'
+	And the result is an array of integers
 
-Scenario: Dice pools can be summative
-	Given I input the dice string "1d6 + 1d100"
-	Then I receive non-discrete dice pools
+Scenario: Dice pools with '+'
+	Given I input the dice string "1d10 + 1d4 + 3"
+	Then the pool rule should be 'sum'
+	And the result is an integer
 
-Scenario: Discrete rolling
-	Given I input the dice strings
-		| 1d10 & 1d10 |
-		| 2d4e & 4d6 |
-		| 1d100 & 1d2 |
-	When I roll them
-	Then the result is an array of integers
+Scenario: Dice pools with 'b'
+	Given I input the dice string "1d12e b 1d6e"
+	Then the pool rule should be 'best'
+	And the result is an integer
 
-Scenario: Summative rolling
-	Given I input the dice strings
-		| 1d100 + 1d10+10 |
-		| 10d6 + 1d12e |
-		| 3d4 |
-	When I roll them
-	Then the result is an integer
+Scenario: Dice pools with 'w'
+	Given I input the dice string "1d20 w 1d20"
+	Then the pool rule should be 'worst'
+	And the result is an integer

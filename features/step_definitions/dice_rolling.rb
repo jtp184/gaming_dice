@@ -14,10 +14,6 @@ Then(/result can be higher than the faces/i) do
   expect(@result.any? { |r| r > @dice.faces }).to be true
 end
 
-Then(/result is always greater than the bonus/i) do
-  expect(@result.all? { |r| r > @dice.bonus }).to be true
-end
-
 When(/compare the dice to an integer/i) do
   @result = @dice <=> rand(10)
 end

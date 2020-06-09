@@ -22,14 +22,6 @@ Then(/dice does explode/i) do
   expect(@dice.explodes?).to be true
 end
 
-Given(/give the dice(?: a )?bonus/i) do
-  @dice = FactoryBot.build(:dice, :bonus)
-end
-
-Then(/dice has a bonus/i) do
-  expect(@dice.bonus).to be > 0
-end
-
 Then(/receive an array of (?:rollables|dice|dice pools)/i) do
   precon = @dice.all? { |d| d.respond_to?(:roll) }
 
